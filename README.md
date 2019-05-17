@@ -15,4 +15,18 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：
-### 2、0517
+
+#### 2、 0517  考察的知识点： 闭包。
+
+```js
+var count = 10;
+function add() {
+  var count = 1;
+  return function () {
+    count += 1;
+    console.log(count);
+  }
+}
+var s = add();
+s();
+

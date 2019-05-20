@@ -15,3 +15,21 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：
+
+
+### 2. this 指向问题
+```js
+var a = '1'
+var obj = {
+   a:'2',
+   say: function () {
+     console.log(this.a)
+     setTimeout(function() {
+       console.log(this.a)
+     });
+   }
+ }
+ obj.say();
+
+```
+ 

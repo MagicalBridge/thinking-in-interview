@@ -7,12 +7,13 @@
 ```js
 for (var i = 1; i <= 3; i++) {
   setTimeout(function() {
-    console.log("ttt" + i);
+    console.log("ttt" + i);  
   }, 0);
 }
 ```
 
-解答：
+解答：3个ttt4
+注：var来声明变量I，声明会提升到作用域的顶部，js单线程，setTimeout是异步匿名函数，for循环结束才会执行setTimeout的异步回调，此时I等于4
 
 #### 2、 0517 考察的知识点： 闭包。
 
@@ -82,3 +83,6 @@ var obj = {
 };
 obj.say();
 ```
+解答：2 ，1
+注：非箭头函数中this最终指向调用它的对象，第一个this指向obj，输出2；setTimeout是全局函数，所以第二个this指向window，输出1
+箭头函数没有自己的this, 它的this是继承而来; 默认指向在定义它时所处的对象

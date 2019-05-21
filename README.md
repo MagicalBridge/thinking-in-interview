@@ -17,7 +17,7 @@ for (var i = 1; i <= 3; i++) {
 解答：
 
 
-### 2. this 指向问题
+#### 2. this 指向问题
 ```js
 var a = '1'
 var obj = {

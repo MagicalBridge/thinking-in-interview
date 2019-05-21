@@ -96,3 +96,24 @@ obj.say();
 解答：2 ，1
 注：非箭头函数中this最终指向调用它的对象，第一个this指向obj，输出2；setTimeout是全局函数，所以第二个this指向window，输出1
 箭头函数没有自己的this, 它的this是继承而来; 默认指向在定义它时所处的对象
+
+#### 4. 0521 考察的知识点：this 指向问题、赋值语句
+```js
+var num = 10;
+var obj = {
+    num:8,
+    inner: {
+        num: 6,
+        print: function () {
+            console.log(this.num);
+        }
+    }
+}
+num = 888;
+obj.inner.print(); 
+var fn = obj.inner.print;
+fn(); 
+(obj.inner.print)(); 
+(obj.inner.print = obj.inner.print)(); 
+```
+解答：

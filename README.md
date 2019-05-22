@@ -4,6 +4,7 @@
 
 **#### 序号、 日期  考察的知识点：xxxx**
 
+### JavaScript基础
 
 #### 1、 0516 考察的知识点：作用域、js 异步、事件循环。
 
@@ -101,13 +102,13 @@ obj.say();
 ```js
 var num = 10;
 var obj = {
-    num:8,
-    inner: {
-        num: 6,
-        print: function () {
-            console.log(this.num);
-        }
+  num:8,
+  inner: {
+    num: 6,
+    print: function () {
+        console.log(this.num);
     }
+  }
 }
 num = 888;
 obj.inner.print(); 
@@ -117,3 +118,74 @@ fn();
 (obj.inner.print = obj.inner.print)(); 
 ```
 解答：
+
+
+#### 5. 0522 考察知识点：数组的操作 hashMap的映射
+
+给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
+
+示例:
+```
+给定 nums = [2, 7, 11, 15], target = 9
+因为 nums[0] + nums[1] = 2 + 7 = 9
+所以返回 [0, 1]
+```
+
+解答：
+
+解法一：使用暴力破解法:
+
+>暴力破解的思路是使用双层 for 循环,外层循环控制第一个数字,内层循环控制第二个数字,当第一个数字和第二个数字之和满足目标数字的时候输出下标，话不多说，直接上代码。
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+var twoSum = function(nums, target) {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) {
+        return [i, j];
+      }
+    }
+  }
+};
+```
+
+解法二：使用 HashMap 解法:
+
+>第一种解法的时间复杂度是很高的，一般来说,我们为了减小时间复杂度，需要使用空间来换，我们想要使用线性的时间复杂度来解决问题，那么就是说只能遍历一个数字，那另一个数字怎么办呢？这个时候我们可以想到使用一个 HashMap，来建立数字和其坐标位置之间的映射，我们知道 HashMap 是常数级别的查找，这样我们在遍历数组的时候，用 target 减去遍历到的数字，就是另外一个数字了，直接在 HashMap 中查找其是否存在即可。题目中的要求是查找的数字不是第一个数字，比如 target 是 4 遍历到了一个 2，那么另一个 2 不能是之前的 2，整个实现步骤为：
+
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+ 
+var twoSum = function(nums, target) {
+  // 创建map对象
+  let map = new Map();
+  // 创建空数组用于输出索引
+  let arr = [];
+
+  // 第一个for循环作用是对数组中的每一个数字做一个映射
+  for (let i = 0; i < nums.length; i++) {
+    map.set(nums[i], i);
+  } 
+  // 第二个for循环 找到目标值，看看在 map 中是否存在 
+  // 存在就输出两个数字对应的索引
+  for (let j = 0; j < nums.length; j++) {
+    let t = target - nums[j];
+
+    if (map.has(t) && map.get(t) != j) {
+      arr.push(j);
+      arr.push(map.get(t));
+      break;
+    }
+  }
+  return arr;
+};
+```

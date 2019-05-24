@@ -1,10 +1,11 @@
 ## 每日面试题集锦
-每日的面试题目的分享意在提高大家对于JavaScript基础知识的把握。
+
+每日的面试题目的分享意在提高大家对于 JavaScript 基础知识的把握。
 每天的面试题目标题格式：
 
-**#### 序号、 日期  考察的知识点：xxxx**
+**#### 序号、 日期 考察的知识点：xxxx**
 
-### JavaScript基础
+### JavaScript 基础
 
 #### 1、 0516 考察的知识点：作用域、js 异步、事件循环。
 
@@ -13,20 +14,20 @@
 ```js
 for (var i = 1; i <= 3; i++) {
   setTimeout(function() {
-    console.log("ttt" + i);  
+    console.log("ttt" + i);
   }, 0);
 }
 ```
 
-解答：3个ttt4
-注：var来声明变量I，声明会提升到作用域的顶部，js单线程，setTimeout是异步匿名函数，for循环结束才会执行setTimeout的异步回调，此时I等于4
+解答：3 个 ttt4
+注：var 来声明变量 I，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 I 等于 4
 
 #### 2、 0517 考察的知识点： 闭包。
 
 实践角度解释闭包：
 
-  >1、即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）。
-  2、在代码中引用了自由变量。
+> 1、即使创建它的上下文已经销毁，它仍然存在（比如，内部函数从父函数中返回）。
+> 2、在代码中引用了自由变量。
 
 闭包的优缺点：使用闭包主要是为了设计私有的方法和变量。闭包的优点是可以避免全局变量的污染，缺点是闭包会常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。
 
@@ -44,7 +45,7 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：2
-注： return 函数可以引用外部函数（父函数）add的变量 count, 因此内层函数 count = 1,最终输出为 2；
+注： return 函数可以引用外部函数（父函数）add 的变量 count, 因此内层函数 count = 1,最终输出为 2；
 
 ```js
 （2) var count = 10;
@@ -94,48 +95,52 @@ var obj = {
 };
 obj.say();
 ```
+
 解答：2 ，1
-注：非箭头函数中this最终指向调用它的对象，第一个this指向obj，输出2；setTimeout是全局函数，所以第二个this指向window，输出1
-箭头函数没有自己的this, 它的this是继承而来; 默认指向在定义它时所处的对象
+注：非箭头函数中 this 最终指向调用它的对象，第一个 this 指向 obj，输出 2；setTimeout 是全局函数，所以第二个 this 指向 window，输出 1
+箭头函数没有自己的 this, 它的 this 是继承而来; 默认指向在定义它时所处的对象
 
 #### 4. 0521 考察的知识点：this 指向问题、赋值语句
+
 ```js
 var num = 10;
 var obj = {
-  num:8,
+  num: 8,
   inner: {
     num: 6,
-    print: function () {
-        console.log(this.num);
+    print: function() {
+      console.log(this.num);
     }
   }
-}
+};
 num = 888;
-obj.inner.print(); 
+obj.inner.print();
 var fn = obj.inner.print;
-fn(); 
-(obj.inner.print)(); 
-(obj.inner.print = obj.inner.print)(); 
+fn();
+obj.inner.print();
+(obj.inner.print = obj.inner.print)();
 ```
+
 解答：
 
-
-#### 5. 0522 考察知识点：数组的操作 hashMap的映射
+#### 5. 0522 考察知识点：数组的操作 hashMap 的映射
 
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
 
 示例:
+
 ```
 给定 nums = [2, 7, 11, 15], target = 9
 因为 nums[0] + nums[1] = 2 + 7 = 9
 所以返回 [0, 1]
 ```
+
 
 解答：
 
 解法一：使用暴力破解法:
 
->暴力破解的思路是使用双层 for 循环,外层循环控制第一个数字,内层循环控制第二个数字,当第一个数字和第二个数字之和满足目标数字的时候输出下标，话不多说，直接上代码。
+> 暴力破解的思路是使用双层 for 循环,外层循环控制第一个数字,内层循环控制第二个数字,当第一个数字和第二个数字之和满足目标数字的时候输出下标，话不多说，直接上代码。
 
 ```js
 /**
@@ -153,10 +158,11 @@ var twoSum = function(nums, target) {
   }
 };
 ```
+
 解答：https://zhidao.baidu.com/question/924556511528417059.html
 解法二：使用 HashMap 解法:
 
->第一种解法的时间复杂度是很高的，一般来说,我们为了减小时间复杂度，需要使用空间来换，我们想要使用线性的时间复杂度来解决问题，那么就是说只能遍历一个数字，那另一个数字怎么办呢？这个时候我们可以想到使用一个 HashMap，来建立数字和其坐标位置之间的映射，我们知道 HashMap 是常数级别的查找，这样我们在遍历数组的时候，用 target 减去遍历到的数字，就是另外一个数字了，直接在 HashMap 中查找其是否存在即可。题目中的要求是查找的数字不是第一个数字，比如 target 是 4 遍历到了一个 2，那么另一个 2 不能是之前的 2，整个实现步骤为：
+> 第一种解法的时间复杂度是很高的，一般来说,我们为了减小时间复杂度，需要使用空间来换，我们想要使用线性的时间复杂度来解决问题，那么就是说只能遍历一个数字，那另一个数字怎么办呢？这个时候我们可以想到使用一个 HashMap，来建立数字和其坐标位置之间的映射，我们知道 HashMap 是常数级别的查找，这样我们在遍历数组的时候，用 target 减去遍历到的数字，就是另外一个数字了，直接在 HashMap 中查找其是否存在即可。题目中的要求是查找的数字不是第一个数字，比如 target 是 4 遍历到了一个 2，那么另一个 2 不能是之前的 2，整个实现步骤为：
 
 ```js
 /**
@@ -164,7 +170,7 @@ var twoSum = function(nums, target) {
  * @param {number} target
  * @return {number[]}
  */
- 
+
 var twoSum = function(nums, target) {
   // 创建map对象
   let map = new Map();
@@ -174,8 +180,8 @@ var twoSum = function(nums, target) {
   // 第一个for循环作用是对数组中的每一个数字做一个映射
   for (let i = 0; i < nums.length; i++) {
     map.set(nums[i], i);
-  } 
-  // 第二个for循环 找到目标值，看看在 map 中是否存在 
+  }
+  // 第二个for循环 找到目标值，看看在 map 中是否存在
   // 存在就输出两个数字对应的索引
   for (let j = 0; j < nums.length; j++) {
     let t = target - nums[j];
@@ -189,3 +195,236 @@ var twoSum = function(nums, target) {
   return arr;
 };
 ```
+
+## 每日面试题集锦
+
+#### 1、 0524 考察的知识点：es6 Set 和 Map。
+
+ES6 中提供了 Set 数据容器，这是一个能够存储无重复值的有序列表。
+
+1.基本用法
+
+创建 Set `new Set()`
+
+值得注意的是,NaN 被 Set 认为是相同的,{}被认为是不同的，在向 Set 加入值时，Set 不会转换数据类型，内部在判断元素是否存在时用的类似于精确等于(===)的方法，“2”和 2 是不同的，NaN 等于其自身。
+
+```js
+var set = new Set([{}, {}]);
+set; //{{},{}}
+set.size; // 2  Set.size 返回Set实例的成员总数
+
+var set = new Set([NaN, NaN]);
+set; //{NaN}
+set.size; // 1
+```
+
+向 Set 中添加元素。
+
+```js
+let set1 = new Set();
+set1.add(1);
+set1.add(2);
+set1.add(3);
+console.log("added:", set1); //  added: Set { 1, 2, 3 }
+```
+
+从 Set 中删除元素。
+
+```js
+let set1 = new Set();
+set1.add(1);
+set1.add(2);
+set1.add(3);
+set1.delete(1); // 返回 true
+set1.delete(4); // 返回 false
+console.log("deleted:", set1);
+// deleted: Set { 2, 3 }
+```
+
+判断某元素是否存在。
+
+```js
+let set1 = new Set()
+set1.add(1)
+set1.add(2)
+set1.add(3)
+set1.delete(1)
+console.log('has(1):', set1.has(1))
+console.log('has(2):', set1.has(2))
+<!--has(1): false-->
+<!--has(2): true-->
+```
+
+清除所有元素。
+
+```js
+let set1 = new Set()
+set1.add(1)
+set1.add(2)
+set1.add(3)
+set1.clear()
+console.log('cleared:', set1)
+<!--cleared: Set {}-->
+```
+
+2.Set 和 Array 互转
+
+数组转 Set
+```js
+let set2 = new Set([4,5,6])
+console.log('array to set 1:', set2)
+// array to set 2: Set { 4, 5, 6 }
+```
+
+Set 转数组 扩展运算符
+
+```js
+let set4 = new Set([4, 5, 6])
+console.log('set to array 1:', [...set4])
+// set to array 1: [ 4, 5, 6 ]
+```
+
+3.遍历方法
+```js
+Set.keys() : 返回键名的遍历器
+Set.values()：返回键值的遍历器
+Set.entries(): 返回键值对的遍历器
+Set.forEach() :回调函数遍历
+forEach()方法遍历
+可以使用 forEach 方法来遍历 Set 中的数据项，该方法传入一个回调函数 callback，还可以传入一个 this，用于回调函数之中：
+
+回调函数 callback 中有三个参数：元素值；元素索引；将要遍历的对象；
+let set = new Set([1,2,3,3,3,3]);
+set.forEach(function (value,key,ownerSet) {
+console.log(value);
+console.log(key);  
+})
+Set 中的 value 和 key 是相同的，这是为了让 Set 的 forEach 方法和数组以及 Map 的 forEach 方法保持一致，都具有三个参数。
+
+4.Set 的一些用法
+
+let arr1 = [1,2,3,4,5];
+let arr2 = [4,5,6,7,8];
+let a = new Set(arr1);
+let b= new Set(arr2)
+
+(1)数组去重&并集
+
+new Set([...arr1,...arr2]) //{1,2,3,4,5,6,7,8}
+let arr3 = [...new Set([...arr1,...arr2])] //[1,2,3,4,5,6,7,8](2)交集
+
+let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
+
+(3)差集
+
+let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
+let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
+[...arr3,...arr4] //[1,2,3,6,7,8]
+
+数据结构 map 基本概念
+ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始值或对象）都可以作为一个键或一个值。 1.基本用法
+
+set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
+let map = new Map();
+map.set('dsssddddddddsdsdsdssfw',8);
+map.set({a:1},'ddsdsds');
+
+get(key):获取 key 的值
+map.get('dsssddddddddsdsdsdssfw')//8
+map.get('x')//undefined
+注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
+let map = new Map();
+map.set(['a'], 555);
+map.get(['a'])
+
+let map2 = new Map();
+let a = ['a'];
+let b = ['a'];
+map2.set(a, 555);
+map2.get(a)
+
+has(key):has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
+map.has('dsssddddddddsdsdsdssfw'); //true
+
+delete(key):delete 方法删除某个键，返回 true。如果删除失败，返回 false。
+map.delete('dsssddddddddsdsdsdssfw');
+map.has('dsssddddddddsdsdsdssfw')//false
+
+clear():清空 Map 对象
+map.size // 2
+map.clear()
+map.size // 0
+
+2.遍历方法
+
+const map = new Map([
+['F', 'no'],
+['T', 'yes'],
+]);
+
+for (let key of map.keys()) {
+console.log(key);
+}
+"F"
+"T"
+
+for (let value of map.values()) {
+console.log(value);
+}
+// "no"
+// "yes"
+
+for (let item of map.entries()) {
+console.log(item[0], item[1]);
+}
+// "F" "no"
+// "T" "yes"
+
+map.forEach(function (key, value, map){
+console.log(key + ':' + value);
+})
+// "F":"no"
+// "T":"yes"
+
+3.与其他数据结构的互相转换
+Map 转为数组
+const myMap = new Map()
+.set(true, 7)
+.set({foo: 3}, ['abc']);
+[...myMap]
+// [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
+数组 转为 Map
+new Map([
+[true, 7],[{foo: 3}, ['abc']]
+])
+
+Map 转为对象
+function strMapToObj(strMap) {
+let obj = Object.create(null);
+for (let [k,v] of strMap) {
+obj[k] = v;
+}
+return obj;
+}
+
+const myMap = new Map()
+.set('yes', true)
+.set('no', false);
+strMapToObj(myMap)
+
+<!--{yes: true, no: false}-->
+
+对象转为 Map
+function objToStrMap(obj) {
+let strMap = new Map();
+for (let k of Object.keys(obj)) {
+strMap.set(k, obj[k]);
+}
+return strMap;
+}
+
+objToStrMap({yes: true, no: false})
+
+<!--{"yes" => true, "no" => false}-->
+
+https://www.cnblogs.com/ljuyi/p/6100071.html

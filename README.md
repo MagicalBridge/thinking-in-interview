@@ -308,14 +308,12 @@ ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始�
 set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
 ```js
 let map = new Map();
-map.set(['a'], 555);
-map.get(['a'])
+map.set('dsssddddddddsdsdsdssfw',8);
+map.set({a:1},'ddsdsds');
 
-let map2 = new Map();
-let a = ['a'];
-let b = ['a'];
-map2.set(a, 555);
-map2.get(a)
+get(key):获取 key 的值
+map.get('dsssddddddddsdsdsdssfw')//8
+map.get('x')//undefined
 ```
 has(key):has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
 map.has('dsssddddddddsdsdsdssfw'); //true
@@ -411,12 +409,14 @@ objToStrMap({yes: true, no: false})
 面试题
 ```js
 let map = new Map();
-map.set('dsssddddddddsdsdsdssfw',8);
-map.set({a:1},'ddsdsds');
+map.set(['a'], 555);
+map.get(['a'])
 
-get(key):获取 key 的值
-map.get('dsssddddddddsdsdsdssfw')//8
-map.get('x')//undefined
+let map2 = new Map();
+let a = ['a'];
+let b = ['a'];
+map2.set(a, 555);
+map2.get(a)
 ```
 注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
 ```js

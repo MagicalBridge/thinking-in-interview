@@ -302,40 +302,10 @@ console.log(key);
 ```
 Set 中的 value 和 key 是相同的，这是为了让 Set 的 forEach 方法和数组以及 Map 的 forEach 方法保持一致，都具有三个参数。
 
-4.Set 的一些用法
-```js
-let arr1 = [1,2,3,4,5];
-let arr2 = [4,5,6,7,8];
-let a = new Set(arr1);
-let b= new Set(arr2)
-```
-(1)数组去重&并集
-```js
-new Set([...arr1,...arr2]) //{1,2,3,4,5,6,7,8}
-let arr3 = [...new Set([...arr1,...arr2])] //[1,2,3,4,5,6,7,8](2)交集
-
-let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
-```
-(3)差集
-```js
-let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
-let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
-[...arr3,...arr4] //[1,2,3,6,7,8]
-```
 数据结构 map 基本概念
 ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始值或对象）都可以作为一个键或一个值。 1.基本用法
 
 set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
-```js
-let map = new Map();
-map.set('dsssddddddddsdsdsdssfw',8);
-map.set({a:1},'ddsdsds');
-
-get(key):获取 key 的值
-map.get('dsssddddddddsdsdsdssfw')//8
-map.get('x')//undefined
-```
-注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
 ```js
 let map = new Map();
 map.set(['a'], 555);
@@ -437,4 +407,37 @@ return strMap;
 objToStrMap({yes: true, no: false})
 
 <!--{"yes" => true, "no" => false}-->
+```
+面试题
+```js
+let map = new Map();
+map.set('dsssddddddddsdsdsdssfw',8);
+map.set({a:1},'ddsdsds');
+
+get(key):获取 key 的值
+map.get('dsssddddddddsdsdsdssfw')//8
+map.get('x')//undefined
+```
+注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
+```js
+let arr1 = [1,2,3,4,5];
+let arr2 = [4,5,6,7,8];
+求这两个数组的并集和交集和差集
+let a = new Set(arr1);
+let b= new Set(arr2)
+```
+(1)数组去重&并集
+```js
+new Set([...arr1,...arr2]) //{1,2,3,4,5,6,7,8}
+let arr3 = [...new Set([...arr1,...arr2])] //[1,2,3,4,5,6,7,8]
+```
+(2)交集
+```js
+let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
+```
+(3)差集
+```js
+let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
+let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
+[...arr3,...arr4] //[1,2,3,6,7,8]
 ```

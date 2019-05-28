@@ -285,7 +285,6 @@ console.log('set to array 1:', [...set4])
 ```
 
 3.遍历方法
-```js
 Set.keys() : 返回键名的遍历器
 Set.values()：返回键值的遍历器
 Set.entries(): 返回键值对的遍历器
@@ -294,37 +293,40 @@ forEach()方法遍历
 可以使用 forEach 方法来遍历 Set 中的数据项，该方法传入一个回调函数 callback，还可以传入一个 this，用于回调函数之中：
 
 回调函数 callback 中有三个参数：元素值；元素索引；将要遍历的对象；
+```js
 let set = new Set([1,2,3,3,3,3]);
 set.forEach(function (value,key,ownerSet) {
 console.log(value);
 console.log(key);  
 })
+```
 Set 中的 value 和 key 是相同的，这是为了让 Set 的 forEach 方法和数组以及 Map 的 forEach 方法保持一致，都具有三个参数。
 
 4.Set 的一些用法
-
+```js
 let arr1 = [1,2,3,4,5];
 let arr2 = [4,5,6,7,8];
 let a = new Set(arr1);
 let b= new Set(arr2)
-
+```
 (1)数组去重&并集
-
+```js
 new Set([...arr1,...arr2]) //{1,2,3,4,5,6,7,8}
 let arr3 = [...new Set([...arr1,...arr2])] //[1,2,3,4,5,6,7,8](2)交集
 
 let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
-
+```
 (3)差集
-
+```js
 let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
 let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
 [...arr3,...arr4] //[1,2,3,6,7,8]
-
+```
 数据结构 map 基本概念
 ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始值或对象）都可以作为一个键或一个值。 1.基本用法
 
 set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
+```js
 let map = new Map();
 map.set('dsssddddddddsdsdsdssfw',8);
 map.set({a:1},'ddsdsds');
@@ -332,7 +334,9 @@ map.set({a:1},'ddsdsds');
 get(key):获取 key 的值
 map.get('dsssddddddddsdsdsdssfw')//8
 map.get('x')//undefined
+```
 注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
+```js
 let map = new Map();
 map.set(['a'], 555);
 map.get(['a'])
@@ -342,21 +346,23 @@ let a = ['a'];
 let b = ['a'];
 map2.set(a, 555);
 map2.get(a)
-
+```
 has(key):has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
 map.has('dsssddddddddsdsdsdssfw'); //true
 
 delete(key):delete 方法删除某个键，返回 true。如果删除失败，返回 false。
+```js
 map.delete('dsssddddddddsdsdsdssfw');
 map.has('dsssddddddddsdsdsdssfw')//false
-
+```
+```js
 clear():清空 Map 对象
 map.size // 2
 map.clear()
 map.size // 0
-
+```
 2.遍历方法
-
+```js
 const map = new Map([
 ['F', 'no'],
 ['T', 'yes'],
@@ -385,20 +391,24 @@ console.log(key + ':' + value);
 })
 // "F":"no"
 // "T":"yes"
-
+```
 3.与其他数据结构的互相转换
 Map 转为数组
+```js
 const myMap = new Map()
 .set(true, 7)
 .set({foo: 3}, ['abc']);
 [...myMap]
 // [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
+```
 数组 转为 Map
+```js
 new Map([
 [true, 7],[{foo: 3}, ['abc']]
 ])
-
+```
 Map 转为对象
+```js
 function strMapToObj(strMap) {
 let obj = Object.create(null);
 for (let [k,v] of strMap) {
@@ -413,8 +423,9 @@ const myMap = new Map()
 strMapToObj(myMap)
 
 <!--{yes: true, no: false}-->
-
+```
 对象转为 Map
+```js
 function objToStrMap(obj) {
 let strMap = new Map();
 for (let k of Object.keys(obj)) {
@@ -426,5 +437,4 @@ return strMap;
 objToStrMap({yes: true, no: false})
 
 <!--{"yes" => true, "no" => false}-->
-
-https://www.cnblogs.com/ljuyi/p/6100071.html
+```

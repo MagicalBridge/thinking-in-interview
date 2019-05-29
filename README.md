@@ -268,17 +268,18 @@ console.log('cleared:', set1)
 2.Set 和 Array 互转
 
 数组转 Set
+
 ```js
-let set2 = new Set([4,5,6])
-console.log('array to set 1:', set2)
+let set2 = new Set([4, 5, 6]);
+console.log("array to set 1:", set2);
 // array to set 2: Set { 4, 5, 6 }
 ```
 
 Set 转数组 扩展运算符
 
 ```js
-let set4 = new Set([4, 5, 6])
-console.log('set to array 1:', [...set4])
+let set4 = new Set([4, 5, 6]);
+console.log("set to array 1:", [...set4]);
 // set to array 1: [ 4, 5, 6 ]
 ```
 
@@ -291,19 +292,22 @@ forEach()方法遍历
 可以使用 forEach 方法来遍历 Set 中的数据项，该方法传入一个回调函数 callback，还可以传入一个 this，用于回调函数之中：
 
 回调函数 callback 中有三个参数：元素值；元素索引；将要遍历的对象；
+
 ```js
-let set = new Set([1,2,3,3,3,3]);
-set.forEach(function (value,key,ownerSet) {
-console.log(value);
-console.log(key);  
-})
+let set = new Set([1, 2, 3, 3, 3, 3]);
+set.forEach(function(value, key, ownerSet) {
+  console.log(value);
+  console.log(key);
+});
 ```
+
 Set 中的 value 和 key 是相同的，这是为了让 Set 的 forEach 方法和数组以及 Map 的 forEach 方法保持一致，都具有三个参数。
 
 数据结构 map 基本概念
 ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始值或对象）都可以作为一个键或一个值。 1.基本用法
 
 set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
+
 ```js
 let map = new Map();
 map.set('dsssddddddddsdsdsdssfw',8);
@@ -313,67 +317,71 @@ get(key):获取 key 的值
 map.get('dsssddddddddsdsdsdssfw')//8
 map.get('x')//undefined
 ```
+
 has(key):has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
 map.has('dsssddddddddsdsdsdssfw'); //true
 
 delete(key):delete 方法删除某个键，返回 true。如果删除失败，返回 false。
+
 ```js
-map.delete('dsssddddddddsdsdsdssfw');
-map.has('dsssddddddddsdsdsdssfw')//false
+map.delete("dsssddddddddsdsdsdssfw");
+map.has("dsssddddddddsdsdsdssfw"); //false
 ```
+
 ```js
 clear():清空 Map 对象
 map.size // 2
 map.clear()
 map.size // 0
 ```
+
 2.遍历方法
+
 ```js
-const map = new Map([
-['F', 'no'],
-['T', 'yes'],
-]);
+const map = new Map([["F", "no"], ["T", "yes"]]);
 
 for (let key of map.keys()) {
-console.log(key);
+  console.log(key);
 }
-"F"
-"T"
+("F");
+("T");
 
 for (let value of map.values()) {
-console.log(value);
+  console.log(value);
 }
 // "no"
 // "yes"
 
 for (let item of map.entries()) {
-console.log(item[0], item[1]);
+  console.log(item[0], item[1]);
 }
 // "F" "no"
 // "T" "yes"
 
-map.forEach(function (key, value, map){
-console.log(key + ':' + value);
-})
+map.forEach(function(key, value, map) {
+  console.log(key + ":" + value);
+});
 // "F":"no"
 // "T":"yes"
 ```
+
 3.与其他数据结构的互相转换
 Map 转为数组
+
 ```js
-const myMap = new Map()
-.set(true, 7)
-.set({foo: 3}, ['abc']);
-[...myMap]
+const myMap = new Map().set(true, 7).set({ foo: 3 }, ["abc"]);
+[...myMap];
 // [ [ true, 7 ], [ { foo: 3 }, [ 'abc' ] ] ]
 ```
+
 数组 转为 Map
+
 ```js
-new Map([
-[true, 7],[{foo: 3}, ['abc']]
-])
+new Map([[true, 7], [{ foo: 3 }, ["abc"]]]);
 ```
+
 Map 转为对象
+
 ```js
 function strMapToObj(strMap) {
 let obj = Object.create(null);
@@ -390,7 +398,9 @@ strMapToObj(myMap)
 
 <!--{yes: true, no: false}-->
 ```
+
 对象转为 Map
+
 ```js
 function objToStrMap(obj) {
 let strMap = new Map();
@@ -404,134 +414,157 @@ objToStrMap({yes: true, no: false})
 
 <!--{"yes" => true, "no" => false}-->
 ```
+
 面试题
+
 ```js
 let map = new Map();
-map.set(['a'], 555);
-map.get(['a'])
+map.set(["a"], 555);
+map.get(["a"]);
 
 let map2 = new Map();
-let a = ['a'];
-let b = ['a'];
+let a = ["a"];
+let b = ["a"];
 map2.set(a, 555);
-map2.get(a)
+map2.get(a);
 ```
+
 注意，只有对同一个对象的引用，Map 结构才将其视为同一个键。
+
 ```js
-let arr1 = [1,2,3,4,5];
-let arr2 = [4,5,6,7,8];
-求这两个数组的并集和交集和差集
+let arr1 = [1, 2, 3, 4, 5];
+let arr2 = [4, 5, 6, 7, 8];
+求这两个数组的并集和交集和差集;
 let a = new Set(arr1);
-let b= new Set(arr2)
+let b = new Set(arr2);
 ```
+
 (1)数组去重&并集
+
 ```js
-new Set([...arr1,...arr2]) //{1,2,3,4,5,6,7,8}
-let arr3 = [...new Set([...arr1,...arr2])] //[1,2,3,4,5,6,7,8]
+new Set([...arr1, ...arr2]); //{1,2,3,4,5,6,7,8}
+let arr3 = [...new Set([...arr1, ...arr2])]; //[1,2,3,4,5,6,7,8]
 ```
+
 (2)交集
+
 ```js
-let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
+let arr3 = new Set(arr1.filter(x => b.has(x))); //{4,5}
 ```
+
 (3)差集
+
 ```js
 let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
 let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
 [...arr3,...arr4] //[1,2,3,6,7,8]
 ```
 
-#### 7、0529 考察的知识点：js深拷贝与浅拷贝
+#### 7、0529 考察的知识点：js 深拷贝与浅拷贝
 
 (1)引例
-```js
-let a = { 
-  age: 1
-}
-let b = a
-a.age = 2
-console.log(b.age)    
-```
-解答：如果给一个变量赋值一个对象，那么两者的值会是同一个引用，其中一方改变，另一方也会相应的改变，因此对于引用类型的复制，简单的赋值无用，这里打印出的b.age为2；
 
-(2)浅拷贝
 ```js
 let a = {
   age: 1
-}
-let b = Object.assign({}, a);
-a.age = 2;
-console.log(b.age)
-```
-解答：1；
-```js
-let a = {
-  age: 1
-}
-let b = {...a};
+};
+let b = a;
 a.age = 2;
 console.log(b.age);
 ```
+
+解答：如果给一个变量赋值一个对象，那么两者的值会是同一个引用，其中一方改变，另一方也会相应的改变，因此对于引用类型的复制，简单的赋值无用，这里打印出的 b.age 为 2；
+
+(2)浅拷贝
+
+```js
+let a = {
+  age: 1
+};
+let b = Object.assign({}, a);
+a.age = 2;
+console.log(b.age);
+```
+
 解答：1；
+
+```js
+let a = {
+  age: 1
+};
+let b = { ...a };
+a.age = 2;
+console.log(b.age);
+```
+
+解答：1；
+
 ```js
 let a = {
   age: 1,
   jobs: {
-    first:'test'
+    first: "test"
   }
-}
+};
 let b = Object.assign({}, a);
-a.jobs.first = 'ttttt';
-console.log(b.jobs.first)
+a.jobs.first = "ttttt";
+console.log(b.jobs.first);
 ```
+
 解答：'ttttt' 浅拷贝只能解决第一层的问题，如果接下去的值中还有对象的话，那么两者享有公同的引用。
 
 (2)深拷贝
+
 ```js
 let a = {
   age: 1,
   jobs: {
-    first: 'FE'
+    first: "FE"
   }
-}
+};
 let b = JSON.parse(JSON.stringify(a));
-a.jobs.first = 'aaaa';
+a.jobs.first = "aaaa";
 console.log(b.jobs.first);
 ```
+
 解答：‘FE’
+
 ```js
 let obj = {
   a: 1
-}
+};
 obj.b = obj;
 let c = JSON.parse(JSON.stringify(obj));
 console.log(c);
 ```
-解答： 如果是循环引用的对象，当我们拷贝obj对象时，就会循环的遍历b属性，直到栈溢出；
+
+解答： 如果是循环引用的对象，当我们拷贝 obj 对象时，就会循环的遍历 b 属性，直到栈溢出；
 
 ```js
 let a = {
   age: undefined,
   jobs: function() {},
-  name: 'yck'
-}
-let b = JSON.parse(JSON.stringify(a))
-console.log(b) 
+  name: "yck"
+};
+let b = JSON.parse(JSON.stringify(a));
+console.log(b);
 ```
-解答：{name: 'yck'}在遇到函数或者undefined的时候，该对象也不能正常的序列化。
+
+解答：{name: 'yck'}在遇到函数或者 undefined 的时候，该对象也不能正常的序列化。
 
 ```js
 function clone(obj) {
   var buf;
   if (obj instanceof Array) {
-    buf = [];  // 创建一个空数组
+    buf = []; // 创建一个空数组
     var i = obj.length;
     while (i--) {
       buf[i] = clone(obj[i]);
     }
     return buf;
-  }else if (obj instanceof Object){
+  } else if (obj instanceof Object) {
     buf = {};
-    for(var k in obj) {
+    for (var k in obj) {
       buf[k] = clone(obj[k]);
     }
     return buf;
@@ -540,10 +573,10 @@ function clone(obj) {
   }
 }
 var obj = {
-  a:1,
-  b:undefined,
-  jobs:function(){}
-}
+  a: 1,
+  b: undefined,
+  jobs: function() {}
+};
 var copy = clone(obj);
 console.log(copy);
 ```

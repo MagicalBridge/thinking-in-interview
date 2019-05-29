@@ -196,9 +196,7 @@ var twoSum = function(nums, target) {
 };
 ```
 
-## 每日面试题集锦
-
-#### 1、 0524 考察的知识点：es6 Set 和 Map。
+#### 6、 0524 考察的知识点：es6 Set 和 Map。
 
 ES6 中提供了 Set 数据容器，这是一个能够存储无重复值的有序列表。
 
@@ -440,4 +438,110 @@ let arr3 = new Set(arr1.filter(x=>b.has(x))) //{4,5}
 let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
 let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
 [...arr3,...arr4] //[1,2,3,6,7,8]
+```
+
+#### 7、0524 考察的知识点：js深拷贝与浅拷贝
+
+(1)引例
+```js
+let a = { 
+  age: 1
+}
+let b = a
+a.age = 2
+console.log(b.age)    
+```
+解答：如果给一个变量赋值一个对象，那么两者的值会是同一个引用，其中一方改变，另一方也会相应的改变，因此对于引用类型的复制，简单的赋值无用，这里打印出的b.age为2；
+(2)浅拷贝
+```js
+let a = {
+  age: 1
+}
+let b = Object.assign({}, a);
+a.age = 2;
+console.log(b.age)
+```
+解答：1；
+```js
+let a = {
+  age: 1
+}
+let b = {...a};
+a.age = 2;
+console.log(b.age);
+```
+解答：1；
+```js
+let a = {
+  age: 1,
+  jobs: {
+    first:'test'
+  }
+}
+let b = Object.assign({}, a);
+a.jobs.first = 'ttttt';
+console.log(b.jobs.first)
+```
+解答：'ttttt' 浅拷贝只能解决第一层的问题，如果接下去的值中还有对象的话，那么两者享有公同的引用。
+(2)深拷贝
+```js
+let a = {
+  age: 1,
+  jobs: {
+    first: 'FE'
+  }
+}
+let b = JSON.parse(JSON.stringify(a));
+a.jobs.first = 'aaaa';
+console.log(b.jobs.first);
+```
+解答：‘FE’
+```js
+let obj = {
+  a: 1
+}
+obj.b = obj;
+let c = JSON.parse(JSON.stringify(obj));
+console.log(c);
+```
+解答： 如果是循环引用的对象，当我们拷贝obj对象时，就会循环的遍历b属性，直到栈溢出；
+
+```js
+let a = {
+  age: undefined,
+  jobs: function() {},
+  name: 'yck'
+}
+let b = JSON.parse(JSON.stringify(a))
+console.log(b) 
+```
+解答：{name: 'yck'}在遇到函数或者undefined的时候，该对象也不能正常的序列化。
+
+```js
+function clone(obj) {
+  var buf;
+  if (obj instanceof Array) {
+    buf = [];  // 创建一个空数组
+    var i = obj.length;
+    while (i--) {
+      buf[i] = clone(obj[i]);
+    }
+    return buf;
+  }else if (obj instanceof Object){
+    buf = {};
+    for(var k in obj) {
+      buf[k] = clone(obj[k]);
+    }
+    return buf;
+  } else {
+    return obj;
+  }
+}
+var obj = {
+  a:1,
+  b:undefined,
+  jobs:function(){}
+}
+var copy = clone(obj);
+console.log(copy);
 ```

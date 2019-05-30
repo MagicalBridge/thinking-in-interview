@@ -478,19 +478,22 @@ console.log(b.age);
 (2)浅拷贝
 
 ```js
+// Object.assign() 方法用于将所有可枚举属性的值从
+// **一个或多个源对象**复制到目标对象。它将返回目标对象。
 let a = {
   age: 1
 };
 let b = Object.assign({}, a);
 a.age = 2;
-console.log(b.age);
+console.log(b.age); // 1
 ```
 
 解答：1；
 
 ```js
+// ES6中的解构赋值也是浅拷贝
 let a = {
-  age: 1
+  age: 1 // value是number 类型
 };
 let b = { ...a };
 a.age = 2;
@@ -502,16 +505,17 @@ console.log(b.age);
 ```js
 let a = {
   age: 1,
-  jobs: {
+  jobs: { // value 是引用类型 object
     first: "test"
   }
 };
 let b = Object.assign({}, a);
 a.jobs.first = "ttttt";
-console.log(b.jobs.first);
+console.log(b.jobs.first); // ttttt
 ```
 
 解答：'ttttt' 浅拷贝只能解决第一层的问题，如果接下去的值中还有对象的话，那么两者享有公同的引用。
+这种情况是我们不想看到的。
 
 (2)深拷贝
 

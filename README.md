@@ -505,7 +505,8 @@ console.log(b.age);
 ```js
 let a = {
   age: 1,
-  jobs: { // value 是引用类型 object
+  jobs: {
+    // value 是引用类型 object
     first: "test"
   }
 };
@@ -583,4 +584,34 @@ var obj = {
 };
 var copy = clone(obj);
 console.log(copy);
+```
+
+#### 8、0601 考察的知识点：var 声明变量的提升
+
+```js
+function f(shouldInitial) {
+  if (shouldInitial) {
+    var x = 10;
+  }
+  return x;
+}
+
+f(true); // 10
+f(false); // undefined
+```
+
+解答：上述函数中 使用 var 声明的变量有一个变量提升的效果。虽然 是在 if 条件语句中
+对 x 进行的声明，但是这种声明会提升。相当于这种写法：
+
+```js
+function f(shouldInitial) {
+  var x;
+  if (shouldInitial) {
+    x = 10;
+  }
+  return x;
+}
+
+f(true); // 10
+f(false); // undefined
 ```

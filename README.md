@@ -615,3 +615,19 @@ function f(shouldInitial) {
 f(true); // 10
 f(false); // undefined
 ```
+
+作为对比我们看这样的一个例子
+
+```js
+function f(input：boolean):number{
+  let a = 100;
+
+  if(input){
+    let b = a+1;
+    return b;
+  }
+  return b
+}
+// 上述函数 使用ts 编写 肯定会爆出 语法错误 因为使用let 声明的变量只在块级作用域
+// 中能够访问到。
+```

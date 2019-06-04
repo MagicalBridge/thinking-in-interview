@@ -631,3 +631,21 @@ function f(input：boolean):number{
 // 上述函数 使用ts 编写 肯定会爆出 语法错误 因为使用let 声明的变量只在块级作用域
 // 中能够访问到。
 ```
+
+#### 9、0602 请写一个阶乘函数 考察知识点：递归
+
+```js
+function factorial(n) {
+  if (n === 1) {
+    return n;
+  }
+  return n * factorial(n - 1);
+}
+```
+factorial(5) = 5*factorial(5-1) --> 5*4*factorial(4-1) --> 5*4*3*factorial(3-1)
+--> 5*4*3*2*factorial(2-1) --> 5*4*3*2*1 = 120
+当n=1 时候这个时候直接返回了1，此时完成了递归计算。
+
+递归中重要的一点就是递归语句和结束条件，如果没有结束条件那么整个递归会无限制的循环下去
+
+

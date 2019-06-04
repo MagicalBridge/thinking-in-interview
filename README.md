@@ -200,72 +200,7 @@ var twoSum = function(nums, target) {
 
 ES6 中提供了 Set 数据容器，这是一个能够存储无重复值的有序列表。
 
-1.基本用法
-
-创建 Set `new Set()`
-
-值得注意的是,NaN 被 Set 认为是相同的,{}被认为是不同的，在向 Set 加入值时，Set 不会转换数据类型，内部在判断元素是否存在时用的类似于精确等于(===)的方法，“2”和 2 是不同的，NaN 等于其自身。
-
-```js
-var set = new Set([{}, {}]);
-set; //{{},{}}
-set.size; // 2  Set.size 返回Set实例的成员总数
-
-var set = new Set([NaN, NaN]);
-set; //{NaN}
-set.size; // 1
-```
-
-向 Set 中添加元素。
-
-```js
-let set1 = new Set();
-set1.add(1);
-set1.add(2);
-set1.add(3);
-console.log("added:", set1); //  added: Set { 1, 2, 3 }
-```
-
-从 Set 中删除元素。
-
-```js
-let set1 = new Set();
-set1.add(1);
-set1.add(2);
-set1.add(3);
-set1.delete(1); // 返回 true
-set1.delete(4); // 返回 false
-console.log("deleted:", set1);
-// deleted: Set { 2, 3 }
-```
-
-判断某元素是否存在。
-
-```js
-let set1 = new Set()
-set1.add(1)
-set1.add(2)
-set1.add(3)
-set1.delete(1)
-console.log('has(1):', set1.has(1))
-console.log('has(2):', set1.has(2))
-<!--has(1): false-->
-<!--has(2): true-->
-```
-
-清除所有元素。
-
-```js
-let set1 = new Set()
-set1.add(1)
-set1.add(2)
-set1.add(3)
-set1.clear()
-console.log('cleared:', set1)
-<!--cleared: Set {}-->
-```
-
-2.Set 和 Array 互转
+Set 和 Array 互转
 
 数组转 Set
 
@@ -283,89 +218,6 @@ console.log("set to array 1:", [...set4]);
 // set to array 1: [ 4, 5, 6 ]
 ```
 
-3.遍历方法
-Set.keys() : 返回键名的遍历器
-Set.values()：返回键值的遍历器
-Set.entries(): 返回键值对的遍历器
-Set.forEach() :回调函数遍历
-forEach()方法遍历
-可以使用 forEach 方法来遍历 Set 中的数据项，该方法传入一个回调函数 callback，还可以传入一个 this，用于回调函数之中：
-
-回调函数 callback 中有三个参数：元素值；元素索引；将要遍历的对象；
-
-```js
-let set = new Set([1, 2, 3, 3, 3, 3]);
-set.forEach(function(value, key, ownerSet) {
-  console.log(value);
-  console.log(key);
-});
-```
-
-Set 中的 value 和 key 是相同的，这是为了让 Set 的 forEach 方法和数组以及 Map 的 forEach 方法保持一致，都具有三个参数。
-
-数据结构 map 基本概念
-ES6 新增了 Map 数据结构，Map 对象保存键值对，任何值（原始值或对象）都可以作为一个键或一个值。 1.基本用法
-
-set(key,value):set 方法设置键名 key 对应的键值为 value，然后返回整个 Map 结构。
-
-```js
-let map = new Map();
-map.set('dsssddddddddsdsdsdssfw',8);
-map.set({a:1},'ddsdsds');
-
-get(key):获取 key 的值
-map.get('dsssddddddddsdsdsdssfw')//8
-map.get('x')//undefined
-```
-
-has(key):has 方法返回一个布尔值，表示某个键是否在当前 Map 对象之中。
-map.has('dsssddddddddsdsdsdssfw'); //true
-
-delete(key):delete 方法删除某个键，返回 true。如果删除失败，返回 false。
-
-```js
-map.delete("dsssddddddddsdsdsdssfw");
-map.has("dsssddddddddsdsdsdssfw"); //false
-```
-
-```js
-clear():清空 Map 对象
-map.size // 2
-map.clear()
-map.size // 0
-```
-
-2.遍历方法
-
-```js
-const map = new Map([["F", "no"], ["T", "yes"]]);
-
-for (let key of map.keys()) {
-  console.log(key);
-}
-("F");
-("T");
-
-for (let value of map.values()) {
-  console.log(value);
-}
-// "no"
-// "yes"
-
-for (let item of map.entries()) {
-  console.log(item[0], item[1]);
-}
-// "F" "no"
-// "T" "yes"
-
-map.forEach(function(key, value, map) {
-  console.log(key + ":" + value);
-});
-// "F":"no"
-// "T":"yes"
-```
-
-3.与其他数据结构的互相转换
 Map 转为数组
 
 ```js
@@ -459,6 +311,7 @@ let arr3 = new Set(arr1.filter(x=>!b.has(x))) //{1,2,3}
 let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
 [...arr3,...arr4] //[1,2,3,6,7,8]
 ```
+
 
 #### 7、0529 考察的知识点：js 深拷贝与浅拷贝
 
@@ -642,10 +495,30 @@ function factorial(n) {
   return n * factorial(n - 1);
 }
 ```
-factorial(5) = 5*factorial(5-1) --> 5*4*factorial(4-1) --> 5*4*3*factorial(3-1)
---> 5*4*3*2*factorial(2-1) --> 5*4*3*2*1 = 120
-当n=1 时候这个时候直接返回了1，此时完成了递归计算。
+
+```js
+factorial(5) = 5*factorial(5-1) -->
+               5*4*factorial(4-1) -->
+               5*4*3*factorial(3-1) -->
+               5*4*3*2*factorial(2-1) -->
+               5*4*3*2*1 = 120
+```
+
+当 n=1 时候这个时候直接返回了 1，此时完成了递归计算。
 
 递归中重要的一点就是递归语句和结束条件，如果没有结束条件那么整个递归会无限制的循环下去
 
+同样的递归应用还在很多的方面比如 斐波那切数列的实现上面：
+什么是斐波那切数列: 又称黄金分割数列 在数学上有这样的定义：
+指的是这样一个数列：1、1、2、3、5、8、13、21、34、……在数学上，斐波纳契数列以如下被以递推的方法定义：F(1)=1，F(2)=1, F(n)=F(n-1)+F(n-2)（n>=3，n∈N\*）
+
+用递归实现: 注意的是 n>=3 这个斐波那切数列的条件
+
+```js
+function fibonacci(n) {
+  return n < 2 ? n : fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+console.log(fibonacci(5)); // 1 1 2 3 5
+```
 

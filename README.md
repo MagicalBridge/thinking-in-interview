@@ -521,4 +521,86 @@ function fibonacci(n) {
 
 console.log(fibonacci(5)); // 1 1 2 3 5
 ```
+#### 10、0605 如何实现一个promise，promise的原理
+解答：promise是对异步编程的一种抽象。它是一个代理对象，可以将异步对象和回调函数脱离开来，通过then方法在这个异步操作上面绑定回调函数
+1.状态 promise有3种状态：pending（待解决，这也是初始化状态），fulfilled（完成），rejected（拒绝）。
+2.接口：promise唯一接口then方法，它需要2个参数，分别是resolveHandler和rejectedHandler。并且返回一个promise对象来支持链式调用
+实现原理：
+```js
+ const PENDING = 'pending';
+  const FULFILLED = 'fulfilled';
+  const REJECTED = 'rejected';
+ class Promise{
+    constructor(executor){
+       this.status = PENDING;
+       this.value = '';
+       this.onfulfilledArr = [];//成功回调集合
+       this.onrejectedArr = [];//失败回调集合
+       this.resolve = this.resolve.bind(this);
+       this.reject = this.reject.bind(this);
+       this.then = this.then.bind(this);
+       executor(this.resolve, this.reject);
+    }
+    resolve(value){
+       if(this.status === PENDING){
+          this.value = value;
+          this.onfulfilledArr.forEach(item =>{
+            item(this.value)
+          })
+          this.status = FULFILLED;
+       }
+    }
+    reject(value){
+      if(this.status == PENDING){
+        this.value = value;
+        this.onrejectedArr.forEach(item => {
+        item(this.value);
+      })
+         this.status = REJECTED;
+
+      }
+    }
+    then(onfulfilled,onrejected){
+       if(this.status ==  FULFILLED){
+         const res = onfulfilled(this.value);
+         return new Promise(function(resolve,reject){
+               resolve(res);
+         })
+       }
+       if(this.status ==  FULFILLED){
+        const res = onrejected(this.value);
+        return new Promise(function(resolve, reject) {
+        reject(res);
+         })
+       }
+       if (this.status === PENDING) {
+          const self = this;
+          return new Promise(function(resolve,reject){
+               self.onfulfilledArr.push(() => {
+                  const res = onfulfilled(self.value);
+                  resolve(res);
+               })
+               self.onrejectedArr.push(() => {
+                const res = onrejected(self.value)
+                reject(res);
+              });
+          })
+       }       
+    }
+ }
+   const test = new Promise((resolve,reject) =>{
+          setTimeout(() => {
+            resolve(100);
+          }, 2000)
+   })
+   test.then((data) =>{
+     console.log(data); //100
+     return data +5;
+   },(data) =>{
+
+   })
+   .then((data) =>{
+    console.log(data) //105
+  },(data) =>{})
+  ```
 

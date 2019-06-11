@@ -603,4 +603,47 @@ console.log(fibonacci(5)); // 1 1 2 3 5
     console.log(data) //105
   },(data) =>{})
   ```
-
+#### 11、0611 统计一个字符串出现最多的字母
+给出一段英文连续的英文字符窜，找出重复出现次数最多的字母
+比如： 输入：afjghdfraaaasdenas  输出 ： a
+```js
+function findMaxDuplicateChar(str) {  
+  if(str.length == 1) {
+    return str;
+  }
+  let charObj = {};
+  for(let i=0;i<str.length;i++) {
+    if(!charObj[str.charAt(i)]) {
+      charObj[str.charAt(i)] = 1;
+    }else{
+      charObj[str.charAt(i)] += 1;
+    }
+  }
+  let maxChar = '',
+      maxValue = 1;
+  for(var k in charObj) {
+    if(charObj[k] >= maxValue) {
+      maxChar = k;
+      maxValue = charObj[k];
+    }
+  }
+  return maxChar;
+}
+```
+promise和setTimeout执行顺序的问题
+```js
+setTimeout(function(){console.log(1)},0);
+new Promise(function(resolve){
+    console.log(2)
+    for( var i=0 ; i<100 ; i++ ){
+        i==99 && resolve()
+    }
+    console.log(3)
+}).then(function(){
+    console.log(4)
+});
+console.log(5);
+```
+输出：2   3   5  4  undefined  1
+解答：then和settimeout执行顺序，即setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此then 函数先输出，settimeout后输出。
+参考链接：https://www.jianshu.com/p/4516ad4b3048

@@ -663,41 +663,44 @@ console.log(5);
 
 #### 12、0612   1). 变量提升 2). 函数提升  3). 预处理  4). 调用顺序
 ```js
-    var c = 1;
-    function c(c) {
-        console.log(c);
-        var c = 3;
-    }
-    c(2)
-// 这里我们先来了解下“预处理”，那什么是预处理呢？js语言本身具有预处理机制，js引擎在预处理期对所有声明的变量和函数进行处理，就是先把变量进行声明并读到内存里。也就是收集用var声明的变量信息和函数声明信息
+  var c = 1;
+  function c(c) {
+    console.log(c);
+    var c = 3;
+  }
+  c(2)
+```
+这里我们先来了解下 “预处理”，那什么是预处理呢？js语言本身具有预处理机制，js引擎在预处理期对所有声明的变量和函数进行处理，就是先把变量进行声明并读到内存里。也就是收集用var声明的变量信息和函数声明信息
 
-//变量和函数的优先顺序，先变量后函数。当变量名和函数名一致时后者会覆盖前者，我们看下下面的小案例
-    function b() {
-    }
-    var b
-    console.log(typeof b)
+变量和函数的优先顺序，先变量后函数。当变量名和函数名一致时后者会覆盖前者，我们看下下面的小案例
+```js
+  function b() {
+  }
+  var b
+  console.log(typeof b) // function 说明函数声明覆盖了 变量声明
+```
 
-// 先预处理var c；
+我们看看最开始这个例子的解释
+先预处理var c；然后预处理整个c函数
+```js
+function c(c) {
+  console.log(c)
+  var c = 3
+}
+```
+此时c的typeof为function
 
-// 然后预处理整个c函数
+接下来再给c赋值,值为1，即c=1，此时c是整型变量1.typeof为number了。
 
-// function c(c) {
-//             console.log(c)
-//             var c = 3
-//     }
+最后再执行c(2)调用函数。所以我们调用的时候当然就会报c不是一个函数的错误了.
 
-// 此时c的typeof为function
-
-// 接下来再给c赋值,值为1，即c=1，此时c是整型变量1.typeof为number了。
-
-// 最后再执行c(2)调用函数。所以我们调用的时候当然就会报c不是一个函数的错误了
-
-    //   var c = 1
-    // function c(c) {
-    //     console.log(c)
-    //     var c = 3
-    // }
-    // console.log(c) // 
-    // console.log(typeof c) // 
-    // c(2) 
+```js
+var c = 1
+function c(c) {
+  console.log(c)
+  var c = 3
+}
+console.log(c) 
+console.log(typeof c)
+c(2)
 ```

@@ -312,7 +312,6 @@ let arr4 = new Set(arr2.filter(x=>!a.has(x))) //{6,7,8}
 [...arr3,...arr4] //[1,2,3,6,7,8]
 ```
 
-
 #### 7、0529 考察的知识点：js 深拷贝与浅拷贝
 
 (1)引例
@@ -521,108 +520,116 @@ function fibonacci(n) {
 
 console.log(fibonacci(5)); // 1 1 2 3 5
 ```
-#### 10、0605 如何实现一个promise，promise的原理
-解答：promise是对异步编程的一种抽象。它是一个代理对象，可以将异步对象和回调函数脱离开来，通过then方法在这个异步操作上面绑定回调函数
-1.状态 promise有3种状态：pending（待解决，这也是初始化状态），fulfilled（完成），rejected（拒绝）。
-2.接口：promise唯一接口then方法，它需要2个参数，分别是resolveHandler和rejectedHandler。并且返回一个promise对象来支持链式调用
+
+#### 10、0605 如何实现一个 promise，promise 的原理
+
+解答：promise 是对异步编程的一种抽象。它是一个代理对象，可以将异步对象和回调函数脱离开来，通过 then 方法在这个异步操作上面绑定回调函数 1.状态 promise 有 3 种状态：pending（待解决，这也是初始化状态），fulfilled（完成），rejected（拒绝）。 2.接口：promise 唯一接口 then 方法，它需要 2 个参数，分别是 resolveHandler 和 rejectedHandler。并且返回一个 promise 对象来支持链式调用
 实现原理：
+
 ```js
- const PENDING = 'pending';
-  const FULFILLED = 'fulfilled';
-  const REJECTED = 'rejected';
- class Promise{
-    constructor(executor){
-       this.status = PENDING;
-       this.value = '';
-       this.onfulfilledArr = [];//成功回调集合
-       this.onrejectedArr = [];//失败回调集合
-       this.resolve = this.resolve.bind(this);
-       this.reject = this.reject.bind(this);
-       this.then = this.then.bind(this);
-       executor(this.resolve, this.reject);
-    }
-    resolve(value){
-       if(this.status === PENDING){
-          this.value = value;
-          this.onfulfilledArr.forEach(item =>{
-            item(this.value)
-          })
-          this.status = FULFILLED;
-       }
-    }
-    reject(value){
-      if(this.status == PENDING){
-        this.value = value;
-        this.onrejectedArr.forEach(item => {
+const PENDING = "pending";
+const FULFILLED = "fulfilled";
+const REJECTED = "rejected";
+class Promise {
+  constructor(executor) {
+    this.status = PENDING;
+    this.value = "";
+    this.onfulfilledArr = []; //成功回调集合
+    this.onrejectedArr = []; //失败回调集合
+    this.resolve = this.resolve.bind(this);
+    this.reject = this.reject.bind(this);
+    this.then = this.then.bind(this);
+    executor(this.resolve, this.reject);
+  }
+  resolve(value) {
+    if (this.status === PENDING) {
+      this.value = value;
+      this.onfulfilledArr.forEach(item => {
         item(this.value);
-      })
-         this.status = REJECTED;
-
-      }
+      });
+      this.status = FULFILLED;
     }
-    then(onfulfilled,onrejected){
-       if(this.status ==  FULFILLED){
-         const res = onfulfilled(this.value);
-         return new Promise(function(resolve,reject){
-               resolve(res);
-         })
-       }
-       if(this.status ==  FULFILLED){
-        const res = onrejected(this.value);
-        return new Promise(function(resolve, reject) {
+  }
+  reject(value) {
+    if (this.status == PENDING) {
+      this.value = value;
+      this.onrejectedArr.forEach(item => {
+        item(this.value);
+      });
+      this.status = REJECTED;
+    }
+  }
+  then(onfulfilled, onrejected) {
+    if (this.status == FULFILLED) {
+      const res = onfulfilled(this.value);
+      return new Promise(function(resolve, reject) {
+        resolve(res);
+      });
+    }
+    if (this.status == FULFILLED) {
+      const res = onrejected(this.value);
+      return new Promise(function(resolve, reject) {
         reject(res);
-         })
-       }
-       if (this.status === PENDING) {
-          const self = this;
-          return new Promise(function(resolve,reject){
-               self.onfulfilledArr.push(() => {
-                  const res = onfulfilled(self.value);
-                  resolve(res);
-               })
-               self.onrejectedArr.push(() => {
-                const res = onrejected(self.value)
-                reject(res);
-              });
-          })
-       }       
+      });
     }
- }
-   const test = new Promise((resolve,reject) =>{
-          setTimeout(() => {
-            resolve(100);
-          }, 2000)
-   })
-   test.then((data) =>{
-     console.log(data); //100
-     return data +5;
-   },(data) =>{
+    if (this.status === PENDING) {
+      const self = this;
+      return new Promise(function(resolve, reject) {
+        self.onfulfilledArr.push(() => {
+          const res = onfulfilled(self.value);
+          resolve(res);
+        });
+        self.onrejectedArr.push(() => {
+          const res = onrejected(self.value);
+          reject(res);
+        });
+      });
+    }
+  }
+}
+const test = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve(100);
+  }, 2000);
+});
+test
+  .then(
+    data => {
+      console.log(data); //100
+      return data + 5;
+    },
+    data => {}
+  )
+  .then(
+    data => {
+      console.log(data); //105
+    },
+    data => {}
+  );
+```
 
-   })
-   .then((data) =>{
-    console.log(data) //105
-  },(data) =>{})
-  ```
 #### 11、0611 统计一个字符串出现最多的字母
+
 给出一段英文连续的英文字符窜，找出重复出现次数最多的字母
-比如： 输入：afjghdfraaaasdenas  输出 ： a
+比如： 输入：afjghdfraaaasdenas 输出 ： a
+
 ```js
-function findMaxDuplicateChar(str) {  
-  if(str.length == 1) {
+function findMaxDuplicateChar(str) {
+  if (str.length == 1) {
     return str;
   }
   let charObj = {};
-  for(let i=0;i<str.length;i++) {
-    if(!charObj[str.charAt(i)]) {
+  for (let i = 0; i < str.length; i++) {
+    if (!charObj[str.charAt(i)]) {
       charObj[str.charAt(i)] = 1;
-    }else{
+    } else {
       charObj[str.charAt(i)] += 1;
     }
   }
-  let maxChar = '',
-      maxValue = 1;
-  for(var k in charObj) {
-    if(charObj[k] >= maxValue) {
+  let maxChar = "",
+    maxValue = 1;
+  for (var k in charObj) {
+    if (charObj[k] >= maxValue) {
       maxChar = k;
       maxValue = charObj[k];
     }
@@ -630,20 +637,25 @@ function findMaxDuplicateChar(str) {
   return maxChar;
 }
 ```
-promise和setTimeout执行顺序的问题
+
+promise 和 setTimeout 执行顺序的问题
+
 ```js
-setTimeout(function(){console.log(1)},0);
-new Promise(function(resolve){
-    console.log(2)
-    for( var i=0 ; i<100 ; i++ ){
-        i==99 && resolve()
-    }
-    console.log(3)
-}).then(function(){
-    console.log(4)
+setTimeout(function() {
+  console.log(1);
+}, 0);
+new Promise(function(resolve) {
+  console.log(2);
+  for (var i = 0; i < 100; i++) {
+    i == 99 && resolve();
+  }
+  console.log(3);
+}).then(function() {
+  console.log(4);
 });
 console.log(5);
 ```
-输出：2   3   5  4  undefined  1
-解答：then和settimeout执行顺序，即setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此then 函数先输出，settimeout后输出。
+
+输出：2 3 5 4 undefined 1
+解答：then 和 settimeout 执行顺序，即 setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此 then 函数先输出，settimeout 后输出。
 参考链接：https://www.jianshu.com/p/4516ad4b3048

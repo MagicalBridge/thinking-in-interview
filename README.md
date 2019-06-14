@@ -656,11 +656,64 @@ new Promise(function(resolve) {
 console.log(5);
 ```
 
-输出：2 3 5 4 undefined 1
+输出：2 3 5 4  1
 解答：then 和 settimeout 执行顺序，即 setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此 then 函数先输出，settimeout 后输出。
 参考链接：https://www.jianshu.com/p/4516ad4b3048
+```js
+async function a() {
+    await console.log(1)
+    console.log(2)
+}
+a()
+console.log(3)
+```
+输出：1， 3， 2
+```js
+async function a() {
+    await console.log(1)
+    console.log(2)
+}
+a();
 
+setTimeont(function(){console.log(3)},0)
+```
+输出： 1,  2， 3
+使用await时，会从右往左执行，当遇到await时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当await执行完毕之后，会先处理微任务队列的代码
+```js
+async function async1() {
+    console.log( 'async1 start' )
+    await async2()
+    console.log( 'async1 end' )
+}
+async function async2() {
+    console.log( 'async2' )
+}
+console.log( 'script start' )
+setTimeout( function () {
+    console.log( 'setTimeout' )
+}, 0 )
+async1();
+new Promise( function ( resolve ) {
+    console.log( 'promise1' )
+    resolve();
+} ).then( function () {
+    console.log( 'promise2' )
+} )
+console.log( 'script end' )
+```
+解答：使用事件循环机制分析:
 
+1.首先执行同步代码，console.log( 'script start' )
+2.遇到setTimeout,会被推入宏任务队列
+3.执行async1(), 它也是同步的，只是返回值是Promise，在内部首先执行console.log( 'async1 start' )
+4.然后执行async2(), 然后会打印console.log( 'async2' )
+5.从右到左会执行, 当遇到await的时候，阻塞后面的代码，去外部执行同步代码
+6.进入 new Promise,打印console.log( 'promise1' )
+7.将.then放入事件循环的微任务队列
+8.继续执行，打印console.log( 'script end' )
+9.外部同步代码执行完毕，接着回到async1()内部, 由于async2()其实是返回一个Promise, await async2()相当于获取它的值，其实就相当于这段代码Promise.resolve(undefined).then((undefined) => {}),所以.then会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印console.log( 'promise2' )，后面一个.then不会有任何打印，但是会执行
+10.执行后面的代码, 打印console.log( 'async1 end' )
+11.进入第二次事件循环，执行宏任务队列, 打印console.log( 'setTimeout' )
 #### 12、0612   1). 变量提升 2). 函数提升  3). 预处理  4). 调用顺序
 ```js
   var c = 1;

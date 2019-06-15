@@ -656,118 +656,123 @@ new Promise(function(resolve) {
 console.log(5);
 ```
 
-输出：2 3 5 4  1
+输出：2 3 5 4 1
 解答：then 和 settimeout 执行顺序，即 setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此 then 函数先输出，settimeout 后输出。
 参考链接：https://www.jianshu.com/p/4516ad4b3048
+
 ```js
 async function a() {
-    await console.log(1)
-    console.log(2)
+  await console.log(1);
+  console.log(2);
 }
-a()
-console.log(3)
+a();
+console.log(3);
 ```
+
 输出：1， 3， 2
+
 ```js
 async function a() {
-    await console.log(1)
-    console.log(2)
+  await console.log(1);
+  console.log(2);
 }
 a();
 
-setTimeont(function(){console.log(3)},0)
+setTimeont(function() {
+  console.log(3);
+}, 0);
 ```
-输出： 1,  2， 3
-使用await时，会从右往左执行，当遇到await时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当await执行完毕之后，会先处理微任务队列的代码
+
+输出： 1, 2， 3
+使用 await 时，会从右往左执行，当遇到 await 时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当 await 执行完毕之后，会先处理微任务队列的代码
+
 ```js
 async function async1() {
-    console.log( 'async1 start' )
-    await async2()
-    console.log( 'async1 end' )
+  console.log("async1 start");
+  await async2();
+  console.log("async1 end");
 }
 async function async2() {
-    console.log( 'async2' )
+  console.log("async2");
 }
-console.log( 'script start' )
-setTimeout( function () {
-    console.log( 'setTimeout' )
-}, 0 )
+console.log("script start");
+setTimeout(function() {
+  console.log("setTimeout");
+}, 0);
 async1();
-new Promise( function ( resolve ) {
-    console.log( 'promise1' )
-    resolve();
-} ).then( function () {
-    console.log( 'promise2' )
-} )
-console.log( 'script end' )
+new Promise(function(resolve) {
+  console.log("promise1");
+  resolve();
+}).then(function() {
+  console.log("promise2");
+});
+console.log("script end");
 ```
+
 解答：使用事件循环机制分析:
 
-1.首先执行同步代码，console.log( 'script start' )
-2.遇到setTimeout,会被推入宏任务队列
-3.执行async1(), 它也是同步的，只是返回值是Promise，在内部首先执行console.log( 'async1 start' )
-4.然后执行async2(), 然后会打印console.log( 'async2' )
-5.从右到左会执行, 当遇到await的时候，阻塞后面的代码，去外部执行同步代码
-6.进入 new Promise,打印console.log( 'promise1' )
-7.将.then放入事件循环的微任务队列
-8.继续执行，打印console.log( 'script end' )
-9.外部同步代码执行完毕，接着回到async1()内部, 由于async2()其实是返回一个Promise, await async2()相当于获取它的值，其实就相当于这段代码Promise.resolve(undefined).then((undefined) => {}),所以.then会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印console.log( 'promise2' )，后面一个.then不会有任何打印，但是会执行
-10.执行后面的代码, 打印console.log( 'async1 end' )
-11.进入第二次事件循环，执行宏任务队列, 打印console.log( 'setTimeout' )
-#### 12、0612   1). 变量提升 2). 函数提升  3). 预处理  4). 调用顺序
+1.首先执行同步代码，console.log( 'script start' ) 2.遇到 setTimeout,会被推入宏任务队列 3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' ) 4.然后执行 async2(), 然后会打印 console.log( 'async2' ) 5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，去外部执行同步代码 6.进入 new Promise,打印 console.log( 'promise1' ) 7.将.then 放入事件循环的微任务队列 8.继续执行，打印 console.log( 'script end' ) 9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2()其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 10.执行后面的代码, 打印 console.log( 'async1 end' ) 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' )
+
+#### 12、0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
+
 ```js
-  var c = 1;
-  function c(c) {
-    console.log(c);
-    var c = 3;
-  }
-  c(2)
+var c = 1;
+function c(c) {
+  console.log(c);
+  var c = 3;
+}
+c(2);
 ```
-这里我们先来了解下 “预处理”，那什么是预处理呢？js语言本身具有预处理机制，js引擎在预处理期对所有声明的变量和函数进行处理，就是先把变量进行声明并读到内存里。也就是收集用var声明的变量信息和函数声明信息
+
+这里我们先来了解下 “预处理”，那什么是预处理呢？js 语言本身具有预处理机制，js 引擎在预处理期对所有声明的变量和函数进行处理，就是先把变量进行声明并读到内存里。也就是收集用 var 声明的变量信息和函数声明信息
 
 变量和函数的优先顺序，先变量后函数。当变量名和函数名一致时后者会覆盖前者，我们看下下面的小案例
+
 ```js
-  function b() {
-  }
-  var b
-  console.log(typeof b) // function 说明函数声明覆盖了 变量声明
+function b() {}
+var b;
+console.log(typeof b); // function 说明函数声明覆盖了 变量声明
 ```
 
 我们看看最开始这个例子的解释
-先预处理var c；然后预处理整个c函数
-```js
-function c(c) {
-  console.log(c)
-  var c = 3
-}
-```
-此时c的typeof为function
-
-接下来再给c赋值,值为1，即c=1，此时c是整型变量1.typeof为number了。
-
-最后再执行c(2)调用函数。所以我们调用的时候当然就会报c不是一个函数的错误了.
+先预处理 var c；然后预处理整个 c 函数
 
 ```js
-var c = 1
 function c(c) {
-  console.log(c)
-  var c = 3
+  console.log(c);
+  var c = 3;
 }
-console.log(c) 
-console.log(typeof c)
-c(2)
 ```
-#### 13、0613 你能简单的说一下vue中的通信方式吗？
 
-vue 中按照组件中组织关系可以分为：**父子组件  兄弟组件 跨级组件** 
-vue中 内置的有两种 :
-  * ref $parent 
-  * $children 
+此时 c 的 typeof 为 function
+
+接下来再给 c 赋值,值为 1，即 c=1，此时 c 是整型变量 1.typeof 为 number 了。
+
+最后再执行 c(2)调用函数。所以我们调用的时候当然就会报 c 不是一个函数的错误了.
+
+```js
+var c = 1;
+function c(c) {
+  console.log(c);
+  var c = 3;
+}
+console.log(c);
+console.log(typeof c);
+c(2);
+```
+
+#### 13、0613 你能简单的说一下 vue 中的通信方式吗？
+
+vue 中按照组件中组织关系可以分为：**父子组件 兄弟组件 跨级组件**
+vue 中 内置的有两种 :
+
+- ref \$parent
+- \$children
 
 这两种方式都是直接得到组件的实例，基于上下文环境访问父组件或者子组件
 这两种访问的方式的弊端是没有办法兄弟组件之间通信，或者跨级组件通信。
 
-在vue 2.2.0 版本新增的是`provide/inject`顾名思义就是提供和注入
+在 vue 2.2.0 版本新增的是`provide/inject`顾名思义就是提供和注入
 在父组件甚至爷爷组件中提供的属性,只要在后代组件中注入就可以使用：
 
 ```js
@@ -787,9 +792,9 @@ export default{
 
 借助第三方工具我们也可以进行组件间的通信是一般也是以下两种：
 
-`eventBus` 使用方式就是相当于在全局设置一个vue对象作为数据的中转
+`eventBus` 使用方式就是相当于在全局设置一个 vue 对象作为数据的中转
 
-另一种就是我们耳熟能详的 vuex了,这种方式也是我们比较推崇的使用方式 
-可以作为数据状态缓存层使用。api相对规范。
+另一种就是我们耳熟能详的 vuex 了,这种方式也是我们比较推崇的使用方式
+可以作为数据状态缓存层使用。api 相对规范。
 
-如果说的更加细分一些，我们还要说下父组件传递给子组件绑定的是props，当然也可以绑定回调但是我们一般不推荐这样使用，子组件通过`$emit`回调的方式将参数传递给父组件的监听事件用于传参。
+如果说的更加细分一些，我们还要说下父组件传递给子组件绑定的是 props，当然也可以绑定回调但是我们一般不推荐这样使用，子组件通过`$emit`回调的方式将参数传递给父组件的监听事件用于传参。

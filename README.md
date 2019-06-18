@@ -893,3 +893,29 @@ Stack.prototype.clear = function() {
   this.items = []
 }
 ```
+#### 18、0618 静态方法
+```js
+  class test {
+    static colorChange(newColor) {
+      this.newColor = newColor
+      return this.newColor
+    }
+
+  constructor({ newColor = 'green' } = {}) {
+    this.newColor = newColor
+  }
+}
+
+const newTest = new test({ newColor: 'purple' });
+newTest.colorChange('orange');
+
+- A: orange
+- B: purple
+- C: green
+- D: TypeError
+
+```
+解答：D
+test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
+
+

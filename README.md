@@ -909,10 +909,10 @@ class test {
 const newTest = new test({ newColor: 'purple' });
 newTest.colorChange('orange');
 
-+ A: orange
-+ B: purple
-+ C: green
-+ D: TypeError
+A: orange
+B: purple
+C: green
+D: TypeError
 
 ```
 解答：D

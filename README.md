@@ -895,11 +895,11 @@ Stack.prototype.clear = function() {
 ```
 #### 18、0618 静态方法
 ```js
-  class test {
-    static colorChange(newColor) {
-      this.newColor = newColor
-      return this.newColor
-    }
+class test {
+  static colorChange(newColor) {
+    this.newColor = newColor;
+    return this.newColor;
+  }
 
   constructor({ newColor = 'green' } = {}) {
     this.newColor = newColor
@@ -909,10 +909,10 @@ Stack.prototype.clear = function() {
 const newTest = new test({ newColor: 'purple' });
 newTest.colorChange('orange');
 
-- A: orange
-- B: purple
-- C: green
-- D: TypeError
++ A: orange
++ B: purple
++ C: green
++ D: TypeError
 
 ```
 解答：D

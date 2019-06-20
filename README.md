@@ -615,17 +615,21 @@ test
 
 ```js
 function findMaxDuplicateChar(str) {
+  // 长度是1 返回本身
   if (str.length == 1) {
     return str;
   }
   let charObj = {};
+  // 遍历字符串 做一个对象的映射。
   for (let i = 0; i < str.length; i++) {
+    // string.charAt(i) 找出对象中的每一个字符
     if (!charObj[str.charAt(i)]) {
       charObj[str.charAt(i)] = 1;
     } else {
       charObj[str.charAt(i)] += 1;
     }
   }
+  
   let maxChar = "",
     maxValue = 1;
   for (var k in charObj) {
@@ -925,5 +929,7 @@ test 是一个静态方法。静态方法被设计为只能被创建它们的构
 3. class定义的类没有私有方法和私有属性
 4. class静态方法与静态属性，
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
+
+### 20.
 
 

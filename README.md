@@ -650,8 +650,8 @@ setTimeout(function() {
 }, 0);
 new Promise(function(resolve) {
   console.log(2);
-  for (var i = 0; i < 100; i++) {
-    i == 99 && resolve();
+  for (var i = 0; i < 1000000000; i++) {
+    i == 99999999 && resolve();
   }
   console.log(3);
 }).then(function() {
@@ -662,6 +662,7 @@ console.log(5);
 
 输出：2 3 5 4 1
 解答：then 和 settimeout 执行顺序，即 setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此 then 函数先输出，settimeout 后输出。
+for 循环是一个同步过程。上述在代码 在控制台中打印 有卡顿就是在执行这个for循环。
 参考链接：https://www.jianshu.com/p/4516ad4b3048
 
 ```js
@@ -690,57 +691,6 @@ setTimeont(function() {
 输出： 1, 2， 3
 使用 await 时，会从右往左执行，当遇到 await 时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当 await 执行完毕之后，会先处理微任务队列的代码
 
-```js
-async function async1() {
-  console.log("async1 start");
-  await async2();
-  console.log("async1 end");
-}
-
-async function async2() {
-  console.log("async2");
-}
-
-console.log("script start");  {1}
-
-setTimeout(function() {
-  console.log("setTimeout");
-}, 0);
-
-async1();                     {2}
-
-new Promise(function(resolve) {
-  console.log("promise1");
-  resolve();
-}).then(function() {
-  console.log("promise2");
-});
-
-console.log("script end");
-
-// script start
-// async1 start
-// async2
-// promise1
-// script end
-// async1 end
-// promise2
-// setTimeout
-```
-
-解答：使用事件循环机制分析:
-
->1.首先执行同步代码，console.log( 'script start' );
-2.遇到 setTimeout, 会被推入宏任务队列;
-3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' );
-4.然后执行 async2(), 然后会打印 console.log( 'async2' );
-5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，**去外部执行同步代码**;
-6.进入 new Promise,Promise 底层实现是一个立即执行函数 会打印 console.log( 'promise1' );
-7.将.then 放入事件循环的微任务队列;
-8.继续执行同步代码，打印 console.log( 'script end' );
-9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2() 其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 
-10.执行后面的代码, 打印 console.log( 'async1 end' );
-11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
 #### 12、0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
 
@@ -961,8 +911,10 @@ test 是一个静态方法。静态方法被设计为只能被创建它们的构
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
 
 ### 20 0620 继续异步专题的研究 EventLoop
+
 得心应手版本:
 ```js
+
 setTimeout(()=>{
   console.log(1) 
 },0)
@@ -978,6 +930,222 @@ console.log(3)
 >这个是属于Eventloop的问题。main script运行结束后，会有微任务队列和宏任务队列。微任务先执行，之后是宏任务。
 
 有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个main script的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将main script的概念单独拎出来，不和两个任务队列混在一起），然后根据main script中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
+
+
+### 21 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
+
+游刃有余版本:
+
+```js
+setTimeout(()=>{
+  console.log(1) 
+},0)
+
+let a = new Promise((resolve)=>{
+  console.log(2)
+  resolve()
+}).then(()=>{
+  console.log(3) 
+}).then(()=>{
+  console.log(4) 
+})
+
+console.log(5) 
+```
+解答:
+此题看似在考`Eventloop`，实则考的是对于`Promise`的掌握程度。`Promise`的then是微任务大家都懂，但是这个then的执行方式是如何的呢，以及Promise的executor是异步的还是同步的需要对promise 有深入的理解才能答对。
+
+这个要从Promise的实现来说，Promise的executor是一个 **同步函数** ，即非异步，立即执行的一个函数，因此他应该是和当前的任务一起执行的。而Promise的链式调用then，每次都会在内部生成一个新的Promise，然后执行then，在执行的过程中不断向微任务(microtask)推入新的函数，因此直至微任务(microtask)的队列清空后才会执行下一波的macrotask。
+
+### 22 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
+
+炉火纯青版本：
+
+这一个版本是上一个版本的进化版本，上一个版本的promise的then函数并未返回一个promise，如果在promise的then中创建一个promise，那么结果该如何呢？
+
+```js
+new Promise((resolve,reject)=> {
+  console.log("promise1")
+  resolve()
+}).then(()=>{
+  console.log("then11")
+  new Promise((resolve,reject)=> {
+    console.log("promise2")
+    resolve()
+  }).then(()=> {
+    console.log("then21")
+  }).then(()=> {
+    console.log("then23")
+  })
+}).then(() => {
+  console.log("then12")
+})
+// promise1
+// then11
+// promise2
+// then21
+// then12
+// then23
+// Promise {<resolved>: undefined}
+```
+解答：遇到这种嵌套的Promise不要慌，应该清楚的分析当前的队列的行为，
+第一轮：
+  * current task: promise1是当之无愧的立即执行的一个函数，promise是一个立即执行的函数，立即执行输出[promise1];
+  * micro task queue: [promise1的第一个then];
+第二轮：
+  * current task: then1执行中，立即输出了then11以及新 promise2 的 `promise2`
+  * micro task queue: [新promise2的then函数,以及promise1的第二个then函数]
+第三轮：
+  * current task: 新promise2的then函数输出then21和promise1的第二个then函数输出then12。
+  * micro task queue: [新promise2的第二then函数]
+第四轮
+  * current task: 新promise2的第二then函数输出then23
+  * micro task queue: []
+
+
+### 22 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
+```js
+
+new Promise((resolve,reject) => {
+  console.log("promise1")
+  resolve()
+}).then(() => {
+  console.log("then11")
+  return new Promise((resolve,reject)=>{
+    console.log("promise2")
+    resolve()
+  }).then(()=>{
+    console.log("then21")
+  }).then(()=>{
+    console.log("then23")
+  })
+}).then(()=>{
+  console.log("then12")
+})
+
+// promise1
+// then11
+// promise2
+// then21
+// then23
+// then12
+// Promise {<resolved>: undefined}
+```
+这里就是Promise中的then **返回** 一个promise的状况了，这个考的重点在于 **Promise而非Eventloop** 了。这里就很好理解为何then12会在then23之后执行，这里Promise1的第二个then相当于是挂在新Promise2的最后一个then的返回值上。
+
+### 23 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
+
+```js
+new Promise((resolve,reject)=>{
+  console.log("promise1")
+  resolve()
+}).then(()=>{
+  console.log("then11")
+  new Promise((resolve,reject)=>{
+    console.log("promise2")
+    resolve()
+  }).then(()=>{
+    console.log("then21")
+  }).then(()=>{
+    console.log("then23")
+  })
+}).then(()=>{
+  console.log("then12")
+})
+
+new Promise((resolve,reject)=>{
+  console.log("promise3")
+  resolve()
+}).then(()=>{
+  console.log("then31")
+})
+
+// promise1
+// promise3
+// then11
+// promise2
+// then31
+// then21
+// then12
+// then23
+```
+解答： 这里需要注意一点promise1 和 promise3 是同步关系
+第一轮
+  * current task: promise1，promise3
+  * micro task queue: [ then11, promise2的第一个then，promise3的第一个then]
+
+第二轮
+  * current task: then11，promise2，then31
+  * micro task queue: [promise2的第一个then，promise1的第二个then]
+
+第三轮
+  * current task: then21，then12
+  * micro task queue: [promise2的第二个then]
+
+第四轮
+  * current task: then23
+  * micro task queue: []
+
+
+### 24 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
+
+```js
+async function async1() {
+  console.log("async1 start");
+  await async2();
+  console.log("async1 end");
+}
+
+async function async2() {
+  console.log("async2");
+}
+
+console.log("script start");  {1}
+
+setTimeout(function() {
+  console.log("setTimeout");
+}, 0);
+
+async1();                     {2}
+
+new Promise(function(resolve) {
+  console.log("promise1");
+  resolve();
+}).then(function() {
+  console.log("promise2");
+});
+
+console.log("script end");
+
+// script start
+// async1 start
+// async2
+// promise1
+// script end
+// async1 end
+// promise2
+// setTimeout
+```
+
+解答：使用事件循环机制分析:
+
+>1.首先执行同步代码，console.log( 'script start' );
+2.遇到 setTimeout, 会被推入宏任务队列;
+3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' );
+4.然后执行 async2(), 然后会打印 console.log( 'async2' );
+5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，**去外部执行同步代码**;
+6.进入 new Promise,Promise 底层实现是一个立即执行函数 会打印 console.log( 'promise1' );
+7.将.then 放入事件循环的微任务队列;
+8.继续执行同步代码，打印 console.log( 'script end' );
+9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2() 其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 
+10.执行后面的代码, 打印 console.log( 'async1 end' );
+11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
+
+
+
+
+
+
 
 
 

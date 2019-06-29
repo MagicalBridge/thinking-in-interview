@@ -629,7 +629,7 @@ function findMaxDuplicateChar(str) {
       charObj[str.charAt(i)] += 1;
     }
   }
-  
+
   let maxChar = "",
     maxValue = 1;
   for (var k in charObj) {
@@ -696,26 +696,51 @@ async function async1() {
   await async2();
   console.log("async1 end");
 }
+
 async function async2() {
   console.log("async2");
 }
-console.log("script start");
+
+console.log("script start");  {1}
+
 setTimeout(function() {
   console.log("setTimeout");
 }, 0);
-async1();
+
+async1();                     {2}
+
 new Promise(function(resolve) {
   console.log("promise1");
   resolve();
 }).then(function() {
   console.log("promise2");
 });
+
 console.log("script end");
+
+// script start
+// async1 start
+// async2
+// promise1
+// script end
+// async1 end
+// promise2
+// setTimeout
 ```
 
 解答：使用事件循环机制分析:
 
-1.首先执行同步代码，console.log( 'script start' ) 2.遇到 setTimeout,会被推入宏任务队列 3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' ) 4.然后执行 async2(), 然后会打印 console.log( 'async2' ) 5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，去外部执行同步代码 6.进入 new Promise,打印 console.log( 'promise1' ) 7.将.then 放入事件循环的微任务队列 8.继续执行，打印 console.log( 'script end' ) 9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2()其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 10.执行后面的代码, 打印 console.log( 'async1 end' ) 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' )
+>1.首先执行同步代码，console.log( 'script start' );
+2.遇到 setTimeout, 会被推入宏任务队列;
+3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' );
+4.然后执行 async2(), 然后会打印 console.log( 'async2' );
+5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，**去外部执行同步代码**;
+6.进入 new Promise,Promise 底层实现是一个立即执行函数 会打印 console.log( 'promise1' );
+7.将.then 放入事件循环的微任务队列;
+8.继续执行同步代码，打印 console.log( 'script end' );
+9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2() 其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 
+10.执行后面的代码, 打印 console.log( 'async1 end' );
+11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
 #### 12、0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
 
@@ -830,26 +855,27 @@ b.next(); // { value:6, done:false }
 b.next(12); // { value:8, done:false }
 b.next(13); // { value:42, done:true }
 ```
-上面代码中，第二次运行next方法的时候不带参数，导致 y 的值等于2 * undefined（即NaN），除以 3 以后还是NaN，因此返回对象的value属性也等于NaN。第三次运行Next方法的时候不带参数，所以z等于undefined，返回对象的value属性等于5 + NaN + undefined，即NaN。
 
-如果向next方法提供参数，返回结果就完全不一样了。上面代码第一次调用b的next方法时，返回x+1的值6；第二次调用next方法，将上一次yield表达式的值设为12，因此y等于24，返回y / 3的值8；第三次调用next方法，将上一次yield表达式的值设为13，因此z等于13，这时x等于5，y等于24，所以return语句的值等于42。
+上面代码中，第二次运行 next 方法的时候不带参数，导致 y 的值等于 2 \* undefined（即 NaN），除以 3 以后还是 NaN，因此返回对象的 value 属性也等于 NaN。第三次运行 Next 方法的时候不带参数，所以 z 等于 undefined，返回对象的 value 属性等于 5 + NaN + undefined，即 NaN。
 
-注意，由于next方法的参数表示上一个yield表达式的返回值，所以在第一次使用next方法时，传递参数是无效的。V8 引擎直接忽略第一次使用next方法时的参数，只有从第二次使用next方法开始，参数才是有效的。从语义上讲，第一个next方法用来启动遍历器对象，所以不用带有参数。
+如果向 next 方法提供参数，返回结果就完全不一样了。上面代码第一次调用 b 的 next 方法时，返回 x+1 的值 6；第二次调用 next 方法，将上一次 yield 表达式的值设为 12，因此 y 等于 24，返回 y / 3 的值 8；第三次调用 next 方法，将上一次 yield 表达式的值设为 13，因此 z 等于 13，这时 x 等于 5，y 等于 24，所以 return 语句的值等于 42。
 
+注意，由于 next 方法的参数表示上一个 yield 表达式的返回值，所以在第一次使用 next 方法时，传递参数是无效的。V8 引擎直接忽略第一次使用 next 方法时的参数，只有从第二次使用 next 方法开始，参数才是有效的。从语义上讲，第一个 next 方法用来启动遍历器对象，所以不用带有参数。
 
 #### 16 0616 react 是如何划分组件的 （react 技术相关）
 
-根据组件的职责通常把组件分为UI组件和容器组件。
+根据组件的职责通常把组件分为 UI 组件和容器组件。
 
 UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑。
 
-两者通过React-Redux 提供connect方法联系起来。
+两者通过 React-Redux 提供 connect 方法联系起来。
 
-#### 17 0617 请用js实现下 栈 这种数据结构(数据结构相关)
+#### 17 0617 请用 js 实现下 栈 这种数据结构(数据结构相关)
 
 栈是一种遵从后进先出的（LIFO）原则的有序集合。新添加的或者删除的元素保存在栈的同一端，称作栈顶，另一端称之为栈底。新元素都靠近栈顶，旧元素都接近栈底。
 
 创建栈这种数据结构
+
 ```js
 function Stack() {
   // 使用数组保存栈里面的元素
@@ -884,20 +910,22 @@ Stack.prototype.peek = function() {
 
 // 查看栈的长度
 Stack.prototype.size = function() {
-  return this.items.length
-}
+  return this.items.length;
+};
 
 // 检查栈是否为空
 Stack.prototype.isEmpty = function() {
-  return this.items.length === 0
-}
+  return this.items.length === 0;
+};
 
 // 清空栈内元素
 Stack.prototype.clear = function() {
-  this.items = []
-}
+  this.items = [];
+};
 ```
+
 #### 18、0618 静态方法
+
 ```js
 class test {
   static colorChange(newColor) {
@@ -905,31 +933,53 @@ class test {
     return this.newColor;
   }
 
-  constructor({ newColor = 'green' } = {}) {
-    this.newColor = newColor
+  constructor({ newColor = "green" } = {}) {
+    this.newColor = newColor;
   }
 }
 
-const newTest = new test({ newColor: 'purple' });
-newTest.colorChange('orange');
+const newTest = new test({ newColor: "purple" });
+newTest.colorChange("orange");
 
-A: orange
-B: purple
-C: green
-D: TypeError
-
+A: orange;
+B: purple;
+C: green;
+D: TypeError;
 ```
+
 解答：D
-test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
+test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是 test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
 
 ### 19. 0619 class 和 function 的区别
+
 解答：
-1. class没有变量提升，必须先声明后使用
-2. class不能重复定义，会报语法错误
-3. class定义的类没有私有方法和私有属性
-4. class静态方法与静态属性，
+
+1. class 没有变量提升，必须先声明后使用
+2. class 不能重复定义，会报语法错误
+3. class 定义的类没有私有方法和私有属性
+4. class 静态方法与静态属性，
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
 
-### 20.
+### 20 0620 继续异步专题的研究 EventLoop
+得心应手版本:
+```js
+setTimeout(()=>{
+  console.log(1) 
+},0)
+Promise.resolve().then(()=>{
+  console.log(2) 
+})
+console.log(3)
+
+// 输出 3 2 1
+```
+解答：这个版本的面试官们就特别友善，仅仅考你一个概念理解，了解宏任务(marcotask)微任务(microtask)，这题就是送分题。
+
+>这个是属于Eventloop的问题。main script运行结束后，会有微任务队列和宏任务队列。微任务先执行，之后是宏任务。
+
+有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个main script的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将main script的概念单独拎出来，不和两个任务队列混在一起），然后根据main script中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
+
+
+
 
 

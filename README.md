@@ -1142,6 +1142,24 @@ console.log("script end");
 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
 
+###  0707 遍历DOM树 （递归、树形结构、原生dom操作）
+```js
+function traverse(node){
+  // dom nodeType 1 --> 元素节点 nodeType 2 --> 属性节点 nodeType 3 --> 文本节点
+  if(node && node.nodeType === 1){
+    console.log(node.tagName);
+  } 
+  
+  var i = 0,childNodes = node.childNodes,item;
+  for(;i<childNodes.length;i++){
+    item = childNodes[i];
+    if(item.nodeType === 1){
+      traverse(item)Î
+    }
+  }
+}
+```
+
 
 
 

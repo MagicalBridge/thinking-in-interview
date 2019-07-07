@@ -1141,6 +1141,70 @@ console.log("script end");
 10.执行后面的代码, 打印 console.log( 'async1 end' );
 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
+#### 0625 下面代码会输出什么？ 考点: this的指向：
+
+```js
+var x = 3;
+var foo = {
+  x: 2,
+  baz: {
+    x: 1,
+    bar: function() {
+      return this.x;
+    }
+  }
+}
+var go = foo.baz.bar;
+
+console.log(go());  // 3
+console.log(foo.baz.bar()); // 1
+```
+
+解答:this由调用者提供，由调用函数的方式来决定。如果是一个对象调用的函数，则this指向该对象，比如foo.baz.bar()。如果函数独立调用比如go()，那么该函数内部的this，则指向undefined。但是在非严格模式中，它会被自动指向全局对象window。
+上诉这段代码中，go的执行是在全局环境中执行的,因此指向的是全局环境中的3。
+
+### 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
+解答:
+```js
+function reverse(str) {
+  let res = str.split('');
+  return res.reverse().join('');
+}
+reverse('hello world!'); // output: '!dlrow olleh'
+```
+
+### 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
+1、Redux鼓励一个应用之中只有一个store，Mobx鼓励实现多个store
+2、Redux是函数式编程，而Mobox的模式是面向对象的。
+3、Redux鼓励数据的规范化，减少冗余。Mobx 容许数据冗余，但同样能保持数据一致
+4、5.Redux更严格，必须调用reducer触发action来改变state， Mobx 最初的一个卖点就是直接修改数据，但是实践中大家还是发现这样无组织无纪律不好，所以后来 Mobx 还是提供了 action 的概念。和 Redux 的 action 有点不同，Mobx 中的 action 其实就是一个函数，不需要做 dispatch。如果想强制要求使用 action，禁止直接修改 observable 数据，使用 Mobx 的 configure
+```js
+import {configure} from 'mobx';
+configure({enforceActions: true});
+```
+
+
+###  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
+解答：四大步骤：
+1、创建一个空的对象，并且this变量引用该对象.
+2、继承函数的原型。
+3、属性和方法被添加到this的引用中，并执行该函数。
+4、新创建的对象由 this 所引用，并且最后隐式的返回 this。
+
+```js
+function new(func) {
+	lat target = {};
+	target.__proto__ = func.prototype;
+	let res = func.call(target);
+	if (typeof(res) == "object" || typeof(res) == "function") {
+		return res;
+	}
+	return target;
+}
+```
+
+
+
 
 ###  0707 遍历DOM树 （递归、树形结构、原生dom操作）
 ```js
@@ -1154,7 +1218,7 @@ function traverse(node){
   for(;i<childNodes.length;i++){
     item = childNodes[i];
     if(item.nodeType === 1){
-      traverse(item)Î
+      traverse(item)
     }
   }
 }

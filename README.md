@@ -1252,6 +1252,71 @@ Function.prototype.apply = function (context, arr) {
 }
 ```
 
+### 0701 页面上有个空的无序列表节点，用 <ul></ul> 表示，要往列表中插入 3 个 <li>，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 <ul> 节点加上 id 或者 class 属性（考点 原生dom的操作）
+```js
+<ul id="list"></ul>
+// 获取 list 节点
+var container = document.getElementById('list');
+// 循环 创建3个li标签
+for (var i = 0; i < 3; i++) {
+  var item = document.createElement('li');
+  item.innerText = i + 1;
+  // 使用 appendChild 将元素放进去
+  container.appendChild(item);
+}
+```
+或者:
+```js
+var container = document.getElementById('list');
+var html = [];
+for (var i = 0; i < 3; i++) {
+    html.push('<li>' + (i + 1) + '</li>');
+}
+container.innerHTML = html.join('');
+```
+如果我们想要增加代码的容错能力，避免变量的污染，我们可以用下面的这套代码来代替
+```js
+(() => {
+  var ndContainer = document.getElementById('js-list');
+  if (!ndContainer) {
+    return;
+  }
+
+  for (var i = 0; i < 3; i++) {
+    var ndItem = document.createElement('li');
+    ndItem.innerText = i + 1;
+    ndContainer.appendChild(ndItem);
+  }
+})();
+```
+
+### 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
+使用es6的中的块级作用域的概念可以帮助我们避免踩坑，这个问题前面的题目有所涉及
+```js
+for (let i = 0; i < 3; i++) {
+  const ndItem = document.createElement('li');
+  ndItem.innerText = i + 1;
+  ndItem.addEventListener('click', function () {
+      alert(i);
+  });
+  ndContainer.appendChild(ndItem);
+}
+```
+而熟悉 addEventListener 文档的候选人会给出下面的方法：
+```js
+for (var i = 0; i < 3; i++) {
+  var ndItem = document.createElement('li');
+  ndItem.innerText = i + 1;
+  ndItem.addEventListener('click', function () {
+    alert(this.innerText);
+  });
+  ndContainer.appendChild(ndItem);
+}
+```
+因为 EventListener 里面默认的 this 指向当前节点。
+
+
+
 ###  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
 解答：四大步骤：
 1、创建一个空的对象，并且this变量引用该对象.

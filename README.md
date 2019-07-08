@@ -1183,6 +1183,74 @@ import {configure} from 'mobx';
 configure({enforceActions: true});
 ```
 
+### 0628 call的模拟实现 考点 对于原生js的熟练程度
+解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
+```js
+Function.prototype.call2 = function (context) {
+    var context = context || window;
+    context.fn = this;
+
+    var args = [];
+    for(var i = 1, len = arguments.length; i < len; i++) {
+        args.push('arguments[' + i + ']');
+    }
+
+    var result = eval('context.fn(' + args +')');
+
+    delete context.fn
+    return result;
+}
+```
+
+### 0629 apply的模拟实现 考点 对于原生js的熟练程度
+解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
+```js
+Function.prototype.apply = function (context, arr) {
+    var context = Object(context) || window;
+    context.fn = this;
+
+    var result;
+    if (!arr) {
+        result = context.fn();
+    }
+    else {
+        var args = [];
+        for (var i = 0, len = arr.length; i < len; i++) {
+            args.push('arr[' + i + ']');
+        }
+        result = eval('context.fn(' + args + ')')
+    }
+
+    delete context.fn
+    return result;
+}
+```
+
+### 0630 bind模拟实现 考点 对于原生js的熟练程度
+解答：主要参考了冴羽老师的博客：[bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
+
+```js
+  Function.prototype.bind2 = function (context) {
+
+    if (typeof this !== "function") {
+      throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
+    }
+
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
+
+    var fNOP = function () {};
+
+    var fBound = function () {
+        var bindArgs = Array.prototype.slice.call(arguments);
+        return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
+    }
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+    return fBound;
+}
+```
 
 ###  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
 解答：四大步骤：
@@ -1202,9 +1270,6 @@ function new(func) {
 	return target;
 }
 ```
-
-
-
 
 ###  0707 遍历DOM树 （递归、树形结构、原生dom操作）
 ```js

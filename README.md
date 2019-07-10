@@ -1183,22 +1183,26 @@ import {configure} from 'mobx';
 configure({enforceActions: true});
 ```
 
-### 0628 call的模拟实现 考点 对于原生js的熟练程度
+### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
 Function.prototype.call2 = function (context) {
-    var context = context || window;
-    context.fn = this;
+  // call 函数传入的this指向可能是null 如果是null 用window替代
+  var context = context || window;
+  // 将调用call的函数 传递给 context 变成它内部的函数
+  context.fn = this;
 
-    var args = [];
-    for(var i = 1, len = arguments.length; i < len; i++) {
-        args.push('arguments[' + i + ']');
-    }
-
-    var result = eval('context.fn(' + args +')');
-
-    delete context.fn
-    return result;
+  // 处理参数问题，call函数的参数是不定参数，因此需要整合成一个数组
+  var args = [];
+  for(var i = 1, len = arguments.length; i < len; i++) {
+      args.push('arguments[' + i + ']');
+  }
+  // call 函数可能具有返回值。
+  var result = eval('context.fn(' + args +')');
+  // 删除这个多余的属性 
+  delete context.fn
+  // 返回结果
+  return result;
 }
 ```
 

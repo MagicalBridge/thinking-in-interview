@@ -1378,7 +1378,7 @@ map 函数的一个参数是一个callback回调函数,map会保证数组中的�
 
 上述的题目答案为什么是 [1, NaN, NaN] 呢？ 这还得从这个回调函数callback说起。
 这个callback 接收三个参数：
-  >currentValue：callback 数组中正在处理的当前元素。
+  currentValue：callback 数组中正在处理的当前元素。
   index: callback 数组中正在处理的当前元素的索引。
   array: map 方法被调用的数组。
 
@@ -1388,7 +1388,7 @@ map 函数的一个参数是一个callback回调函数,map会保证数组中的�
 
 了解这两个函数后，我们可以模拟一下运行情况:
 
-  >1、parseInt('1', 0) //radix为0时，且string参数不以“0x”和“0”开头时，按照10为基数处理。这个时候返回1
+  1、parseInt('1', 0) //radix为0时，且string参数不以“0x”和“0”开头时，按照10为基数处理。这个时候返回1
   2、parseInt('2', 1) //基数为1（1进制）表示的数中，最大值小于2，所以无法解析，返回NaN
   3、parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，所以无法解析，返回NaN
 

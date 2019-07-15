@@ -900,7 +900,7 @@ D: TypeError;
 解答：D
 test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是 test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
 
-### 19. 0619 class 和 function 的区别
+#### 19. 0619 class 和 function 的区别
 
 解答：
 
@@ -910,7 +910,7 @@ test 是一个静态方法。静态方法被设计为只能被创建它们的构
 4. class 静态方法与静态属性，
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
 
-### 20 0620 继续异步专题的研究 EventLoop
+#### 20 0620 继续异步专题的研究 EventLoop
 
 得心应手版本:
 ```js
@@ -932,7 +932,7 @@ console.log(3)
 有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个main script的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将main script的概念单独拎出来，不和两个任务队列混在一起），然后根据main script中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
 
 
-### 21 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
+#### 21 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
 
 游刃有余版本:
 
@@ -957,7 +957,7 @@ console.log(5)
 
 这个要从Promise的实现来说，Promise的executor是一个 **同步函数** ，即非异步，立即执行的一个函数，因此他应该是和当前的任务一起执行的。而Promise的链式调用then，每次都会在内部生成一个新的Promise，然后执行then，在执行的过程中不断向微任务(microtask)推入新的函数，因此直至微任务(microtask)的队列清空后才会执行下一波的macrotask。
 
-### 22 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
+#### 22 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
 
 炉火纯青版本：
 
@@ -1003,7 +1003,7 @@ new Promise((resolve,reject)=> {
   * micro task queue: []
 
 
-### 22 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
+#### 22 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
 ```js
 
 new Promise((resolve,reject) => {
@@ -1033,7 +1033,7 @@ new Promise((resolve,reject) => {
 ```
 这里就是Promise中的then **返回** 一个promise的状况了，这个考的重点在于 **Promise而非Eventloop** 了。这里就很好理解为何then12会在then23之后执行，这里Promise1的第二个then相当于是挂在新Promise2的最后一个then的返回值上。
 
-### 23 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
+#### 23 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
 
 ```js
 new Promise((resolve,reject)=>{
@@ -1087,7 +1087,7 @@ new Promise((resolve,reject)=>{
   * micro task queue: []
 
 
-### 24 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
+#### 24 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
 
 ```js
 async function async1() {
@@ -1163,7 +1163,7 @@ console.log(foo.baz.bar()); // 1
 解答:this由调用者提供，由调用函数的方式来决定。如果是一个对象调用的函数，则this指向该对象，比如foo.baz.bar()。如果函数独立调用比如go()，那么该函数内部的this，则指向undefined。但是在非严格模式中，它会被自动指向全局对象window。
 上诉这段代码中，go的执行是在全局环境中执行的,因此指向的是全局环境中的3。
 
-### 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
+#### 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
 解答:
 ```js
 function reverse(str) {
@@ -1173,7 +1173,7 @@ function reverse(str) {
 reverse('hello world!'); // output: '!dlrow olleh'
 ```
 
-### 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
+#### 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
 1、Redux鼓励一个应用之中只有一个store，Mobx鼓励实现多个store
 2、Redux是函数式编程，而Mobox的模式是面向对象的。
 3、Redux鼓励数据的规范化，减少冗余。Mobx 容许数据冗余，但同样能保持数据一致
@@ -1183,7 +1183,7 @@ import {configure} from 'mobx';
 configure({enforceActions: true});
 ```
 
-### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
+#### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
 Function.prototype.call2 = function (context) {
@@ -1206,7 +1206,7 @@ Function.prototype.call2 = function (context) {
 }
 ```
 
-### 0629 apply的模拟实现 考点 对于原生js的熟练程度
+#### 0629 apply的模拟实现 考点 对于原生js的熟练程度
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
 Function.prototype.apply = function (context, arr) {
@@ -1230,7 +1230,7 @@ Function.prototype.apply = function (context, arr) {
 }
 ```
 
-### 0630 bind模拟实现 考点 对于原生js的熟练程度
+#### 0630 bind模拟实现 考点 对于原生js的熟练程度
 解答：主要参考了冴羽老师的博客：[bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
 
 ```js
@@ -1256,7 +1256,7 @@ Function.prototype.apply = function (context, arr) {
 }
 ```
 
-### 0701 页面上有个空的无序列表节点，用 `<ul></ul>` 表示，要往列表中插入3 个`<li>`，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 `<ul>` 节点加上 id 或者 class 属性（考点 原生dom的操作）
+#### 0701 页面上有个空的无序列表节点，用 `<ul></ul>` 表示，要往列表中插入3 个`<li>`，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 `<ul>` 节点加上 id 或者 class 属性（考点 原生dom的操作）
 ```js
 <ul id="list"></ul>
 // 获取 list 节点
@@ -1294,7 +1294,7 @@ container.innerHTML = html.join('');
 })();
 ```
 
-### 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
+#### 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
 使用es6的中的块级作用域的概念可以帮助我们避免踩坑，这个问题前面的题目有所涉及
 ```js
 for (let i = 0; i < 3; i++) {
@@ -1321,7 +1321,7 @@ for (var i = 0; i < 3; i++) {
 
 
 
-###  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
+####  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
 解答：四大步骤：
 1、创建一个空的对象，并且this变量引用该对象.
 2、继承函数的原型。
@@ -1340,7 +1340,7 @@ function new(func) {
 }
 ```
 
-###  0707 遍历DOM树 （递归、树形结构、原生dom操作）
+####  0707 遍历DOM树 （递归、树形结构、原生dom操作）
 ```js
 function traverse(node){
   // dom nodeType 1 --> 元素节点 nodeType 2 --> 属性节点 nodeType 3 --> 文本节点
@@ -1358,7 +1358,7 @@ function traverse(node){
 }
 ```
 
-### 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的map方法的掌握程度
+#### 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的map方法的掌握程度
 
 解答：输出的结果是  [1, NaN, NaN];
 

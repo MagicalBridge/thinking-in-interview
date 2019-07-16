@@ -1453,20 +1453,22 @@ console.log(arr, sum);
 ```
 打印结果:
   (1）1 2 1
+
       3 3 2
+
       6 4 3
+      
       [1,2,3,4] 10
 
   (2) 1 2, undefined 3, undefined 4 
-  
+
 解答：
-语法：
 
-  >arr.reduce(callback,[initialValue]) 
+语法：arr.reduce(callback,[initialValue]) 
 
-    reduce为数组中的每一个元素依次执行回调函数，不包括数组中被删除或未被赋值的元素。
+  reduce为数组中的每一个元素依次执行回调函数，不包括数组中被删除或未被赋值的元素。
     
-    callback接受四个参数：
+  callback接受四个参数：
 ```js
     Accumulator (acc) 初始值（或上一次回调函数的返回值）
     Current Value (cur) 当前元素值
@@ -1475,7 +1477,7 @@ console.log(arr, sum);
 ```
 说明：未设置初始值index从1开始;
 
-     函数没有返回值，则默认返回undefined。
+    函数没有返回值，则默认返回undefined。
 
 
 

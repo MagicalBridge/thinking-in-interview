@@ -1441,6 +1441,29 @@ map 函数的一个参数是一个callback回调函数,map会保证数组中的�
   3、parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，所以无法解析，返回NaN
 ```
 
+#### 39 0709 考查数组的reduce()方法
+```js
+(1) var arr = [1, 2, 3, 4];
+var sum = arr.reduce(function(prev, cur, index, arr) {
+    console.log(prev, cur, index);
+    return prev + cur;
+})
+console.log(arr, sum);
+(2) [1, 2, 3, 4].reduce((x, y) => console.log(x, y));
+```
+打印结果:
+  (1）1 2 1
+      3 3 2
+      6 4 3
+      [1,2,3,4] 10
+  (2) 1 2, undefined 3, undefined 4
+解答：arr.reduce(callback,[initialValue])
+    reduce为数组中的每一个元素依次执行回调函数，不包括数组中被删除或未被赋值的元素，接受四个参数：
+    初始值（或上一次回调函数的返回值），当前元素值，当前索引，调用reduced的数组。
+说明：未设置初始值index从1开始；
+     函数没有返回值，则默认返回undefined。
+
+
 
 
 

@@ -236,11 +236,11 @@ Map 转为对象
 
 ```js
 function strMapToObj(strMap) {
-let obj = Object.create(null);
-for (let [k,v] of strMap) {
-obj[k] = v;
-}
-return obj;
+  let obj = Object.create(null);
+    for (let [k,v] of strMap) {
+    obj[k] = v;
+  }
+  return obj;
 }
 
 const myMap = new Map()
@@ -1141,7 +1141,7 @@ console.log("script end");
 10.执行后面的代码, 打印 console.log( 'async1 end' );
 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
-#### 0625 下面代码会输出什么？ 考点: this的指向：
+#### 25 0625 下面代码会输出什么？ 考点: this的指向：
 
 ```js
 var x = 3;
@@ -1163,7 +1163,7 @@ console.log(foo.baz.bar()); // 1
 解答:this由调用者提供，由调用函数的方式来决定。如果是一个对象调用的函数，则this指向该对象，比如foo.baz.bar()。如果函数独立调用比如go()，那么该函数内部的this，则指向undefined。但是在非严格模式中，它会被自动指向全局对象window。
 上诉这段代码中，go的执行是在全局环境中执行的,因此指向的是全局环境中的3。
 
-#### 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
+#### 26 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
 解答:
 ```js
 function reverse(str) {
@@ -1173,7 +1173,7 @@ function reverse(str) {
 reverse('hello world!'); // output: '!dlrow olleh'
 ```
 
-#### 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
+#### 27 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
 1、Redux鼓励一个应用之中只有一个store，Mobx鼓励实现多个store
 2、Redux是函数式编程，而Mobox的模式是面向对象的。
 3、Redux鼓励数据的规范化，减少冗余。Mobx 容许数据冗余，但同样能保持数据一致
@@ -1183,7 +1183,7 @@ import {configure} from 'mobx';
 configure({enforceActions: true});
 ```
 
-#### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
+#### 28 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
 Function.prototype.call2 = function (context) {
@@ -1206,7 +1206,7 @@ Function.prototype.call2 = function (context) {
 }
 ```
 
-#### 0629 apply的模拟实现 考点 对于原生js的熟练程度
+#### 29 0629 apply的模拟实现 考点 对于原生js的熟练程度
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
 Function.prototype.apply = function (context, arr) {
@@ -1230,7 +1230,7 @@ Function.prototype.apply = function (context, arr) {
 }
 ```
 
-#### 0630 bind模拟实现 考点 对于原生js的熟练程度
+#### 30 0630 bind模拟实现 考点 对于原生js的熟练程度
 解答：主要参考了冴羽老师的博客：[bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
 
 ```js
@@ -1256,7 +1256,7 @@ Function.prototype.apply = function (context, arr) {
 }
 ```
 
-#### 0701 页面上有个空的无序列表节点，用 `<ul></ul>` 表示，要往列表中插入3 个`<li>`，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 `<ul>` 节点加上 id 或者 class 属性（考点 原生dom的操作）
+#### 31 0701 页面上有个空的无序列表节点，用 `<ul></ul>` 表示，要往列表中插入3 个`<li>`，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 `<ul>` 节点加上 id 或者 class 属性（考点 原生dom的操作）
 ```js
 <ul id="list"></ul>
 // 获取 list 节点
@@ -1294,7 +1294,7 @@ container.innerHTML = html.join('');
 })();
 ```
 
-#### 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
+#### 32 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
 使用es6的中的块级作用域的概念可以帮助我们避免踩坑，这个问题前面的题目有所涉及
 ```js
 for (let i = 0; i < 3; i++) {
@@ -1320,8 +1320,52 @@ for (var i = 0; i < 3; i++) {
 因为 EventListener 里面默认的 this 指向当前节点。
 
 
+#### 33 0703 实现一个防抖函数？ (循序渐进，提供思路和版本)
 
-####  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
+解答：防抖函数，实际上是一个接收一个函数，一个等待时间的函数，无论你怎样的频繁的操作我等到你不操作的时间开始算起n秒后执行
+第一个版本：
+```js
+function debounce(func,wait){
+  var timeout;
+  return function () {
+    clearTimeout(timeout)
+    timeout = setTimeout(func, wait);
+  }
+}
+```
+#### 34 实现一个防抖函数？ (循序渐进，提供思路和版本)
+第二个版本：上述的第一个版本中this指向已经变了为了能够保留执行时候的this指向。我们来看看第二个版本
+```js
+function debounce(func,wait){
+  var timeout;
+  return function(){
+    var context = this;
+    clearTimeout(timeout)
+    timeout = setTimeout(function(){
+      func.apply(context)
+    },wait)
+  }
+}
+```
+
+#### 35 0705 实现一个防抖函数？ (循序渐进，提供思路和版本)
+第三个版本：上面的一个版本实际上还是不够完美的。因为丢失了event对象 这一个版本我们添加一个event对象
+```js
+function debounce(func,wait){
+  var timeout;
+
+  return function(){
+    var context = this,
+    args = arguments;
+    clearTimeout(timeout)
+    timeout = setTimeout(function(){
+      func.apply(context,args)
+    },wait)
+  }
+}
+```
+
+#### 36 0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
 解答：四大步骤：
 1、创建一个空的对象，并且this变量引用该对象.
 2、继承函数的原型。
@@ -1340,7 +1384,7 @@ function new(func) {
 }
 ```
 
-####  0707 遍历DOM树 （递归、树形结构、原生dom操作）
+#### 37 0707 遍历DOM树 （递归、树形结构、原生dom操作）
 ```js
 function traverse(node){
   // dom nodeType 1 --> 元素节点 nodeType 2 --> 属性节点 nodeType 3 --> 文本节点
@@ -1358,7 +1402,7 @@ function traverse(node){
 }
 ```
 
-#### 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的map方法的掌握程度
+#### 38 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的map方法的掌握程度
 
 解答：输出的结果是  [1, NaN, NaN];
 

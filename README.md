@@ -1470,14 +1470,22 @@ console.log(arr, sum);
     
   callback接受四个参数：
 ```js
-    Accumulator (acc) 初始值（或上一次回调函数的返回值）
-    Current Value (cur) 当前元素值
-    Current Index (idx) 当前索引
-    Source Array (src) 调用reduced的数组
+  Accumulator (acc) 初始值（或上一次回调函数的返回值）
+  Current Value (cur) 当前元素值
+  Current Index (idx) 当前索引
+  Source Array (src) 调用reduced的数组
 ```
 说明：未设置初始值index从1开始;
 
     函数没有返回值，则默认返回undefined。
+
+#### 40 0710 说说Redux和Vuex的设计思想:
+1、软件设计领域有很多通用的思想，比如隔离变化，约定优于配置
+
+解答:[Vuex、Flux、Redux、Redux-saga、Dva、MobX](https://zhuanlan.zhihu.com/p/53599723) 这个链接文章非常值得一看
+
+
+
 
 
 

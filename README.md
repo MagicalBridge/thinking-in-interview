@@ -20,7 +20,7 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：3 个 ttt4
-注：var 来声明变量 I，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 I 等于 4
+注：var 来声明变量 i，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 i 等于 4
 
 #### 2、 0517 考察的知识点： 闭包。
 
@@ -1484,7 +1484,7 @@ console.log(arr, sum);
 
 解答:[Vuex、Flux、Redux、Redux-saga、Dva、MobX](https://zhuanlan.zhihu.com/p/53599723) 这个链接文章非常值得一看
 
-
+#### 40 0710 
 
 
 

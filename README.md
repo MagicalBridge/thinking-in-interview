@@ -1699,3 +1699,87 @@ n = 1 -> (n-2)
 ……
 0
 O($n^2$) 的时间复杂度
+
+#### 0729 47、手写深拷贝
+
+1、遍历对象
+
+```js
+  function deepClone(source){
+    if(typeof source == ('string'|| 'number')){
+      return source;
+    }
+    if(!source || typeof source != 'object'){
+      throw new Error("error arguments!")
+    }
+    var newSource = source.constructor === Array? [] : {};
+    for(var key in source){
+      if(source.hasOwnProperty(key)){
+        if(typeof source[key] !== 'object'){
+          newSource[key] = source[key]
+        }else{
+          newSource[key] = deepClone(source[key])
+        }
+      }
+    }
+    return newSource;
+  }
+```
+
+2、用JSON实现深拷贝
+
+```js
+  let a = {a:1};
+  let b = JSON.parse(JSON.stringify(a));
+```
+
+3、通过jQuery的extend方法实现深拷贝
+
+```js
+  let array = [1,2,3,4];
+  let newArray = $.extend(true,[],array);
+```
+
+4、lodash函数库实现深拷贝
+
+```js
+  lodash.cloneDeep()
+```
+
+#### 48、如何判断是否为数组？
+1、Object.prototype.toString()返回的是//"[object Type]"的形式，通过call将Array的this上下文切换到Object，从而调用了Object.prototype.toString()，因此返回[object Function]。（https://www.jianshu.com/p/e4237ebb1cf0）
+
+```js
+ let a=[1,2, 3, 4];
+ console.log(Object.prototype.toString.call(a))//[object Array]
+```
+
+2、我们创建的每个函数都有一个prototype（原型）对象，这个属性是一个指针，指向一个对象。在默认情况下，所有原型对象都会自动获得一个constructor（构造函数）属性，这个属性是一个指向prototype属性所在函数的指针。因为constructor属性在构造函数的原型里，并且指向构造函数，那我们就可以利用constructor属性来判断一个实例对象是由哪个构造函数构造出来的，也可以说判断它属于哪个类。
+
+```js
+  let a = [1,2, 3, 4];
+  console.log(a.constructor); // ƒ Array() { [native code] }
+```
+
+3、instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。通俗来将就是判断一个实例对象是否由某个构造函数构造而来。只要对象实例的原型链不发生变化，instanceof便可以正确判断。
+
+```js
+  let a = [1,2, 3, 4];
+  console.log(a instanceof Array); //true
+```
+
+#### 49、简述cookie、sessionStorage和localStorage的区别
+
+共同点：都是保存在浏览器端，且同源的。
+区别：
+(1)cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递。而sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存。
+(2)cookie数据还有路径（path）的概念，可以限制cookie只属于某个路径下。
+(3)存储大小限制不同，cookie数据不能超过4k，同时因为每次http请求都会携带cookie，所以cookie只适合保存很小的数据，如会话标识。sessionStorage和localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大。
+(4)数据有效期不同
+sessionStorage：仅在当前浏览器窗口关闭前有效，自然也就不可能持久保持；
+localStorage：始终有效，窗口或浏览器关闭也一直保存，因此用作持久数据；
+cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭。
+(5)作用域不同
+sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；
+localStorage 在所有同源窗口中都是共享的；
+cookie也是在所有同源窗口中都是共享的。

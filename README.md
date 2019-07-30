@@ -1185,6 +1185,29 @@ configure({enforceActions: true});
 
 ### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
+
+
+var foo = {
+  value:1,
+  bar:function(){
+  console.log(this.value)
+}
+}
+
+function bar(){
+  console.log(this.value)
+}
+
+bar.call(foo,1,2,3);
+
+
+
+
+
+
+
+
+
 ```js
 Function.prototype.call2 = function (context) {
   // call 函数传入的this指向可能是null 如果是null 用window替代
@@ -1357,6 +1380,36 @@ function traverse(node){
   }
 }
 ```
+
+###  0724 Vue中给data中的对象属性添加一个新的属性时会发生什么，如何解决？
+```
+   <div><ul>
+     <li v-for="value in obj":key="value">
+     {{value}}
+     </li> </ul>
+    <button @click="addObjB">添加obj.b</button>
+    </div>
+    export default {
+     data (){
+      return
+       { 
+         obj:{
+         a:'obj.a'      
+       }
+    }},
+    methods:{
+    addObjB (){
+        this.obj.b ='obj.b'
+
+
+       console.log(this.obj)
+   }}}
+```
+解答：Vue实例创建时， obj.b 并未声明，因此就没有被Vue转换为响应式的属性，自然就不会触发视图的更新，这时就需要使用Vue的全局api—— $set() this.$set(this.obj,'b','obj.b')
+
+
+
+
 
 
 

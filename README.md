@@ -1783,3 +1783,21 @@ cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏�
 sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；
 localStorage 在所有同源窗口中都是共享的；
 cookie也是在所有同源窗口中都是共享的。
+
+#### 50、手写一个冒泡的排序算法 算法实现
+
+```js
+  function bubbleSort(arr){
+    if(arr === undefined || arr.length < 2){
+      return 
+    }
+    for(let end = arr.length-1;end>0;end--){
+      for(let i = 0;i<end;i++){
+        if(arr[i]>[arr[i+1]]){
+          [[arr[i],arr[i+1]]] = [arr[i+1],arr[i]]
+        }
+      }
+    }
+    return arr
+  }
+```

@@ -1834,3 +1834,25 @@ cookie也是在所有同源窗口中都是共享的。
   [HTTP1.0、HTTP1.1 和 HTTP2.0 的区别](https://mp.weixin.qq.com/s/GICbiyJpINrHZ41u_4zT-A?)
 
   
+#### 52、选择排序实现 考察点 常见的算法实现
+  ```js
+  function selectSort(arr=[]) {
+    if (arr === undefined || arr.length < 2) {
+      return;
+    }
+    let len = arr.length;
+    for (let i = 0; i < len; i++) {
+      let minIndex = i;
+      for (let j = i + 1; i < len; j++) {
+        if (arr[j] < arr[minIndex]) {
+          minIndex = j;
+        }
+      }
+      // 每一轮循环完毕后 将当前这一轮的 最小的放在前面
+      [arr[i], arr[minIndex]] = [arr[minIndex], arr[i]];
+    }
+    return arr;
+  }
+  ```
+
+

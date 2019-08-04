@@ -1855,4 +1855,21 @@ cookie也是在所有同源窗口中都是共享的。
   }
   ```
 
+#### 52、插入排序实现 考察点 常见的算法实现:
+```js
+function insertionSort(arr) {
+  if (arr == null || arr.length < 2) {
+    return;
+  }
+  // 这个外层的for循环 i 就是当前这个要插入的数,第一个数认为第一次是不需要排序的
+  for (let i = 1; i < arr.length; i++) {
+    // j>=0 这条件是为了不越界 arr[j] > arr[j + 1] 前一个数和后一个数做比较
+    for (let j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
+      [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+    }
+  }
+  return arr
+}
+```
+
 

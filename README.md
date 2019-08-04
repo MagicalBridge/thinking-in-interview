@@ -1406,17 +1406,3 @@ function traverse(node){
    }}}
 ```
 解答：Vue实例创建时， obj.b 并未声明，因此就没有被Vue转换为响应式的属性，自然就不会触发视图的更新，这时就需要使用Vue的全局api—— $set() this.$set(this.obj,'b','obj.b')
-
-
-
-
-
-
-
-
-
-
-
-
-
-

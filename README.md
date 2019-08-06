@@ -1872,4 +1872,25 @@ function insertionSort(arr) {
 }
 ```
 
+#### 0806 53、你是如何理解Vue的响应式系统的?
+
+响应式系统简述:
+任何一个 Vue Component 都有一个与之对应的 Watcher 实例。
+Vue 的 data 上的属性会被添加 getter 和 setter 属性。
+当 Vue Component render 函数被执行的时候, data 上会被 触碰(touch), 即被读, getter 方法会被调用, 此时 Vue 会去记录此 Vue component 所依赖的所有 data。(这一过程被称为依赖收集)
+data 被改动时（主要是用户操作）, 即被写, setter 方法会被调用, 此时 Vue 会去通知所有依赖于此 data 的组件去调用他们的 render 函数进行更新。
+
+#### 0806 54、Vue中的key到底有什么用？
+
+key是为Vue中的vnode标记的唯一id,通过这个key,我们的diff操作可以更准确、更快速
+diff算法的过程中,先会进行新旧节点的首尾交叉对比,当无法匹配的时候会用新节点的key与旧节点进行比对,然后超出差异.
+
+diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndIdx，它们的2个变量相互比较，一共有4种比较方式。如果4种比较都没匹配，如果设置了key，就会用key进行比较，在比较的过程中，变量会往中间靠，一旦StartIdx>EndIdx表明oldCh和newCh至少有一个已经遍历完了，就会结束比较,这四种比较方式就是首、尾、旧尾新头、旧头新尾.
+
+准确: 如果不加key,那么vue会选择复用节点(Vue的就地更新策略),导致之前节点的状态被保留下来,会产生一系列的bug.
+快速: key的唯一性可以被Map数据结构充分利用,相比于遍历查找的时间复杂度O(n),Map的时间复杂度仅仅为O(1).
+
+```js
+  ![avatar](https://user-gold-cdn.xitu.io/2019/8/1/16c498ca0e514088?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+```
 

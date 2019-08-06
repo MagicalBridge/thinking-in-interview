@@ -1890,7 +1890,5 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 准确: 如果不加key,那么vue会选择复用节点(Vue的就地更新策略),导致之前节点的状态被保留下来,会产生一系列的bug.
 快速: key的唯一性可以被Map数据结构充分利用,相比于遍历查找的时间复杂度O(n),Map的时间复杂度仅仅为O(1).
 
-```js
-  ![avatar](https://user-gold-cdn.xitu.io/2019/8/1/16c498ca0e514088?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
-```
+![图片](https://user-gold-cdn.xitu.io/2019/8/1/16c498ca0e514088?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 

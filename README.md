@@ -22,6 +22,26 @@ for (var i = 1; i <= 3; i++) {
 解答：3 个 ttt4
 注：var 来声明变量 i，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 i 等于 4
 
+追问：如何实现让这个函数打印 ttt1 ttt2 ttt3 
+
+```js
+// 使用匿名函数
+for (var i = 1; i <= 3; i++) {
+  (function(i){
+    setTimeout(function() {
+      console.log("ttt" + i);
+    }, 0);
+  })(i)
+}
+
+// 例如块级作用域
+for (let i = 1; i <= 3; i++) {
+  setTimeout(function() {
+    console.log("ttt" + i);
+  }, 0);
+}
+```
+
 #### 2、 0517 考察的知识点： 闭包。
 
 实践角度解释闭包：
@@ -61,7 +81,7 @@ for (var i = 1; i <= 3; i++) {
     s();
 ```
 
-解答：1，2
+解答：2,3
 注解：这里函数调用两次，第一次返回 2，闭包可以保存变量值，因此第二次调用时外层函数 count=2，最终输出结果是 3；
 
 ```js
@@ -97,8 +117,23 @@ obj.say();
 ```
 
 解答：2 ，1
-注：非箭头函数中 this 最终指向调用它的对象，第一个 this 指向 obj，输出 2；setTimeout 是全局函数，所以第二个 this 指向 window，输出 1
-箭头函数没有自己的 this, 它的 this 是继承而来; 默认指向在定义它时所处的对象
+注：非箭头函数中 this 最终指向调用它的对象，第一个 this 指向 obj，输出 2；setTimeout 是全局函数，所以第二个 this 指向 window，输出 1 ，箭头函数没有自己的 this, 它的 this 是继承而来; 默认指向在定义它时所处的对象。
+
+因此，我们修改下代码：
+```js
+var a = "1";
+var obj = {
+  a: "2",
+  say: function() {
+    console.log(this.a);
+    setTimeout(() => {
+      console.log(this.a);
+    });
+  }
+};
+obj.say();
+```
+解答：2，2 就像上文解释的那样 虽然window 上面挂载了1 但是setTime 这个函数是定义在 obj 这个函数中的
 
 #### 4. 0521 考察的知识点：this 指向问题、赋值语句
 
@@ -121,7 +156,7 @@ obj.inner.print();
 (obj.inner.print = obj.inner.print)();
 ```
 
-解答：
+解答：6 888 6 888 关键看这个函数是在全局环境中执行的。
 
 #### 5. 0522 考察知识点：数组的操作 hashMap 的映射
 
@@ -135,7 +170,6 @@ obj.inner.print();
 所以返回 [0, 1]
 ```
 
-
 解答：
 
 解法一：使用暴力破解法:
@@ -218,6 +252,8 @@ console.log("set to array 1:", [...set4]);
 // set to array 1: [ 4, 5, 6 ]
 ```
 
+Map 和 Array 互转
+
 Map 转为数组
 
 ```js
@@ -255,16 +291,16 @@ strMapToObj(myMap)
 
 ```js
 function objToStrMap(obj) {
-let strMap = new Map();
-for (let k of Object.keys(obj)) {
-strMap.set(k, obj[k]);
-}
-return strMap;
+  let strMap = new Map();
+  for (let k of Object.keys(obj)) {
+    strMap.set(k, obj[k]);
+  }
+  return strMap;
 }
 
 objToStrMap({yes: true, no: false})
 
-<!--{"yes" => true, "no" => false}-->
+// {"yes" => true, "no" => false}
 ```
 
 面试题
@@ -286,7 +322,7 @@ map2.get(a);
 ```js
 let arr1 = [1, 2, 3, 4, 5];
 let arr2 = [4, 5, 6, 7, 8];
-求这两个数组的并集和交集和差集;
+// 求这两个数组的并集和交集和差集;
 let a = new Set(arr1);
 let b = new Set(arr2);
 ```

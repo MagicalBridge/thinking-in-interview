@@ -1988,6 +1988,40 @@ function flatten(arr) {
 console.log(flatten(arr))
 ```
 
+直接使用 `Array.prototype.flat(depth)`这个原生的api也能达到相同的目的.
+其中depth 的意思是展开的深度,默认值是1。如果传入这个参数`Infinity`展开任意的
+数据
+
+#### 0726 55、将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
+var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+
+```js
+function flatten(arr){
+  var result = [];
+  for(var i = 0,len = arr.length;i<len;i++){
+    if(Array.isArray(arr[i])){
+      result = result.concat(flatten(arr[i]))
+    }else{
+      result.push(arr[i])
+    }
+  }
+  return result
+}
+
+function unique(resultArr){
+  return [...new Set(resultArr)]
+}
+
+function upSort(arr){
+  return arr.sort(function(a,b){
+    return a-b
+  })
+}
+upSort(unique(flatten(arr)))
+```
+
+
+
 
 
 

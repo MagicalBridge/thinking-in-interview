@@ -1768,11 +1768,23 @@ O($n^2$) 的时间复杂度
   }
 ```
 
-2、用JSON实现深拷贝
-
+2、用JSON.parse 和JSON.stringify配合使用实现深拷贝  不仅适用于数组还适用于对象！但是这种拷贝的方式不能拷贝函数。
 ```js
+  // 对象深拷贝
   let a = {a:1};
   let b = JSON.parse(JSON.stringify(a));
+  a.a = 2;
+
+  console.log(a); // { a: 2 }
+  console.log(b); // { a: 1 }
+
+  // 数组的深拷贝 改变原数组 新的数组并不会受影响
+  var arr = ['old', 1, true, ['old1', 'old2'], {old: 1}]
+  var new_arr = JSON.parse( JSON.stringify(arr) );
+
+  arr[0] = 'new'
+  console.log(arr); // [ 'new', 1, true, [ 'old1', 'old2' ], { old: 1 } ]
+  console.log(new_arr); // [ 'old', 1, true, [ 'old1', 'old2' ], { old: 1 } ]
 ```
 
 3、通过jQuery的extend方法实现深拷贝
@@ -1913,6 +1925,71 @@ function insertionSort(arr) {
   return arr
 }
 ```
+
+#### 0724 53、如何实现数组的浅拷贝：
+在平时的业务开发中，如果是一维数组，我们可以巧妙的借用两个数组方法来进行操作：concat slice
+
+>* concat方法用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。
+
+```js
+var arr = ['old', 1, true, null, undefined];
+var newArr = arr.concat(); // 并不会改变原来的数组，
+newArr[0] = 'new'
+console.log(newArr); // [ 'new', 1, true, null, undefined ]
+```
+
+>* slice() 方法返回一个新的数组对象，这一对象是一个由 begin 和 end 决定的原数组的浅拷贝（包括 begin，不包括end）。原始数组不会被改变。
+
+```js
+var arr = ['old', 1, true, null, undefined];
+var newArr = arr.slice(); // 这里省略了 begin 和 end 意味着拷贝整个数组
+newArr[0] = 'new'
+console.log(newArr); // [ 'new', 1, true, null, undefined ]
+```
+上文说道，上述的方式比较适合简单的一维数组的拷贝，如果数组中嵌套了对象或者数组，利用concat拷贝会发生一些问题：
+```js
+var arr = [{old: 'old'}, ['old']];
+var new_arr = arr.concat(); // 或者 slice()
+
+arr[0].old = 'new';
+arr[1][0] = 'new';
+
+console.log(arr) // [{old: 'new'}, ['new']]
+console.log(new_arr) // [{old: 'new'}, ['new']]
+```
+我们会发现，无论是新数组还是旧数组都发生了变化，也就是说使用 concat 方法，克隆的并不彻底。
+
+如果数组元素是基本类型，就会拷贝一份，互不影响，而如果是对象或者数组，就会只拷贝对象和数组的引用，这样我们无论在新旧数组进行了修改，两者都会发生变化。
+
+我们把这种复制引用的拷贝方法称之为浅拷贝，与之对应的就是深拷贝，深拷贝就是指完全的拷贝一个对象，即使嵌套了对象，两者也相互分离，修改一个对象的属性，也不会影响另一个。
+
+所以我们可以看出使用 concat 和 slice 是一种浅拷贝。
+
+
+#### 0725 54、如何实现数组的扁平化操作 (数组扁平化操作，一般使用递归调用操作)
+首先解释一下什么是数组的扁平化操作, 简单的说就是将多维的数组拍平变成一维数组：
+
+例如： arr = [1, [2, [3, 4]]];  数组拍平之后变成了 [1,2,3,4];
+
+一般这种实现，我们首先想到的是递归,直接上代码：
+```js
+var arr = [1, [2, [3, 4]]];
+function flatten(arr) {
+  var result = [];
+  for (var i = 0, len = arr.length; i < len; i++) {
+    if (Array.isArray(arr[i])) {
+      result = result.concat(flatten(arr[i]))
+    }else {
+      result.push(arr[i])
+    }
+  }
+  return result;
+}
+console.log(flatten(arr))
+```
+
+
+
 
 #### 0806 53、你是如何理解Vue的响应式系统的?
 

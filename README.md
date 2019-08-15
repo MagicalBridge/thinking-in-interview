@@ -1433,7 +1433,37 @@ function traverse(node){
    computed监听的变量不能在data中初始化
    computed储存需要处理的数据值，有缓存机制，只有改变时才执行
    watch 可以监听路由router的变化，props、data、computed内的数据变化
+   
+###  0815 vue 中v-model原理及应用
+
+1、v-model是语法糖
+
+```js
+<input v-model="sth" />
+<input v-bind:value="sth" v-on:input="sth = $event.target.value" />
+```
+
+第一行的代码其实只是第二行的语法糖,在给<input />元素添加v-model属性时，默认会把value作为元素的属性，然后把'input'事件作为实时传递value的触发事件
+
+###  0815 Vue中双向绑定 简单原理说明
+
+1、vue.js 则是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调
 
 
-
-
+2、Object.defineProperty()
+Object.defineProperty有三个参数（参数一 要添加属性的对象，参数二要添加的属性，参数三一个函数（get set函数 和java里面getter和setter比较像））
+```js
+  var obj  = {};
+  Object.defineProperty(obj, 'name', {
+    get: function() {
+        console.log('我被获取了')
+        return val;
+    },
+    set: function (newVal) {
+        console.log('我被设置了')
+    }
+  })
+  obj.name = 'fei';//在给obj设置name属性的时候，触发了set这个方法
+  var val = obj.name;//在得到obj的name属性，会触发get方法
+```
+3、

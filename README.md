@@ -2009,8 +2009,32 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 ```
 
 第一行的代码其实只是第二行的语法糖,在给<input />元素添加v-model属性时，默认会把value作为元素的属性，然后把'input'事件作为实时传递value的触发事件
+2、修饰符
+1.lazy 
+在输入框中，v-model默认是在input事件中同步输入框的数据的，使用修饰符lazy则会变为在change事件中同步
 
-###  0815 Vue中双向绑定 简单原理说明
+```js
+<input type="text" v-model.lazy="message"/>
+<p>当前输入是：{{message}}</p>
+```
+
+2.number 
+使用该修饰符可以将输入转化为Number类型，否则我们得到的数据的类型是String。
+
+```js
+<input type="text" v-model.number="message"/>
+<p>当前输入是：{{message}}</p>
+```
+
+3.trim 
+这个修饰符可以自动过滤输入的首尾空格。
+
+```js
+<input type="text" v-model.trim="message"/>
+<p>当前输入是：{{message}}</p>
+```
+
+###  0815 Vue中双向绑定 简单原理说明（https://www.cnblogs.com/zhenfei-jiang/p/7542900.html）
 
 1、vue.js 则是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
 2、Object.defineProperty()
@@ -2033,6 +2057,8 @@ Object.defineProperty有三个参数（参数一 要添加属性的对象，参�
 
 3、vue如何实现原理图
 ![图片](https://upload-images.jianshu.io/upload_images/8560482-d18d5fe20c1ade5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/730/format/webp)
+
+
 1、实现一个数据监听器Observer，能够对数据对象的所有属性进行监听，如有变动可拿到最新值并通知订阅者
 2、实现一个指令解析器Compile，对每个元素节点的指令进行扫描和解析，根据指令模板替换数据，以及绑定相应的更新函数
 3、实现一个Watcher，作为连接Observer和Compile的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图

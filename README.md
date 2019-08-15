@@ -1382,7 +1382,7 @@ function traverse(node){
 ```
 
 ###  0724 Vue中给data中的对象属性添加一个新的属性时会发生什么，如何解决？
-```
+```js
    <div><ul>
      <li v-for="value in obj":key="value">
      {{value}}
@@ -1406,3 +1406,34 @@ function traverse(node){
    }}}
 ```
 解答：Vue实例创建时， obj.b 并未声明，因此就没有被Vue转换为响应式的属性，自然就不会触发视图的更新，这时就需要使用Vue的全局api—— $set() this.$set(this.obj,'b','obj.b')
+
+###  0812 Vue中如何监控某个属性值的变化
+   1.Vue中监控对象属性的变化 
+      watch:{
+        obj:{
+          handler(newValue, oldValue){
+            console.log('obj changed')
+           },
+          deep:true
+         }
+      }
+  2.watch:{
+    'a':{
+        handler(newName, oldName){
+          console.log('a changed')
+        }
+       }
+     }
+  3.computed:{
+       a1(){
+        return this.obj.a
+      }
+   }
+   watch 和 computed的不同：
+   computed监听的变量不能在data中初始化
+   computed储存需要处理的数据值，有缓存机制，只有改变时才执行
+   watch 可以监听路由router的变化，props、data、computed内的数据变化
+
+
+
+

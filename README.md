@@ -20,7 +20,7 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：3 个 ttt4
-注：var 来声明变量 i，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 i 等于 4
+注：var 来声明变量 I，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 I 等于 4
 
 追问：如何实现让这个函数打印 ttt1 ttt2 ttt3 
 
@@ -272,11 +272,11 @@ Map 转为对象
 
 ```js
 function strMapToObj(strMap) {
-  let obj = Object.create(null);
-    for (let [k,v] of strMap) {
-    obj[k] = v;
-  }
-  return obj;
+let obj = Object.create(null);
+for (let [k,v] of strMap) {
+obj[k] = v;
+}
+return obj;
 }
 
 const myMap = new Map()
@@ -698,7 +698,7 @@ console.log(5);
 
 输出：2 3 5 4 1
 解答：then 和 settimeout 执行顺序，即 setTimeout(fn, 0)在下一轮“事件循环”开始时执行，Promise.then()在本轮“事件循环”结束时执行。因此 then 函数先输出，settimeout 后输出。
-for 循环是一个同步过程。上述在代码 在控制台中打印 有卡顿就是在执行这个 for 循环。
+for 循环是一个同步过程。上述在代码 在控制台中打印 有卡顿就是在执行这个for循环。
 参考链接：https://www.jianshu.com/p/4516ad4b3048
 
 ```js
@@ -726,6 +726,7 @@ setTimeont(function() {
 
 输出： 1, 2， 3
 使用 await 时，会从右往左执行，当遇到 await 时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当 await 执行完毕之后，会先处理微任务队列的代码
+
 
 #### 12、0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
 
@@ -847,7 +848,7 @@ b.next(13); // { value:42, done:true }
 
 注意，由于 next 方法的参数表示上一个 yield 表达式的返回值，所以在第一次使用 next 方法时，传递参数是无效的。V8 引擎直接忽略第一次使用 next 方法时的参数，只有从第二次使用 next 方法开始，参数才是有效的。从语义上讲，第一个 next 方法用来启动遍历器对象，所以不用带有参数。
 
-#### 16、 0616 react 是如何划分组件的 （react 技术相关）
+#### 16 0616 react 是如何划分组件的 （react 技术相关）
 
 根据组件的职责通常把组件分为 UI 组件和容器组件。
 
@@ -855,7 +856,7 @@ UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑。
 
 两者通过 React-Redux 提供 connect 方法联系起来。
 
-#### 17、 0617 请用 js 实现下 栈 这种数据结构(数据结构相关)
+#### 17 0617 请用 js 实现下 栈 这种数据结构(数据结构相关)
 
 栈是一种遵从后进先出的（LIFO）原则的有序集合。新添加的或者删除的元素保存在栈的同一端，称作栈顶，另一端称之为栈底。新元素都靠近栈顶，旧元素都接近栈底。
 
@@ -935,7 +936,7 @@ D: TypeError;
 解答：D
 test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是 test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
 
-#### 19、 0619 class 和 function 的区别
+### 19. 0619 class 和 function 的区别
 
 解答：
 
@@ -945,172 +946,155 @@ test 是一个静态方法。静态方法被设计为只能被创建它们的构
 4. class 静态方法与静态属性，
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
 
-#### 20、 0620 继续异步专题的研究 EventLoop
+### 20 0620 继续异步专题的研究 EventLoop
 
 得心应手版本:
-
 ```js
-setTimeout(() => {
-  console.log(1);
-}, 0);
-Promise.resolve().then(() => {
-  console.log(2);
-});
-console.log(3);
+
+setTimeout(()=>{
+  console.log(1) 
+},0)
+Promise.resolve().then(()=>{
+  console.log(2) 
+})
+console.log(3)
 
 // 输出 3 2 1
 ```
-
 解答：这个版本的面试官们就特别友善，仅仅考你一个概念理解，了解宏任务(marcotask)微任务(microtask)，这题就是送分题。
 
-> 这个是属于 Eventloop 的问题。main script 运行结束后，会有微任务队列和宏任务队列。微任务先执行，之后是宏任务。
+>这个是属于Eventloop的问题。main script运行结束后，会有微任务队列和宏任务队列。微任务先执行，之后是宏任务。
 
-有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个 main script 的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将 main script 的概念单独拎出来，不和两个任务队列混在一起），然后根据 main script 中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
+有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个main script的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将main script的概念单独拎出来，不和两个任务队列混在一起），然后根据main script中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
 
-#### 21、 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
+
+### 21 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
 
 游刃有余版本:
 
 ```js
-setTimeout(() => {
-  console.log(1);
-}, 0);
+setTimeout(()=>{
+  console.log(1) 
+},0)
 
-let a = new Promise(resolve => {
-  console.log(2);
-  resolve();
+let a = new Promise((resolve)=>{
+  console.log(2)
+  resolve()
+}).then(()=>{
+  console.log(3) 
+}).then(()=>{
+  console.log(4) 
 })
-  .then(() => {
-    console.log(3);
-  })
-  .then(() => {
-    console.log(4);
-  });
 
-console.log(5);
+console.log(5) 
 ```
-
 解答:
-此题看似在考`Eventloop`，实则考的是对于`Promise`的掌握程度。`Promise`的 then 是微任务大家都懂，但是这个 then 的执行方式是如何的呢，以及 Promise 的 executor 是异步的还是同步的需要对 promise 有深入的理解才能答对。
+此题看似在考`Eventloop`，实则考的是对于`Promise`的掌握程度。`Promise`的then是微任务大家都懂，但是这个then的执行方式是如何的呢，以及Promise的executor是异步的还是同步的需要对promise 有深入的理解才能答对。
 
-这个要从 Promise 的实现来说，Promise 的 executor 是一个 **同步函数** ，即非异步，立即执行的一个函数，因此他应该是和当前的任务一起执行的。而 Promise 的链式调用 then，每次都会在内部生成一个新的 Promise，然后执行 then，在执行的过程中不断向微任务(microtask)推入新的函数，因此直至微任务(microtask)的队列清空后才会执行下一波的 macrotask。
+这个要从Promise的实现来说，Promise的executor是一个 **同步函数** ，即非异步，立即执行的一个函数，因此他应该是和当前的任务一起执行的。而Promise的链式调用then，每次都会在内部生成一个新的Promise，然后执行then，在执行的过程中不断向微任务(microtask)推入新的函数，因此直至微任务(microtask)的队列清空后才会执行下一波的macrotask。
 
-#### 22、 0622 继续异步专题的研究 EventLoop 考点：promise 的进阶用法，对于 then 中 return 一个 promise 的掌握
+### 22 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
 
 炉火纯青版本：
 
-这一个版本是上一个版本的进化版本，上一个版本的 promise 的 then 函数并未返回一个 promise，如果在 promise 的 then 中创建一个 promise，那么结果该如何呢？
+这一个版本是上一个版本的进化版本，上一个版本的promise的then函数并未返回一个promise，如果在promise的then中创建一个promise，那么结果该如何呢？
 
 ```js
-new Promise((resolve, reject) => {
-  console.log("promise1");
-  resolve();
-})
-  .then(() => {
-    console.log("then11");
-    new Promise((resolve, reject) => {
-      console.log("promise2");
-      resolve();
-    })
-      .then(() => {
-        console.log("then21");
-      })
-      .then(() => {
-        console.log("then23");
-      });
+new Promise((resolve,reject)=> {
+  console.log("promise1")
+  resolve()
+}).then(()=>{
+  console.log("then11")
+  new Promise((resolve,reject)=> {
+    console.log("promise2")
+    resolve()
+  }).then(()=> {
+    console.log("then21")
+  }).then(()=> {
+    console.log("then23")
   })
-  .then(() => {
-    console.log("then12");
-  });
-// promise1
-// then11
-// promise2
-// then21
-// then12
-// then23
-// Promise {<resolved>: undefined}
-```
-
-解答：遇到这种嵌套的 Promise 不要慌，应该清楚的分析当前的队列的行为，
-第一轮：
-
-- current task: promise1 是当之无愧的立即执行的一个函数，promise 是一个立即执行的函数，立即执行输出[promise1];
-- micro task queue: [promise1 的第一个 then];
-  第二轮：
-- current task: then1 执行中，立即输出了 then11 以及新 promise2 的 `promise2`
-- micro task queue: [新 promise2 的 then 函数,以及 promise1 的第二个 then 函数]
-  第三轮：
-- current task: 新 promise2 的 then 函数输出 then21 和 promise1 的第二个 then 函数输出 then12。
-- micro task queue: [新 promise2 的第二 then 函数]
-  第四轮
-- current task: 新 promise2 的第二 then 函数输出 then23
-- micro task queue: []
-
-#### 22、 0622 继续异步专题的研究 EventLoop 考点 如果说这边的 Promise 中 then 返回一个 Promise 呢？
-
-```js
-new Promise((resolve, reject) => {
-  console.log("promise1");
-  resolve();
-})
-  .then(() => {
-    console.log("then11");
-    return new Promise((resolve, reject) => {
-      console.log("promise2");
-      resolve();
-    })
-      .then(() => {
-        console.log("then21");
-      })
-      .then(() => {
-        console.log("then23");
-      });
-  })
-  .then(() => {
-    console.log("then12");
-  });
-
-// promise1
-// then11
-// promise2
-// then21
-// then23
-// then12
-// Promise {<resolved>: undefined}
-```
-
-这里就是 Promise 中的 then **返回** 一个 promise 的状况了，这个考的重点在于 **Promise 而非 Eventloop** 了。这里就很好理解为何 then12 会在 then23 之后执行，这里 Promise1 的第二个 then 相当于是挂在新 Promise2 的最后一个 then 的返回值上。
-
-#### 23、 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个 Promise 呢，再加一个 new Promise 是否会影响结果?
-
-```js
-new Promise((resolve, reject) => {
-  console.log("promise1");
-  resolve();
-})
-  .then(() => {
-    console.log("then11");
-    new Promise((resolve, reject) => {
-      console.log("promise2");
-      resolve();
-    })
-      .then(() => {
-        console.log("then21");
-      })
-      .then(() => {
-        console.log("then23");
-      });
-  })
-  .then(() => {
-    console.log("then12");
-  });
-
-new Promise((resolve, reject) => {
-  console.log("promise3");
-  resolve();
 }).then(() => {
-  console.log("then31");
-});
+  console.log("then12")
+})
+// promise1
+// then11
+// promise2
+// then21
+// then12
+// then23
+// Promise {<resolved>: undefined}
+```
+解答：遇到这种嵌套的Promise不要慌，应该清楚的分析当前的队列的行为，
+第一轮：
+  * current task: promise1是当之无愧的立即执行的一个函数，promise是一个立即执行的函数，立即执行输出[promise1];
+  * micro task queue: [promise1的第一个then];
+第二轮：
+  * current task: then1执行中，立即输出了then11以及新 promise2 的 `promise2`
+  * micro task queue: [新promise2的then函数,以及promise1的第二个then函数]
+第三轮：
+  * current task: 新promise2的then函数输出then21和promise1的第二个then函数输出then12。
+  * micro task queue: [新promise2的第二then函数]
+第四轮
+  * current task: 新promise2的第二then函数输出then23
+  * micro task queue: []
+
+
+### 22 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
+```js
+
+new Promise((resolve,reject) => {
+  console.log("promise1")
+  resolve()
+}).then(() => {
+  console.log("then11")
+  return new Promise((resolve,reject)=>{
+    console.log("promise2")
+    resolve()
+  }).then(()=>{
+    console.log("then21")
+  }).then(()=>{
+    console.log("then23")
+  })
+}).then(()=>{
+  console.log("then12")
+})
+
+// promise1
+// then11
+// promise2
+// then21
+// then23
+// then12
+// Promise {<resolved>: undefined}
+```
+这里就是Promise中的then **返回** 一个promise的状况了，这个考的重点在于 **Promise而非Eventloop** 了。这里就很好理解为何then12会在then23之后执行，这里Promise1的第二个then相当于是挂在新Promise2的最后一个then的返回值上。
+
+### 23 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
+
+```js
+new Promise((resolve,reject)=>{
+  console.log("promise1")
+  resolve()
+}).then(()=>{
+  console.log("then11")
+  new Promise((resolve,reject)=>{
+    console.log("promise2")
+    resolve()
+  }).then(()=>{
+    console.log("then21")
+  }).then(()=>{
+    console.log("then23")
+  })
+}).then(()=>{
+  console.log("then12")
+})
+
+new Promise((resolve,reject)=>{
+  console.log("promise3")
+  resolve()
+}).then(()=>{
+  console.log("then31")
+})
 
 // promise1
 // promise3
@@ -1121,29 +1105,25 @@ new Promise((resolve, reject) => {
 // then12
 // then23
 ```
-
-解答： 这里需要注意一点 promise1 和 promise3 是同步关系
+解答： 这里需要注意一点promise1 和 promise3 是同步关系
 第一轮
-
-- current task: promise1，promise3
-- micro task queue: [ then11, promise2 的第一个 then，promise3 的第一个 then]
+  * current task: promise1，promise3
+  * micro task queue: [ then11, promise2的第一个then，promise3的第一个then]
 
 第二轮
-
-- current task: then11，promise2，then31
-- micro task queue: [promise2 的第一个 then，promise1 的第二个 then]
+  * current task: then11，promise2，then31
+  * micro task queue: [promise2的第一个then，promise1的第二个then]
 
 第三轮
-
-- current task: then21，then12
-- micro task queue: [promise2 的第二个 then]
+  * current task: then21，then12
+  * micro task queue: [promise2的第二个then]
 
 第四轮
+  * current task: then23
+  * micro task queue: []
 
-- current task: then23
-- micro task queue: []
 
-#### 24、0624 继续异步专题的研究 EventLoop 考点:在 async/await 之下，对 Eventloop 的影响。
+### 24 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
 
 ```js
 async function async1() {
@@ -1156,19 +1136,13 @@ async function async2() {
   console.log("async2");
 }
 
-console.log("script start");
-{
-  1;
-}
+console.log("script start");  {1}
 
 setTimeout(function() {
   console.log("setTimeout");
 }, 0);
 
-async1();
-{
-  2;
-}
+async1();                     {2}
 
 new Promise(function(resolve) {
   console.log("promise1");
@@ -1191,19 +1165,19 @@ console.log("script end");
 
 解答：使用事件循环机制分析:
 
-> - 1.首先执行同步代码，console.log( 'script start' );
-> - 2.遇到 setTimeout, 会被推入宏任务队列;
-> - 3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' );
-> - 4.然后执行 async2(), 然后会打印 console.log( 'async2' );
-> - 5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，**去外部执行同步代码**;
-> - 6.进入 new Promise,Promise 底层实现是一个立即执行函数 会打印 console.log( 'promise1' );
-> - 7.将.then 放入事件循环的微任务队列;
-> - 8.继续执行同步代码，打印 console.log( 'script end' );
-> - 9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2() 其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行
-> - 10.执行后面的代码, 打印 console.log( 'async1 end' );
-> - 11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
+>1.首先执行同步代码，console.log( 'script start' );
+2.遇到 setTimeout, 会被推入宏任务队列;
+3.执行 async1(), 它也是同步的，只是返回值是 Promise，在内部首先执行 console.log( 'async1 start' );
+4.然后执行 async2(), 然后会打印 console.log( 'async2' );
+5.从右到左会执行, 当遇到 await 的时候，阻塞后面的代码，**去外部执行同步代码**;
+6.进入 new Promise,Promise 底层实现是一个立即执行函数 会打印 console.log( 'promise1' );
+7.将.then 放入事件循环的微任务队列;
+8.继续执行同步代码，打印 console.log( 'script end' );
+9.外部同步代码执行完毕，接着回到 async1()内部, 由于 async2() 其实是返回一个 Promise, await async2()相当于获取它的值，其实就相当于这段代码 Promise.resolve(undefined).then((undefined) => {}),所以.then 会被推入微任务队列, 所以现在微任务队列会有两个任务。接下来处理微任务队列，打印 console.log( 'promise2' )，后面一个.then 不会有任何打印，但是会执行 
+10.执行后面的代码, 打印 console.log( 'async1 end' );
+11.进入第二次事件循环，执行宏任务队列, 打印 console.log( 'setTimeout' );
 
-#### 25、 0625 下面代码会输出什么？ 考点: this 的指向：
+#### 0625 下面代码会输出什么？ 考点: this的指向：
 
 ```js
 var x = 3;
@@ -1215,46 +1189,63 @@ var foo = {
       return this.x;
     }
   }
-};
+}
 var go = foo.baz.bar;
 
-console.log(go()); // 3
+console.log(go());  // 3
 console.log(foo.baz.bar()); // 1
 ```
 
-解答:this 由调用者提供，由调用函数的方式来决定。如果是一个对象调用的函数，则 this 指向该对象，比如 foo.baz.bar()。如果函数独立调用比如 go()，那么该函数内部的 this，则指向 undefined。但是在非严格模式中，它会被自动指向全局对象 window。
-上诉这段代码中，go 的执行是在全局环境中执行的,因此指向的是全局环境中的 3。
+解答:this由调用者提供，由调用函数的方式来决定。如果是一个对象调用的函数，则this指向该对象，比如foo.baz.bar()。如果函数独立调用比如go()，那么该函数内部的this，则指向undefined。但是在非严格模式中，它会被自动指向全局对象window。
+上诉这段代码中，go的执行是在全局环境中执行的,因此指向的是全局环境中的3。
 
-#### 26、 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
-
+### 0626 写一个逆序字符串的函数 考点 js 原生字符串处理的掌握。
 解答:
-
 ```js
 function reverse(str) {
-  let res = str.split("");
-  return res.reverse().join("");
+  let res = str.split('');
+  return res.reverse().join('');
 }
-reverse("hello world!"); // output: '!dlrow olleh'
+reverse('hello world!'); // output: '!dlrow olleh'
 ```
 
-#### 27、 0627 React 使用中用过哪些状态管理工具，紧接着问了 redux 和 mobx 的区别
-
-1、Redux 鼓励一个应用之中只有一个 store，Mobx 鼓励实现多个 store
-2、Redux 是函数式编程，而 Mobox 的模式是面向对象的。
-3、Redux 鼓励数据的规范化，减少冗余。Mobx 容许数据冗余，但同样能保持数据一致
-4、5.Redux 更严格，必须调用 reducer 触发 action 来改变 state， Mobx 最初的一个卖点就是直接修改数据，但是实践中大家还是发现这样无组织无纪律不好，所以后来 Mobx 还是提供了 action 的概念。和 Redux 的 action 有点不同，Mobx 中的 action 其实就是一个函数，不需要做 dispatch。如果想强制要求使用 action，禁止直接修改 observable 数据，使用 Mobx 的 configure
-
+### 0627 React使用中用过哪些状态管理工具，紧接着问了redux和mobx的区别
+1、Redux鼓励一个应用之中只有一个store，Mobx鼓励实现多个store
+2、Redux是函数式编程，而Mobox的模式是面向对象的。
+3、Redux鼓励数据的规范化，减少冗余。Mobx 容许数据冗余，但同样能保持数据一致
+4、5.Redux更严格，必须调用reducer触发action来改变state， Mobx 最初的一个卖点就是直接修改数据，但是实践中大家还是发现这样无组织无纪律不好，所以后来 Mobx 还是提供了 action 的概念。和 Redux 的 action 有点不同，Mobx 中的 action 其实就是一个函数，不需要做 dispatch。如果想强制要求使用 action，禁止直接修改 observable 数据，使用 Mobx 的 configure
 ```js
-import { configure } from "mobx";
-configure({ enforceActions: true });
+import {configure} from 'mobx';
+configure({enforceActions: true});
 ```
 
-#### 28、 0628 call 的模拟实现 考点 对于原生 js 的熟练程度 基本面试必考
+### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
+解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 
-解答：主要参考了冴羽老师的博客：[call 和 apply 的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
+
+var foo = {
+  value:1,
+  bar:function(){
+  console.log(this.value)
+}
+}
+
+function bar(){
+  console.log(this.value)
+}
+
+bar.call(foo,1,2,3);
+
+
+
+
+
+
+
+
 
 ```js
-Function.prototype.call2 = function(context) {
+Function.prototype.call2 = function (context) {
   // call 函数传入的this指向可能是null 如果是null 用window替代
   var context = context || window;
   // 将调用call的函数 传递给 context 变成它内部的函数
@@ -1262,206 +1253,138 @@ Function.prototype.call2 = function(context) {
 
   // 处理参数问题，call函数的参数是不定参数，因此需要整合成一个数组
   var args = [];
-  for (var i = 1, len = arguments.length; i < len; i++) {
-    args.push("arguments[" + i + "]");
+  for(var i = 1, len = arguments.length; i < len; i++) {
+      args.push('arguments[' + i + ']');
   }
   // call 函数可能具有返回值。
-  var result = eval("context.fn(" + args + ")");
-  // 删除这个多余的属性
-  delete context.fn;
+  var result = eval('context.fn(' + args +')');
+  // 删除这个多余的属性 
+  delete context.fn
   // 返回结果
   return result;
-};
+}
 ```
 
-#### 29、 0629 apply 的模拟实现 考点 对于原生 js 的熟练程度
-
-解答：主要参考了冴羽老师的博客：[call 和 apply 的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
-
+### 0629 apply的模拟实现 考点 对于原生js的熟练程度
+解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
 ```js
-Function.prototype.apply = function(context, arr) {
-  var context = Object(context) || window;
-  context.fn = this;
+Function.prototype.apply = function (context, arr) {
+    var context = Object(context) || window;
+    context.fn = this;
 
-  var result;
-  if (!arr) {
-    result = context.fn();
-  } else {
-    var args = [];
-    for (var i = 0, len = arr.length; i < len; i++) {
-      args.push("arr[" + i + "]");
+    var result;
+    if (!arr) {
+        result = context.fn();
     }
-    result = eval("context.fn(" + args + ")");
-  }
+    else {
+        var args = [];
+        for (var i = 0, len = arr.length; i < len; i++) {
+            args.push('arr[' + i + ']');
+        }
+        result = eval('context.fn(' + args + ')')
+    }
 
-  delete context.fn;
-  return result;
-};
+    delete context.fn
+    return result;
+}
 ```
 
-#### 30、 0630 bind 模拟实现 考点 对于原生 js 的熟练程度
-
-解答：主要参考了冴羽老师的博客：[bind 的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
+### 0630 bind模拟实现 考点 对于原生js的熟练程度
+解答：主要参考了冴羽老师的博客：[bind的模拟实现](https://github.com/mqyqingfeng/Blog/issues/12)
 
 ```js
-Function.prototype.bind2 = function(context) {
-  if (typeof this !== "function") {
-    throw new Error(
-      "Function.prototype.bind - what is trying to be bound is not callable"
-    );
-  }
+  Function.prototype.bind2 = function (context) {
 
-  var self = this;
-  var args = Array.prototype.slice.call(arguments, 1);
+    if (typeof this !== "function") {
+      throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
+    }
 
-  var fNOP = function() {};
+    var self = this;
+    var args = Array.prototype.slice.call(arguments, 1);
 
-  var fBound = function() {
-    var bindArgs = Array.prototype.slice.call(arguments);
-    return self.apply(
-      this instanceof fNOP ? this : context,
-      args.concat(bindArgs)
-    );
-  };
+    var fNOP = function () {};
 
-  fNOP.prototype = this.prototype;
-  fBound.prototype = new fNOP();
-  return fBound;
-};
+    var fBound = function () {
+        var bindArgs = Array.prototype.slice.call(arguments);
+        return self.apply(this instanceof fNOP ? this : context, args.concat(bindArgs));
+    }
+
+    fNOP.prototype = this.prototype;
+    fBound.prototype = new fNOP();
+    return fBound;
+}
 ```
 
-#### 31、 0701 页面上有个空的无序列表节点，用 `<ul></ul>` 表示，要往列表中插入 3 个`<li>`，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 `<ul>` 节点加上 id 或者 class 属性（考点 原生 dom 的操作）
-
+### 0701 页面上有个空的无序列表节点，用 <ul></ul> 表示，要往列表中插入 3 个 <li>，每个列表项的文本内容是列表项的插入顺序，取值 1, 2, 3，怎么用原生的 JS 实现这个需求？同时约定，为方便获取节点引用，可以根据需要为 <ul> 节点加上 id 或者 class 属性（考点 原生dom的操作）
 ```js
-<ul id="list" />;
+<ul id="list"></ul>
 // 获取 list 节点
-var container = document.getElementById("list");
+var container = document.getElementById('list');
 // 循环 创建3个li标签
 for (var i = 0; i < 3; i++) {
-  var item = document.createElement("li");
+  var item = document.createElement('li');
   item.innerText = i + 1;
   // 使用 appendChild 将元素放进去
   container.appendChild(item);
 }
 ```
-
 或者:
-
 ```js
-var container = document.getElementById("list");
+var container = document.getElementById('list');
 var html = [];
 for (var i = 0; i < 3; i++) {
-  html.push("<li>" + (i + 1) + "</li>");
+    html.push('<li>' + (i + 1) + '</li>');
 }
-container.innerHTML = html.join("");
+container.innerHTML = html.join('');
 ```
-
 如果我们想要增加代码的容错能力，避免变量的污染，我们可以用下面的这套代码来代替
-
 ```js
 (() => {
-  var ndContainer = document.getElementById("js-list");
+  var ndContainer = document.getElementById('js-list');
   if (!ndContainer) {
     return;
   }
 
   for (var i = 0; i < 3; i++) {
-    var ndItem = document.createElement("li");
+    var ndItem = document.createElement('li');
     ndItem.innerText = i + 1;
     ndContainer.appendChild(ndItem);
   }
 })();
 ```
 
-#### 32、 0702 接着昨天的问题,如果我们想要弹出来每一个 li 里面的内容应该如何做呢？
-
-使用 es6 的中的块级作用域的概念可以帮助我们避免踩坑，这个问题前面的题目有所涉及
-
+### 0702 接着昨天的问题,如果我们想要弹出来每一个li里面的内容应该如何做呢？
+使用es6的中的块级作用域的概念可以帮助我们避免踩坑，这个问题前面的题目有所涉及
 ```js
 for (let i = 0; i < 3; i++) {
-  const ndItem = document.createElement("li");
+  const ndItem = document.createElement('li');
   ndItem.innerText = i + 1;
-  ndItem.addEventListener("click", function() {
-    alert(i);
+  ndItem.addEventListener('click', function () {
+      alert(i);
   });
   ndContainer.appendChild(ndItem);
 }
 ```
-
 而熟悉 addEventListener 文档的候选人会给出下面的方法：
-
 ```js
 for (var i = 0; i < 3; i++) {
-  var ndItem = document.createElement("li");
+  var ndItem = document.createElement('li');
   ndItem.innerText = i + 1;
-  ndItem.addEventListener("click", function() {
+  ndItem.addEventListener('click', function () {
     alert(this.innerText);
   });
   ndContainer.appendChild(ndItem);
 }
 ```
-
 因为 EventListener 里面默认的 this 指向当前节点。
 
-#### 33、 0703 实现一个防抖函数？ (循序渐进，提供思路和版本)
 
-防抖的原理就是：你尽管触发事件，但是我一定在事件触发n秒后才执行，如果你在一个事件触发的n秒内又触发了这个时间，那我就以新的事件时间为准，n秒后才执行，总之，就是要等你触发完事件n秒内不再触发事件，我才执行，是不是很任性。
 
-解答：防抖函数，实际上是一个接收一个函数，一个等待时间的函数，无论你怎样的频繁的操作我等到你不操作的时间开始算起 n 秒后执行
-第一个版本：
-
-```js
-function debounce(func, wait) {
-  var timeout;
-  return function() {
-    clearTimeout(timeout);
-    timeout = setTimeout(func, wait);
-  };
-}
-```
-
-#### 34、 实现一个防抖函数？ (循序渐进，提供思路和版本)
-
-第二个版本：上述的第一个版本中 this 指向已经变了为了能够保留执行时候的 this 指向。我们来看看第二个版本
-
-```js
-function debounce(func, wait) {
-  var timeout;
-  return function() {
-    var context = this;
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      func.apply(context);
-    }, wait);
-  };
-}
-```
-
-#### 35、 0705 实现一个防抖函数？ (循序渐进，提供思路和版本)
-
-第三个版本：上面的一个版本实际上还是不够完美的。因为丢失了 event 对象 这一个版本我们添加一个 event 对象
-
-```js
-function debounce(func, wait) {
-  var timeout;
-
-  return function() {
-    var context = this,
-      args = arguments;
-    clearTimeout(timeout);
-    timeout = setTimeout(function() {
-      func.apply(context, args);
-    }, wait);
-  };
-}
-```
-
-#### 36、 0706 说一下 new 操作符都做了哪些事情 考点：js 面向对象系统
-
+###  0706 说一下new操作符都做了哪些事情 考点：js面向对象系统
 解答：四大步骤：
-1、创建一个空的对象，并且 this 变量引用该对象.
+1、创建一个空的对象，并且this变量引用该对象.
 2、继承函数的原型。
-3、属性和方法被添加到 this 的引用中，并执行该函数。
+3、属性和方法被添加到this的引用中，并执行该函数。
 4、新创建的对象由 this 所引用，并且最后隐式的返回 this。
 
 ```js
@@ -1476,22 +1399,19 @@ function new(func) {
 }
 ```
 
-#### 37、 0707 遍历 DOM 树 （递归、树形结构、原生 dom 操作）
-
+###  0707 遍历DOM树 （递归、树形结构、原生dom操作）
 ```js
-function traverse(node) {
+function traverse(node){
   // dom nodeType 1 --> 元素节点 nodeType 2 --> 属性节点 nodeType 3 --> 文本节点
-  if (node && node.nodeType === 1) {
+  if(node && node.nodeType === 1){
     console.log(node.tagName);
-  }
-
-  var i = 0,
-    childNodes = node.childNodes,
-    item;
-  for (; i < childNodes.length; i++) {
+  } 
+  
+  var i = 0,childNodes = node.childNodes,item;
+  for(;i<childNodes.length;i++){
     item = childNodes[i];
-    if (item.nodeType === 1) {
-      traverse(item);
+    if(item.nodeType === 1){
+      traverse(item)
     }
   }
 }
@@ -1762,12 +1682,10 @@ O($n^2$) 的时间复杂度
         }else{
           newSource[key] = deepClone(source[key])
         }
+        return newSource;
       }
     }
-    return newSource;
-  }
 ```
-
 2、用JSON.parse 和JSON.stringify配合使用实现深拷贝  不仅适用于数组还适用于对象！但是这种拷贝的方式不能拷贝函数。
 ```js
   // 对象深拷贝
@@ -1841,19 +1759,8 @@ cookie也是在所有同源窗口中都是共享的。
 #### 0720 50、手写一个冒泡的排序算法 算法实现
 
 ```js
-  function bubbleSort(arr){
-    if(arr === undefined || arr.length < 2){
-      return 
-    }
-    for(let end = arr.length-1;end>0;end--){
-      for(let i = 0;i<end;i++){
-        if(arr[i]>[arr[i+1]]){
-          [[arr[i],arr[i+1]]] = [arr[i+1],arr[i]]
-        }
-      }
-    }
-    return arr
-  }
+<input v-model="sth" />
+<input v-bind:value="sth" v-on:input="sth = $event.target.value" />
 ```
 
 #### 0721 51、说一下http1.0 http1.1 和http2.0的区别:
@@ -1884,8 +1791,7 @@ cookie也是在所有同源窗口中都是共享的。
 
   4、服务端推送（server push），同SPDY一样，HTTP2.0也具有server push功能。
 
-  更多对于HTTP内容可以看这篇文章:
-  [HTTP1.0、HTTP1.1 和 HTTP2.0 的区别](https://mp.weixin.qq.com/s/GICbiyJpINrHZ41u_4zT-A?)
+###  0815 Vue中双向绑定 简单原理说明
 
   
 #### 0722 52、选择排序实现 考察点 常见的算法实现
@@ -1911,19 +1817,18 @@ cookie也是在所有同源窗口中都是共享的。
 
 #### 0723 52、插入排序实现 考察点 常见的算法实现:
 ```js
-function insertionSort(arr) {
-  if (arr == null || arr.length < 2) {
-    return;
-  }
-  // 这个外层的for循环 i 就是当前这个要插入的数,第一个数认为第一次是不需要排序的
-  for (let i = 1; i < arr.length; i++) {
-    // j>=0 这条件是为了不越界 arr[j] > arr[j + 1] 前一个数和后一个数做比较
-    for (let j = i - 1; j >= 0 && arr[j] > arr[j + 1]; j--) {
-      [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+  var obj  = {};
+  Object.defineProperty(obj, 'name', {
+    get: function() {
+        console.log('我被获取了')
+        return val;
+    },
+    set: function (newVal) {
+        console.log('我被设置了')
     }
-  }
-  return arr
-}
+  })
+  obj.name = 'fei';//在给obj设置name属性的时候，触发了set这个方法
+  var val = obj.name;//在得到obj的name属性，会触发get方法
 ```
 
 #### 0724 53、如何实现数组的浅拷贝：

@@ -2003,7 +2003,7 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 
 1、v-model是语法糖
 
-```js
+```html
 <input v-model="sth" />
 <input v-bind:value="sth" v-on:input="sth = $event.target.value" />
 ```
@@ -2013,7 +2013,7 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 1.lazy 
 在输入框中，v-model默认是在input事件中同步输入框的数据的，使用修饰符lazy则会变为在change事件中同步
 
-```js
+```html
 <input type="text" v-model.lazy="message"/>
 <p>当前输入是：{{message}}</p>
 ```
@@ -2021,7 +2021,7 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 2.number 
 使用该修饰符可以将输入转化为Number类型，否则我们得到的数据的类型是String。
 
-```js
+```html
 <input type="text" v-model.number="message"/>
 <p>当前输入是：{{message}}</p>
 ```
@@ -2029,7 +2029,7 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 3.trim 
 这个修饰符可以自动过滤输入的首尾空格。
 
-```js
+```html
 <input type="text" v-model.trim="message"/>
 <p>当前输入是：{{message}}</p>
 ```

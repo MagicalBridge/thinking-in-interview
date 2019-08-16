@@ -2036,23 +2036,29 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 
 ###  0815 Vue中双向绑定 简单原理说明（https://www.cnblogs.com/zhenfei-jiang/p/7542900.html）
 
-1、vue.js 则是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
-2、Object.defineProperty()
-Object.defineProperty有三个参数（参数一 要添加属性的对象，参数二要添加的属性，参数三一个函数（get set函数 和java里面getter和setter比较像））
+1、vue是采用数据劫持结合发布者-订阅者模式的方式，通过`Object.defineProperty()`来劫持各个属性的`setter`，`getter`，在数据变动时发布消息给订阅者，触发相应的监听回调。
+
+2、`Object.defineProperty()`:
+Object.defineProperty有三个参数
+参数一: 要添加属性的对象，
+参数二: 要添加的属性名称
+参数三: 将被定义或修改的属性描述符。
 
 ```js
-  var obj  = {};
-  Object.defineProperty(obj, 'name', {
-    get: function() {
-        console.log('我被获取了')
-        return val;
-    },
-    set: function (newVal) {
-        console.log('我被设置了')
-    }
-  })
-  obj.name = 'fei';//在给obj设置name属性的时候，触发了set这个方法
-  var val = obj.name;//在得到obj的name属性，会触发get方法
+var obj  = {};
+Object.defineProperty(obj, 'name', {
+  configurable: true, // 值为true的时候值才能被改变
+  enumerable: true, // 可枚举
+  get: function() {
+    console.log('我被获取了')
+    return val;
+  },
+  set: function (newVal) {
+    console.log('我被设置了')
+  }
+})
+obj.name = 'fei';   //在给obj设置name属性的时候，触发了set这个方法
+var val = obj.name; //在得到obj的name属性，会触发get方法
 ```
 
 3、vue如何实现原理图

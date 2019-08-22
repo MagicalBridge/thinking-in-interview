@@ -1973,7 +1973,8 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
 
 
 ###  0812 Vue中如何监控某个属性值的变化
-   1.Vue中监控对象属性的变化 
+```js
+  1.Vue中监控对象属性的变化 
       watch:{
         obj:{
           handler(newValue, oldValue){
@@ -1994,10 +1995,11 @@ diff程可以概括为：oldCh和newCh各有两个头尾的变量StartIdx和EndI
         return this.obj.a
       }
    }
-   watch 和 computed的不同：
-   computed监听的变量不能在data中初始化
-   computed储存需要处理的数据值，有缓存机制，只有改变时才执行
-   watch 可以监听路由router的变化，props、data、computed内的数据变化
+```
+watch 和 computed的不同：
+computed监听的变量不能在data中初始化
+computed储存需要处理的数据值，有缓存机制，只有改变时才执行
+watch 可以监听路由router的变化，props、data、computed内的数据变化
 
 ###  0815 vue 中v-model原理及应用
 

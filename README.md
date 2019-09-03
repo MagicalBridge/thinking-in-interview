@@ -2185,6 +2185,25 @@ console.log(b);//1
 初始化的时候 _uid 就是 0 因此赋值的时候就是0 下次使用使用的时候就变成1了。
 
 
+###  0902 window.location.search 用法总结
+- 1、在bing搜索中 搜索study 这样关键字 浏览器中复制链接如下：
+
+https://cn.bing.com/search?q=study&qs=n&form=QBRE&sp=-1&pq=study&sc=8-5&sk=&cvid=C454F59743B94FE6833BAEE96ED19CEC
+
+- 2、使用 `window.location.search` 方法截取url参数获得以下链接：
+console.log(window.location.search): 
+?q=study&qs=n&form=QBRE&sp=-1&pq=study&sc=8-5&sk=&cvid=C454F59743B94FE6833BAEE96ED19CEC
+
+- 3、截取的链接中是以问号开头的，需要截取问号后面的拼接参数键值对。使用substring() 方法 注意subsrt()这个方法已经逐渐被废弃
+  subString()方法：方法返回一个字符串在开始索引到结束索引之间的一个子集, 或从开始索引直到字符串的末尾的一个子集。
+  第二个参数是可以选择的 如果不写则 默认截取到最后,第一个参数是开始的位置的索引.
+- 4、在很多的项目中使用 import * as querystring from 'querystring' 
+  这种使用方式 逐渐取代之前的那种方式, 
+
+
+
+
+
 ###  0903 Vue.use(plugin)的用法：
   最近在梳理项目的时候，发现项目中使用了很多vue的插件。所以回顾下use的用法：
   - 参数：`{Object | Function} plugin`

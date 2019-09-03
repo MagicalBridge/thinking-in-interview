@@ -2184,3 +2184,10 @@ console.log(b);//1
 在vue的源码中的 `initMinin` 函数中 _uid 使用的是 **后自增**, `vm._uid = uid++` => `vue = {_uid : 0}`
 初始化的时候 _uid 就是 0 因此赋值的时候就是0 下次使用使用的时候就变成1了。
 
+
+###  0903 Vue.use(plugin)的用法：
+  最近在梳理项目的时候，发现项目中使用了很多vue的插件。所以回顾下use的用法：
+  - 参数：`{Object | Function} plugin`
+  - 用法: 安装 Vue.js 插件。如果插件是一个对象，必须提供 install 方法。如果插件是一个函数，它会被作为 install 方法。install 方法调用时，会将 Vue 作为参数传入。该方法需要在调用 new Vue() 之前被调用。当 install 方法被同一个插件多次调用，插件将只会被安装一次。
+
+

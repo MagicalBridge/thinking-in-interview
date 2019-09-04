@@ -2200,10 +2200,6 @@ console.log(window.location.search):
 - 4、在很多的项目中使用 import * as querystring from 'querystring' 
   这种使用方式 逐渐取代之前的那种方式, 
 
-
-
-
-
 ###  0903 Vue.use(plugin)的用法：
   最近在梳理项目的时候，发现项目中使用了很多vue的插件。所以回顾下use的用法：
   - 参数：`{Object | Function} plugin`

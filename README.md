@@ -2272,4 +2272,34 @@ react组件在每次需要重新渲染时候都会调用`componentWillUpdate()`,
 
 实际的操作中 通过 操作 state、props 都可以实现渲染劫持
 
+### 0906 说说 react中Fragment 的应用：
+1、一般来说，我们希望书写有语义的HTML元素，符合相应的嵌套标准，但是有时候 语义化的HTML会被破坏。
+比如我们在写jsx书写 `<div>` `<ol>、<ul>` 由于jsx语法的根节点的限制。我们就是会破坏结构。
+```js
+import React, { Fragment } from 'react';
+
+// 函数组件 在渲染列表的时候 最外层我们并没有使用 div 或者 dl 作为根标签，因为这个函数
+// 作用只是渲染列表没有涉及外部的包裹的元素。
+function ListItem({ item }) {
+  return (
+    <Fragment>
+      <dt>{item.term}</dt>
+      <dd>{item.description}</dd>
+    </Fragment>
+  );
+}
+
+// 父组件中 外层已经提供了 dl标签 这时候 Fragment 起到了作用
+function Glossary(props) {
+  return (
+    <dl>
+      {props.items.map(item => (
+        <ListItem item={item} key={item.id} />
+      ))}
+    </dl>
+  );
+}
+```
+
+
 

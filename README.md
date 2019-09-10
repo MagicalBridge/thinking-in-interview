@@ -2314,6 +2314,59 @@ react.lazy()的应用。react在16.6的版本中添加了 react.lazy() 的这个
 这个是非常让我们头疼的。react16.6 版本中新增加的react.lazy() 是一个非常重要的应用。
 我在思考我们的项目是否能够直接升级成react16.6的版本。
 
+### 0909 
+react 中选择合适的组件类型：
+
+SFC(Stateless Functional Compoent):
+react 可以使用 function 来创建 component 这种组件 没有生命周期 内部不需要维护 state 只要传入 props 有变化则进行重新渲染。
+```js
+function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+// 使用箭头 函数更加简洁
+const Welcome = props => <h1>Hello, {props.name}</h1>;
+```
+
+HOC(Higher-Order Components)
+高阶组件对于 Vue 开发者来说应该是个陌生的概念（不知道，我用 Vue 的时候没见过类似的用法）。从代码上看，高阶组件就是一个方法，传入一个组件，返回另一个组件。
+
+```js
+function logProps(WrappedComponent) {
+  return class extends React.Component {
+    componentWillReceiveProps(nextProps) {
+      console.log('Current props: ', this.props);
+      console.log('Next props: ', nextProps);
+    }
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
+  }
+}
+
+最常见的高阶组件是 react-redux 里面的 connect 方法，通过传入 组件和 map*ToProps 方法，让组件和 store 连接。组件内部就可以直接通过 props 获得 connect 之后的值。
+
+exprot default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Component);
+
+```
+Dynamic Component:
+
+有些业务场景下，在执行时才能确定具体的标签或者组件是什么。在 React 的世界里面，以大写字母开头会被当成动态组件加载，而小写字母开头会被认为是 HTML DOM tag。
+
+```js
+// Heading.js
+render() {
+    const { tag: Tag, children } = this.props;
+    return <Tag>{ children }</Tag>
+}
+```
+
+
+### 0910
+
 
 
 

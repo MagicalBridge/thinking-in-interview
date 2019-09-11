@@ -2359,13 +2359,41 @@ Dynamic Component:
 ```js
 // Heading.js
 render() {
-    const { tag: Tag, children } = this.props;
-    return <Tag>{ children }</Tag>
+  const { tag: Tag, children } = this.props;
+  return <Tag>{ children }</Tag>
 }
 ```
+### 0910 算法题目：给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。你可以假设数组中无重复元素。
 
+输入: [1,3,5,6], 5
+输出: 2
 
-### 0910
+输入: [1,3,5,6], 2
+输出: 1
+
+输入: [1,3,5,6], 7
+输出: 4
+
+分析：这道题目思路非常简单, 循环一遍数组, 和相应的目标值作比较，首先考虑相等的情况，这种情况非常容易得出
+只要判断 nums[i] === target 就可以得出，如果数字是可以插入到数组中的某个特定的位置, 例如第二个例子中
+本来3是在第二个位置，现在2进来之后，就占据了3的位置,数组扩容了.因此当数组的nums[i]>target 时候，返回的也是
+当前的这个遍历到的元素的位置 i 最后一种情况 是遍历完之后 没有发现符合上述两种情况，说明这个数字比数组中的任何一个数字
+都要大，直接插入到数组最后，数组的length 是从1 开始的 length 指的是第一个没有元素的位置
+```js
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number}
+ */
+var searchInsert = function(nums, target) {
+  for(let i = 0;i<nums.length;i++){
+    if(nums[i] >= target){
+      return i;
+    }
+  }
+  return nums.length;
+};
+```
 
 
 

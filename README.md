@@ -2379,6 +2379,7 @@ render() {
 本来3是在第二个位置，现在2进来之后，就占据了3的位置,数组扩容了.因此当数组的nums[i]>target 时候，返回的也是
 当前的这个遍历到的元素的位置 i 最后一种情况 是遍历完之后 没有发现符合上述两种情况，说明这个数字比数组中的任何一个数字
 都要大，直接插入到数组最后，数组的length 是从1 开始的 length 指的是第一个没有元素的位置
+
 ```js
 /**
  * @param {number[]} nums
@@ -2392,6 +2393,21 @@ var searchInsert = function(nums, target) {
     }
   }
   return nums.length;
+};
+```
+
+### 给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+输入: [-2,1,-3,4,-1,2,1,-5,4],
+输出: 6
+解释: 连续子数组 [4,-1,2,1] 的和最大，为 6。
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    
 };
 ```
 

@@ -2421,10 +2421,16 @@ react官方文档中说道，组件无论是使用函数声明还是通过class�
 React组件的class是基于es6的语法规范实现的，react的渲染有两种情况，一个是初次渲染，一个是状态更新之后的再次渲染，构造函数在组件的初次渲染中只会运行一次，构造函数里进行的操作一般有三种用途：
 1、指定this -->  super(props)
 2、设置初始化的状态 --> this.setState({});
-3、为组件上的构造函数绑定this
+3、为组件上的构造函数绑定this;
 
 ### 如何理解react中的super() 和 super(props)?
+react 中的class 是基于es6的规范实现的, 继承是使用extends关键字实现继承的，子类必须在constructor()中调用super() 方法否则新建实例
+就会报错，报错的原因是 子类是没有自己的this对象的，它只能继承父类的this对象，然后对其进行加工，而super()就是将父类中的this对象继承给子类的，没有super() 子类就得不到this对象。
 
+如果你使用了constructor就必须写super() 这个是用来初始化this的，可以绑定事件到this上
+如果你想要在constructor中使用this.props,就必须给super添加参数 super(props)
+注意，无论有没有 constructor，在render中的this.props都是可以使用的，这是react自动附带的
+如果没有用到constructor 是可以不写的，react会默认添加一个空的constroctor.
 
 
 

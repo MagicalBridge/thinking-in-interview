@@ -2432,8 +2432,88 @@ react 中的class 是基于es6的规范实现的, 继承是使用extends关键�
 注意，无论有没有 constructor，在render中的this.props都是可以使用的，这是react自动附带的
 如果没有用到constructor 是可以不写的，react会默认添加一个空的constroctor.
 
+### 写出5种css隐藏元素的办法: css基础运用
+
+1、opacity: 0;
+2、visibility: hidden;
+3、display: none;
+4、position: absolute;
+  top: -9999px;
+  left: -9999px;
+5、clip-path: polygon(0px 0px,0px 0px,0px 0px,0px 0px);
 
 
+### 1、请描述一下状态码304
+  表示浏览器端有缓存，并且服务端未更新，不用向服务器端请求资源。
+### 2、实现一个方法，找出一个数组中重复的元素(10分)
+举例
+arr : [1,2,3,4,1,1,2,4,4]
+输出 [1,2,4]
+```js
+Array、prototype、repeNum : function(){
+  let new_arr : this、sort();  //先排序
+  let res : [] ;
+  for( let i : 0 ; i < new_arr、length ; i++){
+      if(new_arr[i] :: new_arr[i+1] &&    //判断是否重复,是否已经放入容器
+      new_arr[i] !:new_arr[i-1]){
+          res、push(new_arr[i]);
+      }
+  }
+  return res
+}
+```
+
+### 5、将这段英文this is a pen首字母大写(10分)
+法一：
+```js
+function bigLetter(str){
+  let newArr : str、split(" ")、map((v,i):>{
+    return v、slice(0,1)、toUpperCase() + v、slice(1)
+  })
+  return newArr、join(" ")
+}
+```
+
+法二：
+```js
+function bigLetter(str){
+  bigStr : str、toLowerCase()、replace(/\b\w+\b/g, function(word){
+    return word、substring(0,1)、toUpperCase()+word、substring(1);
+  });
+  return bigStr;
+}
+```
+### 6、请写出你常用的10个linux命令并说明作用(20分)
+
+### 7、请写出你常用的5个git命令并说明作用(15分)
+
+### 8、关于Promise的题(10分)
+
+### 9、react向子组件传状态(15分)
+
+### 11、你能说说react的虚拟DOM吗？
+
+12、你这个项目中你负责开发了哪些模块？能说说你主要的开发流程吗？
+13、项目中有没有用过Eslint
+14、来讲讲http?
+15、http请求头有哪些属性
+16、说说GET与POST的区别
+17、知道浏览器缓存吗？
+18、图片懒加载能手写一下吗？
+19、函数节流与防抖
+20、讲讲怎么用Promise
+21、linux如何修改文件权限
+22、有了解过webpack吗？能说说吗？
+23、loader与plugin的区别？
+24、谈谈你对MVVM开发模式的理解 MVVM分为Model、View、ViewModel三者。
+25、.npmrc 是一个什么玩意，脚手架为什么需要这个东西？
+26、.prettierrc 是一个什么东西，有什么作用。
+27、babel.config.js 这个配置文件的作用是什么
+28、postcss.config.js 这个文件是干什么用的
+29、tsconfig.json 这个文件是干什么用的
+30、tslint.json 这个文件是干什么用的
+31、vue.config.js 这个文件是干什么用的
+32、.browserslistrc 这个文件是干什么用的，有什么作用
 
 
 

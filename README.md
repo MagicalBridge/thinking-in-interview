@@ -2490,6 +2490,14 @@ function bigLetter(str){
 ### 6、请写出你常用的10个linux命令并说明作用(20分)
 
 ### 7、请写出你常用的5个git命令并说明作用(15分)
+ - git clone [url]: 下载一个项目和它的整个代码历史
+ - git add [file1] [file2] ... 添加指定文件到暂存区
+ - git add . 添加当前目录的所有文件到暂存区
+ - git commit -m [message] 提交暂存区到仓库区
+ - git commit [file1] [file2] ... -m [message] 提交暂存区的指定文件到仓库区
+ - git branch 列出所有本地分支
+ - git branch -r 列出所有远程分支
+ - git branch -a 新建一个分支，但依然停留在当前分支
 
 ### 8、关于Promise的题(10分)
 

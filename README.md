@@ -2488,6 +2488,11 @@ function bigLetter(str){
 }
 ```
 ### 6、请写出你常用的10个linux命令并说明作用(20分)
+ - ls命令: 显示目录内容，类似DOS下的DIR
+ - mv命令: 更改文件或者目录的名字。mv[options]source destination
+  -f：强制模式，覆盖文件不提示。
+  -i：交互模式，当要覆盖文件的时候给提示。
+  将main.html 修改名称为 index.html mv -f main.html index.html 不加 -f 其实也是可以的
 
 ### 7、请写出你常用的5个git命令并说明作用(15分)
  - git clone [url]: 下载一个项目和它的整个代码历史

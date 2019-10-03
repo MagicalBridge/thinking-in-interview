@@ -2511,6 +2511,9 @@ function bigLetter(str){
 ### 11、你能说说react的虚拟DOM吗？
 
 13、项目中有没有用过Eslint
+
+ESLint（中文站点）是一个开源的 JavaScript 代码检查工具，使用 Node.js 编写，由 Nicholas C. Zakas 于 2013 年 6 月创建。ESLint 的初衷是为了让程序员可以创建自己的检测规则，使其可以在编码的过程中发现问题而不是在执行的过程中。ESLint 的所有规则都被设计成可插入的，为了方便使用，ESLint 内置了一些规则，在这基础上也可以增加自定义规则。
+
 14、来讲讲http?
 15、http请求头有哪些属性
 16、说说GET与POST的区别

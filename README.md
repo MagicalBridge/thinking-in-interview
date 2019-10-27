@@ -2658,6 +2658,50 @@ for (var i = 1; i <= 5; i++) {
     2、所有的引用类型 (数组，对象，函数) 都有一个__proto__ 属性，属性值是一个普通的对象。
     3、所有的函数，都有一个prototype的属性，属性值也是一个对象，
     4、所有的引用类型（数组，对象，函数）,__proto__ 属性值指向它的构造函数的prototype属性值。
+  ```js
+    // 要点一：自由扩展属性
+    var obj = {}; obj.a = 100;
+    var arr = []; arr.a = 100;
+    function fn () {}
+    fn.a = 100;
+    
+    // 要点二：__proto__
+    console.log(obj.__proto__);
+    console.log(arr.__proto__);
+    console.log(fn.__proto__);
+
+    // 要点三：函数有 prototype
+    console.log(fn.prototype)
+
+    // 要点四：引用类型的 __proto__ 属性值指向它的构造函数的 prototype 属性值
+    console.log(obj.__proto__ === Object.prototype)
+  ```
+### 如何判断一个对象中的属性是属于这个对象本身的属性呢？
+  回答：使用 hasOwnProperty 可以进行遍历对象 打印出来真正属于这个对象本身的属性而不是原型上的属性
+  ```js
+  var item
+  for (item in f) {
+    // 高级浏览器已经在 for in 中屏蔽了来自原型的属性，但是这里建议大家还是加上这个判断，保证程序的健壮性
+    if (f.hasOwnProperty(item)) {
+      console.log(item)
+    }
+  }
+  ```
+### 我知道的是，在高级浏览器中 使用for in 遍历已经屏蔽了来自原型额属性，为什么还是使用上述的这种冗余写法呢？
+  为了浏览器的兼容性的问题
+
+### 为什么js中对于异步处理非常的重要？
+  本质上的原因是 js 是一个单线程的语言，在同一时间内只能做一件事情，一心不可二用。
+  下面这个是一个死循环,因为跑到 while循环的时候 一致执行，没有剩余的资源和时间去执行这个setTimeout函数
+  ```js
+  var a = true;
+  setTimeout(function(){
+    a = false;
+  }, 100)
+  while(a){
+    console.log('while执行了')
+  }
+  ```
 
 css 常见知识点:
 ### 1、如何分类css的中标签:

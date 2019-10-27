@@ -1,4 +1,4 @@
-## 每日面试题集锦
+  ## 每日面试题集锦
 
 每日的面试题目的分享意在提高大家对于 JavaScript 基础知识的把握。
 每天的面试题目标题格式：
@@ -2434,6 +2434,246 @@ react官方文档中说道，组件无论是使用函数声明还是通过class�
   var d = {};
   console.log(d.age) // 由于d对象中没有age属性 所以返回undefined
   ```
+### 你能简单的说一下js中数据类型吗？说一下js中的数据类型吧，js 中有哪几种数据类型。
+
+分析，这种问题属于送分的题目，概念性很强，但是回答好也是不容易的，面试官可能会以此为维度继续往下深度挖掘，直到，挖到非常的底层
+让面试者，没有办法回答出来。
+
+可以这样回答:
+
+js的数据类型按照大类型分可以分为两种：基本数据类型（也叫做原始数据类型）和引用数据类型（也叫做对象类型），
+
+基本数据类型有以下几种：number string undefined boolean null 在es6 中又加入了 symbol这种数据类型。
+js中除了原始类型之外都是对象类型了。
+
+
+### 2、原始类型数据有什么特点？和对象类型有什么不同
+回答: 原始数据类型在数据存储的位置上来分，是存储在栈中的，存储的是值，正因为如此，原始类型是没有函数或者方法可以调用的，比如 'undefined.toString()' Uncaught TypeError: Cannot read property 'toString' of undefined 爆出这个错误。
+
+除了这个之外，js中的 number 这种原始类型也会有一些坑，js中的number 是浮点类型的 比如 0.1+0.2 !== 0.3 也正是因为这种情况，我们在实际的项目中是不怎么建议在前端做数值的计算的，即使是做计算，金额也是做展示使用而不是做判断，否则容易采坑。
+
+另外 string 这种原始数据类型 是不可以改变的，我们对于string 做的所有操作都是相当于拷贝了一个副本，原本的字符串不会发生变化。
+
+### 3、你还是没有说出对象类型的特点啊？
+回答：对象类型和原始类型不同的是，对象类型存储的是（地址）指针，当我们创建一个对象的时候,计算机会在内存中开辟一个空间存放这个值，当我们找到这个空间的时候，会拥有一个指针。
+
+这里举一个例子:
+const a = [] 这里给常量a分配了一个内存地址 #001,那么在地址 a 位置存放了一个空数组 [],
+const a = [];const b = a; b.push(1) 这里面当我们将a 赋值给b 的时候实际上 给的是一个地址，也是#001
+当我们在这个地址上进行修改的时候,所有引用这个地址的变量的值都会发生变化。
+
+### 4、null 是原始类型还是 对象类型 为什么使用typeof 判断的时候返回的是object
+实际上 null 是原始类型 之所以 typeof 返回的是object 这实际上是js 中存在已久的bug，现在也没有办法修复，修复之后所造成的影响太大了。
+
+### 5、如果一个函数参数是对象会发生什么问题？
+```js
+function test(person) {
+  person.age = 26
+  person = {
+    name: 'yyy',
+    age: 30
+  }
+
+  return person
+}
+const p1 = {
+  name: 'yck',
+  age: 25
+}
+const p2 = test(p1)
+console.log(p1) // -> ?
+console.log(p2) // -> ?
+```
+
+首先函数传参是传递对象指针的副本，就拿这个例子来说,p1 传递进去，在内部 修改了p1的值，当然p1的值也会发生改变，
+但是 当我们在函数内部重新给person 赋值了一个对象的时候, 出现了分歧, 实际上这个时候 被重新赋值的这个person和
+原本传递进去的p1已经没有任何的关系了。
+
+### 6、js中你都是怎么判断类型的，判断类型中遇到了什么问题？
+我们可以使用：typeof 判断类型 除了null 之外都是可以正确判断的，返回值是一个string 类型
+```js
+typeof 1 // 'number'
+typeof '1' // 'string'
+typeof undefined // 'undefined'
+typeof true // 'boolean'
+typeof Symbol() // 'symbol'
+```
+typeof 对于对象来说，除了函数 都是返回object 因此并不能准确的判断变量到底是什么类型
+```js
+typeof [] // 'object'
+typeof {} // 'object'
+typeof console.log // 'function'
+```
+一般使用中会做一些对象类型判空处理，防止一些空指针的异常场景
+
+当然还可以使用 instanceof 用于实例和构造函数的对应，如果我们使用typeof 是没有办法准确的区分 数组的 因为typeof 除了 function
+全部返回的是 object 使用instanceof 就可以 [1,2,3] instanceof Array 返回的就是true。或者 我们平时使用构造器创建对象的时候
+可以使用 对象 instanceof 构造器 是否为true 判断对象是不是这个构造器的实例。
+
+### 7、说一下js你了解的js中的类型转换：
+回答：js 中的类型转换只有三种情况；
+1、转换为布尔值
+2、转换为数字
+3、转换为字符串
+
+我们实际开发中，会经常遇到将一些数据字段值，转换为布尔值进行判断的情况，这个时候，能够准确的识别
+是非常重要的，在js中 除了 undefined null false  NaN '' 0 -0 其他所有的值都转换为true,包括所有的对象
+最后这个是重点，我们在实际项目中有过采坑的经历，在if的判断条件中, 对某一个初始值为 {} 这个对象做了布尔判断，
+直接进入了逻辑，在update钩子函数中,直接爆了空指针的异常问题。吃过生产的亏。
+
+### 8、说一下this吧
+JavaScript 中的this和其他语言有比较大的不同，一句话概括来说，this总是指向一个对象，具体指向哪个对象是基于函数的执行环境
+动态绑定的，而非函数被声明时的环境。
+
+实际的场景中 this 的指向大概分为4种:
+1、作为对象的方法调用
+2、作为普通函数调用
+3、构造器调用
+4、Function.prototype.call 或者 Function.prototype.apply 调用
+
+1、当作为函数的方法被调用时，this 指向该对象:
+```js
+var obj = {
+  a: 1,
+  getA: function(){
+    alert ( this === obj );    // 输出：true
+    alert ( this.a );    // 输出: 1
+  }
+} 
+```
+
+2、作为普通函数调用:
+也就是我们常说的普通函数方式，此时的this总是指向全局对象。在浏览器的JavaScript里，这个全局对象是window对象。
+```js
+window.name = 'globalName';
+var getName = function(){
+  return this.name;
+}
+console.log( getName() );  // 输出：globalName”
+// 或者
+window.name = 'globalName';
+var myObject = {
+  name: 'sven',
+  getName: function(){
+    return this.name;
+  }
+};
+var getName = myObject.getName;
+console.log( getName() );  // globalName
+```
+
+3、当用new运算符调用函数时，该函数总会返回一个对象，通常情况下，构造器里的this就指向返回的这个对象，见如下代码：
+```js
+var MyClass = function(){
+  this.name = 'sven';
+};
+
+var obj = new MyClass();
+alert ( obj.name ); // 输出：sven”
+```
+这里会有一个坑，如果一个构造器显示的返回了一个object类型的对象，那么此次运算的结果
+会最终会返回这个对象而不是this
+```js
+var MyClass = function(){
+  this.name = 'sven';
+  return {    // 显式地返回一个对象
+    name: 'anne'
+  }
+};
+
+var obj = new MyClass();
+alert ( obj.name );     // 输出：anne”
+```
+4、Function.prototype.call 或者 Function.prototype.apply 调用
+当一个函数借助call 或者apply 调用的时候,this可以动态的绑定。
+
+### 9、箭头函数中的this 指向哪里呢？
+```js
+function a() {
+  return () => {
+    return () => {
+      console.log(this)
+    }
+  }
+}
+console.log(a()()())
+```
+回答：首先箭头函数其实是没有 this 的，箭头函数中的 this 只取决包裹箭头函数的第一个普通函数的 this。在这个例子中，因为包裹箭头函数的第一个普通函数是 a，所以此时的 this 是 window。另外对箭头函数使用 bind 这类函数是无效的。
+
+### 10、说一下闭包吧,什么是闭包，实际开发过程中有哪些应用？你觉得闭包的缺点是什么？
+回到：闭包的定义：函数A内部有一个函数B，函数B可以访问函数A中的变量，那么函数B就是闭包。
+
+```js
+function A() {
+  let a = 1
+  window.B = function () {
+    console.log(a)
+  }
+}
+A()
+B() // 1
+```
+闭包存在的意义是，我们可以间接的访问函数内部的变量。
+应用场景:
+  循环中使用闭包解决 ‘var’定义函数的问题: 因为`setTimeout`是一个异步函数,所以会先把循环执行完毕，这个时候i就是6了，所以会
+  输出一堆6。
+```js
+for (var i = 1; i <= 5; i++) {
+  setTimeout(function timer() {
+    console.log(i)
+  }, i * 1000)
+}
+```
+解决的办法分为三种：
+  1、使用立即执行函数, 我们使用立即执行函数，将变量i 传入函数，固定在了j上面，这样在下次使用的
+  时候，可以用到外部的j 从而达到目的。
+  ```js
+  for(var i = 0;i<=5;i++){
+    ;(function(j){
+      setTimeout(function timer(){
+        console.log(j)
+      },j*1000)
+    })(i)
+  }
+  ```
+  2、第二种的解决办法是 使用setTimeOut的第三个参数，这个参数会被当成函数timer的参数传入
+  ```js
+  for(var i = 0;i<=5;i++){
+    setTimeout(function timer(j){
+      console.log(j)
+    },1000*i,i)
+  }
+  ```
+  3、第三种方式是使用 let 来定义 i 这也是最为推荐的一种方式。
+  ```js
+  for(let i = 0; i<=5;i++){
+    setTimeout(function timer(){
+        console.log(i)
+    })
+  }
+  ```
+### 你是如何理解js中的原型的？简单的说一下js中的原型吧。
+  回答：js中的面向对象系统就是基于原型的,我觉得可以通过以下四个方面理解原型:
+    1、所有的引用类型（数组，对象，函数）都具有对象的特性，可以自由的扩展属性
+    2、所有的引用类型 (数组，对象，函数) 都有一个__proto__ 属性，属性值是一个普通的对象。
+    3、所有的函数，都有一个prototype的属性，属性值也是一个对象，
+    4、所有的引用类型（数组，对象，函数）,__proto__ 属性值指向它的构造函数的prototype属性值。
+
+css 常见知识点:
+### 1、如何分类css的中标签:
+回答: css 中的标签其实有很多，但是按照大类别分 可以分为“块级元素”和“内联元素”
+
+### 2、什么是内联元素，什么是块元素？特点是什么？img 是什么元素。如何将行内元素转换为块元素
+块级元素：一个水平流上只能放置一个元素，多个块级元素换行显示，且元素高度、行高，内边距padding 外边距margin都是可以控制的
+内联元素：多个内联元素可以在同一行显示，且高度、行高 内边距、外边距不可控制，默认的高度和宽度是由内部的内容撑开的。
+img 标签我看的资中属于 行内替换元素（replaced inline element） 属于inline element 
+
+行内元素转换为块元素的方式是：设置disply属性 block table list-item 都是可以具有快速的特性，但是用的最多的是 block
+
+### 3、如何将多个元素，设置在同一行？
+第一种方式是使用浮动 float 第二种方式是设置元素 disolay-inline-block 
+
+### 4、你能想出几种清除浮动的方式，为什么要清除浮动？
 
 ### React组件的构造函数有什么作用？
 React组件的class是基于es6的语法规范实现的，react的渲染有两种情况，一个是初次渲染，一个是状态更新之后的再次渲染，构造函数在组件的初次渲染中只会运行一次，构造函数里进行的操作一般有三种用途：

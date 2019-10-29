@@ -2790,6 +2790,17 @@ img 标签我看的资中属于 行内替换元素（replaced inline element） 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+### 1029（算法题）求多个数组之间的交集（阿里）
+  认真的阅读题目就可以想到，这道题目的结果应该是输出一个集合，es6 中新增两种重要的数据结构 set 和 map 用于
+  补充es5中的数组和对象。
+  
+  这道题目的思路就是 使用set数据结构结合数组的filter方法进行筛选出符合条件的数据
+  ```js
+    let a = new Set([1,2,3]);
+    let b = new Set([4,3,2]);
+    let intersect = new Set([...a].filter(x => b.has(x)))
+    //set{ 2, 3}
+  ```
 
 ### React组件的构造函数有什么作用？
 React组件的class是基于es6的语法规范实现的，react的渲染有两种情况，一个是初次渲染，一个是状态更新之后的再次渲染，构造函数在组件的初次渲染中只会运行一次，构造函数里进行的操作一般有三种用途：

@@ -2884,7 +2884,11 @@ function bigLetter(str){
 
 ### 11、你能说说react的虚拟DOM吗？
 
-13、项目中有没有用过Eslint
+### 12、跟keep-alive 相关的生命周期有哪些？描述下这些生命周期
+  1、activated: 页面第一次进入的时候，钩子触发的顺序是 created > mounted > activated
+  2、deactivated: 页面退出的时候会触发deactivated,当再次前进或者后退的时候只触发activated
+
+### 13、项目中有没有用过Eslint
 
 ESLint（中文站点）是一个开源的 JavaScript 代码检查工具，使用 Node.js 编写，由 Nicholas C. Zakas 于 2013 年 6 月创建。ESLint 的初衷是为了让程序员可以创建自己的检测规则，使其可以在编码的过程中发现问题而不是在执行的过程中。ESLint 的所有规则都被设计成可插入的，为了方便使用，ESLint 内置了一些规则，在这基础上也可以增加自定义规则。
 

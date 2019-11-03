@@ -2922,7 +2922,31 @@ const arr = [
 
 ### 15、有没有在项目中使用过proxy，你是如何理解proxy的？
 proxy 是es6 中新添加的 api 可以理解成在目标对象之前架设一层 "拦截"，外界对这个对象的访问，都必须先通过这层拦截
-因此提供了一种机制，可以对外界的访问进行过滤和改写，
+因此提供了一种机制，可以对外界的访问进行过滤和改写。
+
+### 16、react-router 中我们常用两种路由模式 hashHistory 和 browserHistory 路由模式，他们在使用的时候有什么区别。
+
+使用 hashHistory 的时候 浏览器的url 应该是这样的   /#/user/liuna
+使用 browserHistory 的时候 浏览器的 url 应该是这样的  /user/liuna
+
+虽然 react中推荐使用的是 browserHistory 这种路由方式，这种路由方式 需要server端的配置支持。
+使用hashHistory时，因为有 # 的存在，浏览器不会发送request,react-router 自己根据 url 去 render 相应的模块。
+也就是它的请求头中 无论你的#后面拼接的是什么都不会 request origin 中将 # 拼接进去，
+
+使用browserHistory时，从 / 到 /user/liuna, 浏览器会向server发送request，所以server要做特殊请求，比如用的 express 的话，你需要 handle 所有的路由 app.get('*', (req, res) => { ... })，使用了 nginx 的话，nginx也要做相应的配置。
+
+### 17、为什么react 官方推荐使用 browserHistory 而不是 hashHistory 这种形式？
+
+首先 browserHistory 其实使用的是 HTML5 的 History API，浏览器提供相应的接口来修改浏览器的历史记录；而 hashHistory 是通过改变地址后面的 hash 来改变浏览器的历史记录；
+
+另一个原因是 hash 部分并不会被浏览器发送到服务端，也就是说不管是请求 http://domain.com/index.html#foo 还是 http://domain.com/index.html#bar ，服务只知道请求了 index.html 并不知道 hash 部分的细节。而 History API 需要服务端支持，这样服务端能获取请求细节。
+
+
+
+
+
+
+
 
 17、知道浏览器缓存吗？
 18、图片懒加载能手写一下吗？

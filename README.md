@@ -2925,7 +2925,6 @@ proxy 是es6 中新添加的 api 可以理解成在目标对象之前架设一�
 因此提供了一种机制，可以对外界的访问进行过滤和改写。
 
 ### 16、react-router 中我们常用两种路由模式 hashHistory 和 browserHistory 路由模式，他们在使用的时候有什么区别。
-
 使用 hashHistory 的时候 浏览器的url 应该是这样的   /#/user/liuna
 使用 browserHistory 的时候 浏览器的 url 应该是这样的  /user/liuna
 
@@ -2940,6 +2939,13 @@ proxy 是es6 中新添加的 api 可以理解成在目标对象之前架设一�
 首先 browserHistory 其实使用的是 HTML5 的 History API，浏览器提供相应的接口来修改浏览器的历史记录；而 hashHistory 是通过改变地址后面的 hash 来改变浏览器的历史记录；
 
 另一个原因是 hash 部分并不会被浏览器发送到服务端，也就是说不管是请求 http://domain.com/index.html#foo 还是 http://domain.com/index.html#bar ，服务只知道请求了 index.html 并不知道 hash 部分的细节。而 History API 需要服务端支持，这样服务端能获取请求细节。
+
+### 18、从零开始搭建一个vue项目，说说有哪些步骤，哪些重要的插件，目录结构如何设计？
+
+
+
+
+
 
 
 

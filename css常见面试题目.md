@@ -44,10 +44,35 @@ css 的选择器有：
  // todo 
 
 ## 1112、display有哪些值，说说他们的作用？
-
 + display: inline (内联)
 + none -- 隐藏
 + block -- 块显示
 + table -- 表格显示
 + list-item -- 项目列表
 + inlin-block -- 内联块
+
+## 1113、position的值？
++ static（默认）：按照正常文档流进行排列。
++ relative（相对定位）：不脱离文档流，参考自身静态位置通过 top bottom left right 定位
++ absolute（绝对定位）：参考距离最近一个不为 static 的父元素通过top，bottom，left，right 定位。
++ fixed （固定定位）：所固定的参照对象是可视窗口。
+
+注意 absolute 这个的使用规则, fixed 是可视窗口
+
+## 1113、css3 有哪些新的特性
+
++ 1、RGBA和透明度
++ 2、background-image、background-origin(content-box、padding-box、border-box) background-size、background-repeat
++ 3、word-wrap（对于长的不可分割的单词换行） word-wrap:break-word
++ 4、文字阴影：text-shadow：5px 5px 5px #FF0000 (水平阴影、垂直阴影、模糊距离、阴影颜色)
++ 5、font-size属性：定义自己的字体
++ 6、圆角（边框半径）：border-radius 属性用于创建圆角
++ 7、边框图片：border-image：url（border.png）30 30 round
++ 8、盒阴影：box-shadow： 10px 10px 5px #888888
++ 9、媒体查询：定义两套css 当浏览器的尺寸变化的时候采用不同的样式属性
+
+## 1113、请解释一下css3 中的flexbox（弹性盒模型）以及使用场景
+该布局模型的目的是提供一种更加高效的方式来对容器中的条目进行布局、对其和分配空间。在传统的布局方式中，block布局是把块在垂直方向上从上到下依次排列，而inline布局则是在水平方向来排列，弹性盒布局没有这样的方向限制，可以由开发人员自由操控。
+
+使用场景：在移动端前端开发中使用非常广泛，在andriod 和 ios 也完美支持。
+

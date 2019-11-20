@@ -1,4 +1,4 @@
-  ## 每日面试题集锦
+# 每日面试题集锦
 
 每日的面试题目的分享意在提高大家对于 JavaScript 基础知识的把握。
 每天的面试题目标题格式：
@@ -20,12 +20,18 @@ for (var i = 1; i <= 3; i++) {
 ```
 
 解答：3 个 ttt4
-注：var 来声明变量 I，声明会提升到作用域的顶部，js 单线程，setTimeout 是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 I 等于 4
+这道题目有一个坑需要避免，因为i 是从1开始的，所以循环的方式是这样的：
+  i = 1   -> i 是否小于等于3  -> i++ ->  i = 2;
+  i = 2   -> i 是否小于等于3  -> i++ ->  i = 3;
+  i = 3   -> i 是否小于等于3  -> i++ ->  i = 4;
+  i = 4   -> i 是否小于等于3  否 退出循环,退出循环的时候 i 已经变成了 4
+注：var 来声明变量 `i`，声明会提升到作用域的顶部，js单线程，`setTimeout`是异步匿名函数，for 循环结束才会执行 setTimeout 的异步回调，此时 `i` 等于 4
 
 追问：如何实现让这个函数打印 ttt1 ttt2 ttt3 
 
 ```js
-// 使用匿名函数
+// 使用自执行函数 每次循环的时候将当前循环的变量作为参数传入自执行函数
+// 和上面的代码不同 虽然 i++ 时候变成了 4 但是 i = 4 时候并不会执行循环
 for (var i = 1; i <= 3; i++) {
   (function(i){
     setTimeout(function() {
@@ -52,53 +58,51 @@ for (let i = 1; i <= 3; i++) {
 闭包的优缺点：使用闭包主要是为了设计私有的方法和变量。闭包的优点是可以避免全局变量的污染，缺点是闭包会常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。
 
 ```js
-(1) var count = 10;
-    function add() {
-      var count = 1;
-      return function () {
-        count += 1;
-        console.log(count);
-      }
-    }
-    var s = add();
-    s();
+var count = 10;
+function add() {
+  var count = 1;
+  return function () {
+    count += 1;
+    console.log(count);
+  }
+}
+var s = add();
+s();
 ```
-
 解答：2
 注： return 函数可以引用外部函数（父函数）add 的变量 count, 因此内层函数 count = 1,最终输出为 2；
 
 ```js
-（2) var count = 10;
-    function add() {
-      var count = 1;
-      return function () {
-        count += 1;
-        console.log(count);
-      }
-    }
-    var s = add();
-    s();
-    s();
+var count = 10;
+function add() {
+  var count = 1;
+  return function () {
+    count += 1;
+    console.log(count);
+  }
+}
+var s = add();
+s();
+s();
 ```
 
 解答：2,3
 注解：这里函数调用两次，第一次返回 2，闭包可以保存变量值，因此第二次调用时外层函数 count=2，最终输出结果是 3；
 
 ```js
-（3）var count = 10;
-    function add() {
-      return function () {
-        count += 1;
-        console.log(count);
-      }
-    }
-    var s = add();
-    s();
+var count = 10;
+function add() {
+  return function () {
+    count += 1;
+    console.log(count);
+  }
+}
+var s = add();
+s();
 ```
 
 解答：11
-
-注解： 闭包函数内部可以引用外部的参数和变量，此例 return 函数没有定义 count 依次往上找直至 Windows，找到就返回，找不到就返回 undefined,这里找到 count=10 最后打印的结构就是 11;
+注解： 闭包函数内部可以引用外部的参数和变量，此例 return 函数没有定义 count 依次往上找直至 Windows（作用域链），找到就返回，找不到就返回 undefined,这里找到 count=10 最后打印的结构就是 11;
 
 #### 3. 0520 考察的知识点：this 指向问题
 
@@ -116,8 +120,8 @@ var obj = {
 obj.say();
 ```
 
-解答：2 ，1
-注：非箭头函数中 this 最终指向调用它的对象，第一个 this 指向 obj，输出 2；setTimeout 是全局函数，所以第二个 this 指向 window，输出 1 ，箭头函数没有自己的 this, 它的 this 是继承而来; 默认指向在定义它时所处的对象。
+解答：2，1
+>注：非箭头函数中 `this` 最终指向调用它的对象，第一个 this 指向 obj，输出 2；setTimeout 是全局函数，所以第二个 this 指向 window，输出 1，箭头函数没有自己的 this, 它的 this 是继承而来; 默认指向在定义它时所处的对象。
 
 因此，我们修改下代码：
 ```js
@@ -133,7 +137,8 @@ var obj = {
 };
 obj.say();
 ```
-解答：2，2 就像上文解释的那样 虽然window 上面挂载了1 但是setTime 这个函数是定义在 obj 这个函数中的
+解答：2，2 就像上文解释的那样 虽然window 上面挂载了1 但是 setTimeout 这个函数是定义在 obj 这个函数中的
+因此和这个函数拥有相同的this指向。
 
 #### 4. 0521 考察的知识点：this 指向问题、赋值语句
 
@@ -156,9 +161,14 @@ obj.inner.print();
 (obj.inner.print = obj.inner.print)();
 ```
 
-解答：6 888 6 888 关键看这个函数是在全局环境中执行的。
+解答：`6 888 6 888` 
++ 在执行 `obj.inner.print()` 这个函数的时候 调用对象是 obj.inner 按this 指向的关系，应该是inner，在inner内部 num的值是6因此`obj.inner.print()`打印出来的是 6；
++ `var fn = obj.inner.print` 执行这个语句，将print的函数重新赋值给了 fn 接着在下面执行 `fn()` 是在全局作用域环境执行的，这个是this指向window，在widow上面num 已经被重新赋值成了 888
++ `obj.inner.print()` 再次执行这个函数时候 第一次执行的效果是一样的。
++ 解答：https://zhidao.baidu.com/question/924556511528417059.html 
++ `(obj.inner.print = obj.inner.print)()` 用一个匿名函数包裹, 在全局环境下执行 输出 888 
 
-#### 5. 0522 考察知识点：数组的操作 hashMap 的映射
+#### 5. 0522 考察知识点：数组的操作 hashMap 的映射 （leetcode 第一题 非常经典）
 
 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。你可以假设每种输入只会对应一个答案。但是，你不能重复利用这个数组中同样的元素。
 
@@ -174,7 +184,7 @@ obj.inner.print();
 
 解法一：使用暴力破解法:
 
-> 暴力破解的思路是使用双层 for 循环,外层循环控制第一个数字,内层循环控制第二个数字,当第一个数字和第二个数字之和满足目标数字的时候输出下标，话不多说，直接上代码。
+> 暴力破解的思路是使用双层 for 循环,外层循环控制第一个数字,内层循环控制第二个数字,当第一个数字和第二个数字之和满足目标数字的时候输出下标。
 
 ```js
 /**
@@ -186,14 +196,13 @@ var twoSum = function(nums, target) {
   for (let i = 0; i < nums.length; i++) {
     for (let j = i + 1; j < nums.length; j++) {
       if (nums[i] + nums[j] === target) {
-        return [i, j];
+        return [i, j]
       }
     }
   }
-};
+}
 ```
 
-解答：https://zhidao.baidu.com/question/924556511528417059.html
 解法二：使用 HashMap 解法:
 
 > 第一种解法的时间复杂度是很高的，一般来说,我们为了减小时间复杂度，需要使用空间来换，我们想要使用线性的时间复杂度来解决问题，那么就是说只能遍历一个数字，那另一个数字怎么办呢？这个时候我们可以想到使用一个 HashMap，来建立数字和其坐标位置之间的映射，我们知道 HashMap 是常数级别的查找，这样我们在遍历数组的时候，用 target 减去遍历到的数字，就是另外一个数字了，直接在 HashMap 中查找其是否存在即可。题目中的要求是查找的数字不是第一个数字，比如 target 是 4 遍历到了一个 2，那么另一个 2 不能是之前的 2，整个实现步骤为：

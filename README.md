@@ -236,7 +236,26 @@ var twoSum = function(nums, target) {
     }
   }
   return arr;
-};
+}
+```
+
+解法三：也可以只使用一遍map，在对数组映射的同时反过来检查下里面是否含相应的值
+```js
+var twoSum = function(nums, target) {
+  // 创建map对象
+  let map = new Map();
+  // 创建空数组用于输出索引
+  let arr = [];
+  for (let j = 0; j < nums.length; j++) {
+    let t = target - nums[j];
+    if (map.has(t)) {
+      arr.push(j);
+      arr.push(map.get(t))
+       return arr
+    }
+    map.set(nums[j],j)
+  }
+}
 ```
 
 #### 6、 0524 考察的知识点：es6 Set 和 Map。
@@ -263,7 +282,7 @@ console.log("set to array 1:", [...set4]);
 
 Map 和 Array 互转
 
-Map 转为数组
+Map 转为数组(还是)
 
 ```js
 const myMap = new Map().set(true, 7).set({ foo: 3 }, ["abc"]);

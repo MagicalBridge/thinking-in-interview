@@ -4,12 +4,12 @@
 
 ### CSS专题
 
-[css基础面试题](https://github.com/MagicalBridge/orange_financial_interview/blob/master/css%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md)
+[css面试题](https://github.com/MagicalBridge/orange_financial_interview/blob/master/css%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md)
 
 
 ### JavaScript 专题
 
-#### 1、 0516 考察的知识点：作用域、js 异步、事件循环。
+#### 0516 考察的知识点：作用域、js 异步、事件循环。
 
 观察下面代码看看输出什么内容：
 
@@ -50,7 +50,7 @@ for (let i = 1; i <= 3; i++) {
 }
 ```
 
-#### 2、 0517 考察的知识点： 闭包。
+#### 0517 考察的知识点： 闭包。
 
 实践角度解释闭包：
 
@@ -106,7 +106,7 @@ s();
 解答：11
 注解： 闭包函数内部可以引用外部的参数和变量，此例 return 函数没有定义 count 依次往上找直至 Windows（作用域链），找到就返回，找不到就返回 undefined,这里找到 count=10 最后打印的结构就是 11;
 
-#### 3. 0520 考察的知识点：this 指向问题
+#### 0520 考察的知识点：this 指向问题
 
 ```js
 var a = "1";
@@ -142,7 +142,7 @@ obj.say();
 解答：2，2 就像上文解释的那样 虽然window 上面挂载了1 但是 setTimeout 这个函数是定义在 obj 这个函数中的
 因此和这个函数拥有相同的this指向。
 
-#### 4. 0521 考察的知识点：this 指向问题、赋值语句
+#### 0521 考察的知识点：this 指向问题、赋值语句
 
 ```js
 var num = 10;
@@ -260,7 +260,7 @@ var twoSum = function(nums, target) {
 }
 ```
 
-#### 6、 0524 考察的知识点：es6 Set 和 Map。
+#### 0524 考察的知识点：es6 Set 和 Map。
 
 ES6 中提供了 Set 数据容器，这是一个能够存储无重复值的有序列表。
 
@@ -510,7 +510,7 @@ var copy = clone(obj);
 console.log(copy);
 ```
 
-#### 8、0601 考察的知识点：var 声明变量的提升
+#### 0601 考察的知识点：var 声明变量的提升
 
 ```js
 function f(shouldInitial) {
@@ -556,7 +556,7 @@ function f(input：boolean):number{
 // 中能够访问到。
 ```
 
-#### 9、0602 请写一个阶乘函数 考察知识点：递归
+#### 0602 请写一个阶乘函数 考察知识点：递归
 
 ```js
 function factorial(n) {
@@ -593,7 +593,7 @@ function fibonacci(n) {
 console.log(fibonacci(5)); // 1 1 2 3 5
 ```
 
-#### 10、0605 如何实现一个 promise，promise 的原理
+#### 0605 如何实现一个 promise，promise 的原理
 
 解答：promise 是对异步编程的一种抽象。它是一个代理对象，可以将异步对象和回调函数脱离开来，通过 then 方法在这个异步操作上面绑定回调函数 1.状态 promise 有 3 种状态：pending（待解决，这也是初始化状态），fulfilled（完成），rejected（拒绝）。 2.接口：promise 唯一接口 then 方法，它需要 2 个参数，分别是 resolveHandler 和 rejectedHandler。并且返回一个 promise 对象来支持链式调用
 实现原理：
@@ -680,7 +680,7 @@ test
   );
 ```
 
-#### 11、0611 统计一个字符串出现最多的字母
+#### 0611 统计一个字符串出现最多的字母
 
 给出一段英文连续的英文字符窜，找出重复出现次数最多的字母
 比如： 输入：afjghdfraaaasdenas 输出 ： a
@@ -764,7 +764,7 @@ setTimeont(function() {
 使用 await 时，会从右往左执行，当遇到 await 时，会阻塞函数内部处于它后面的代码，去执行该函数外部的同步代码，当外部同步代码执行完毕，再回到该函数内部执行剩余的代码, 并且当 await 执行完毕之后，会先处理微任务队列的代码
 
 
-#### 12、0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
+#### 0612 1). 变量提升 2). 函数提升 3). 预处理 4). 调用顺序
 
 ```js
 var c = 1;
@@ -812,7 +812,7 @@ console.log(typeof c);
 c(2);
 ```
 
-#### 13、0613 vue 组件的通信方式:
+#### 0613 vue 组件的通信方式:
 
 vue 中按照组件中组织关系可以分为：**父子组件 兄弟组件 跨级组件**
 vue 中 内置的有两种 :
@@ -858,7 +858,7 @@ export default{
 
 相应地，连续的执行就叫做同步。由于是连续执行，不能插入其他任务，所以操作系统从硬盘读取文件的这段时间，程序只能干等着。
 
-#### 15、0615 摘自阮一峰老师的 es6 中 generator 的例子：
+#### 0615 摘自阮一峰老师的 es6 中 generator 的例子：
 
 ```js
 function* foo(x) {
@@ -884,7 +884,7 @@ b.next(13); // { value:42, done:true }
 
 注意，由于 next 方法的参数表示上一个 yield 表达式的返回值，所以在第一次使用 next 方法时，传递参数是无效的。V8 引擎直接忽略第一次使用 next 方法时的参数，只有从第二次使用 next 方法开始，参数才是有效的。从语义上讲，第一个 next 方法用来启动遍历器对象，所以不用带有参数。
 
-#### 16 0616 react 是如何划分组件的 （react 技术相关）
+#### 0616 react 是如何划分组件的 （react 技术相关）
 
 根据组件的职责通常把组件分为 UI 组件和容器组件。
 
@@ -892,7 +892,7 @@ UI 组件负责 UI 的呈现，容器组件负责管理数据和逻辑。
 
 两者通过 React-Redux 提供 connect 方法联系起来。
 
-#### 17 0617 请用 js 实现下 栈 这种数据结构(数据结构相关)
+#### 0617 请用 js 实现下 栈 这种数据结构(数据结构相关)
 
 栈是一种遵从后进先出的（LIFO）原则的有序集合。新添加的或者删除的元素保存在栈的同一端，称作栈顶，另一端称之为栈底。新元素都靠近栈顶，旧元素都接近栈底。
 
@@ -946,7 +946,7 @@ Stack.prototype.clear = function() {
 };
 ```
 
-#### 18、0618 静态方法
+#### 0618 静态方法
 
 ```js
 class test {
@@ -972,7 +972,7 @@ D: TypeError;
 解答：D
 test 是一个静态方法。静态方法被设计为只能被创建它们的构造器使用（也就是 test),并且不能传递给实例。因为 newTest 是一个实例，静态方法不能被实例使用，因此抛出了 TypeError 错误.
 
-### 19. 0619 class 和 function 的区别
+### 0619 class 和 function 的区别
 
 解答：
 
@@ -982,7 +982,7 @@ test 是一个静态方法。静态方法被设计为只能被创建它们的构
 4. class 静态方法与静态属性，
 5. 不能用 call apply bind 的方式 来改变他的执行上下文
 
-### 20 0620 继续异步专题的研究 EventLoop
+### 0620 继续异步专题的研究 EventLoop
 
 得心应手版本:
 ```js
@@ -1004,7 +1004,7 @@ console.log(3)
 有时候会有版本是宏任务>微任务>宏任务，在这里需要讲清楚一个概念，以免混淆。这里有个main script的概念，就是一开始执行的代码（代码总要有开始执行的时候对吧，不然宏任务和微任务的队列哪里来的），这里被定义为了宏任务（笔者喜欢将main script的概念单独拎出来，不和两个任务队列混在一起），然后根据main script中产生的微任务队列和宏任务队列，分别清空，这个时候是先清空微任务的队列，再去清空宏任务的队列。
 
 
-### 21 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
+### 0621 继续异步专题的研究 EventLoop 考点 promise 的执行
 
 游刃有余版本:
 
@@ -1029,7 +1029,7 @@ console.log(5)
 
 这个要从Promise的实现来说，Promise的executor是一个 **同步函数** ，即非异步，立即执行的一个函数，因此他应该是和当前的任务一起执行的。而Promise的链式调用then，每次都会在内部生成一个新的Promise，然后执行then，在执行的过程中不断向微任务(microtask)推入新的函数，因此直至微任务(microtask)的队列清空后才会执行下一波的macrotask。
 
-### 22 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
+### 0622 继续异步专题的研究 EventLoop 考点：promise的进阶用法，对于then中return一个promise的掌握
 
 炉火纯青版本：
 
@@ -1075,7 +1075,7 @@ new Promise((resolve,reject)=> {
   * micro task queue: []
 
 
-### 22 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
+### 0622 继续异步专题的研究 EventLoop 考点 如果说这边的Promise中then返回一个Promise呢？
 ```js
 
 new Promise((resolve,reject) => {
@@ -1105,7 +1105,7 @@ new Promise((resolve,reject) => {
 ```
 这里就是Promise中的then **返回** 一个promise的状况了，这个考的重点在于 **Promise而非Eventloop** 了。这里就很好理解为何then12会在then23之后执行，这里Promise1的第二个then相当于是挂在新Promise2的最后一个then的返回值上。
 
-### 23 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
+### 0623 继续异步专题的研究 EventLoop 考点 如果说这边不止一个Promise呢，再加一个new Promise是否会影响结果?
 
 ```js
 new Promise((resolve,reject)=>{
@@ -1159,7 +1159,7 @@ new Promise((resolve,reject)=>{
   * micro task queue: []
 
 
-### 24 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
+### 0624 继续异步专题的研究 EventLoop 考点:在async/await之下，对Eventloop的影响。
 
 ```js
 async function async1() {
@@ -1257,8 +1257,7 @@ configure({enforceActions: true});
 
 ### 0628 call的模拟实现 考点 对于原生js的熟练程度 基本面试必考
 解答：主要参考了冴羽老师的博客：[call和apply的模拟实现](https://github.com/mqyqingfeng/Blog/issues/11)
-
-
+```js
 var foo = {
   value:1,
   bar:function(){
@@ -1271,14 +1270,7 @@ function bar(){
 }
 
 bar.call(foo,1,2,3);
-
-
-
-
-
-
-
-
+```
 
 ```js
 Function.prototype.call2 = function (context) {
@@ -1453,7 +1445,7 @@ function traverse(node){
 }
 ```
 
-#### 38、 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的 map 方法的掌握程度
+### 0708 ['1', '2', '3'].map(parseInt) what & why ? 考察对于数组的 map 方法的掌握程度
 
 解答：输出的结果是 [1, NaN, NaN];
 
@@ -1500,7 +1492,7 @@ map方法在调用callback函数时,会给它传递三个参数:当前正在遍�
   3、parseInt('3', 2) //基数为2（2进制）表示的数中，最大值小于3，所以无法解析，返回NaN
 ```
 
-#### 39、 0709 考查数组的 reduce()方法
+### 0709 考查数组的 reduce()方法
 
 ```js
 (1) var arr = [1, 2, 3, 4];
@@ -1542,13 +1534,13 @@ reduce 为数组中的每一个元素依次执行回调函数，不包括数组�
 
     函数没有返回值，则默认返回undefined。
 
-#### 40、 0710 说说 Redux 和 Vuex 的设计思想:
+####  0710 说说 Redux 和 Vuex 的设计思想:
 
 1、软件设计领域有很多通用的思想，比如隔离变化，约定优于配置
 
 解答:[Vuex、Flux、Redux、Redux-saga、Dva、MobX](https://zhuanlan.zhihu.com/p/53599723) 这个链接文章非常值得一看
 
-#### 41、 0711 什么是 HTTPS 与 HTTP 的区别是什么？ 考察 http 的网络知识
+####  0711 什么是 HTTPS 与 HTTP 的区别是什么？ 考察 http 的网络知识
 
 解析：要理解 HTTPS 首先需要明白 http 的缺点是什么，知道背景之后再理解记忆 https 就比较简单了。
 
@@ -1568,7 +1560,7 @@ HTTP 与 HTTPS 的区别：
 > - 4.HTTP 的连接很简单，是无状态的；HTTPS 协议是由 SSL+HTTP 协议构建的可进行加密传输、身份认证的网络协议，比 HTTP 协议安全。
 > - 5、传输速度方面 HTTPS 由于中间的 SSL 链接会消耗一部分性能问题。
 
-#### 42、 0712 什么是 HTTP 三次握手？为什么是三次而不是两次，具体的过程是怎样的 考察 http 的网络知识
+#### 0712 什么是 HTTP 三次握手？为什么是三次而不是两次，具体的过程是怎样的 考察 http 的网络知识
 
 TCP 为了保证将数据准确无误的送达到目标处，采用了三次握手的策略,同时为了验证客户端和服务端的发送和接收的功能是正常的。
 
@@ -1600,13 +1592,13 @@ TCP 为了保证将数据准确无误的送达到目标处，采用了三次握�
 
 我们看到有两个中间状态，syn_sent 和 syn_recv，这两个状态叫着「半打开」状态，就是向对方招手了，但是还没来得及看到对方的点头微笑。syn_sent 是主动打开方的「半打开」状态，syn_recv 是被动打开方的「半打开」状态。客户端是主动打开方，服务器是被动打开方。
 
-#### 43、 0713 三次握手的作用？对上面一个题目的补充:
+####  0713 三次握手的作用？对上面一个题目的补充:
 
 > - 1.确认双方的接受能力、发送能力是否正常。
 > - 2.指定自己的初始化序列号，为后面的可靠传送做准备。
 > - 3.如果是 https 协议的话，三次握手这个过程，还会进行数字证书的验证以及加密密钥的验证等等。
 
-#### 44、 0714 三次握手其他问题的补充
+####  0714 三次握手其他问题的补充
 
 1.（ISN）是固定的吗 也就是初始化的序列号是固定的吗？
 三次握手的一个重要功能是客户端和服务端交换 ISN(Initial Sequence Number), 以便让对方知道接下来接收数据的时候如何按序列号组装数据。
@@ -1623,7 +1615,7 @@ TCP 为了保证将数据准确无误的送达到目标处，采用了三次握�
 
 而对于第三次的话，此时客户端已经处于 established 状态，也就是说，对于客户端来说，他已经建立起连接了，并且也已经知道服务器的接收、发送能力是正常的了，所以能携带数据页没啥毛病。
 
-#### 45、0715 四次挥手
+#### 0715 四次挥手
 
 TCP 断开链接的过程和建立链接的过程比较类似，它分成了 4 个动作。
 
@@ -1639,7 +1631,7 @@ TCP 断开链接的过程和建立链接的过程比较类似，它分成了 4 �
 
 至于 TIME_WAIT 持续的时间至少是一个报文的来回时间。一般会设置一个计时，如果过了这个计时没有再次收到 FIN 报文，则代表对方成功就是 ACK 报文，此时处于 CLOSED 状态。
 
-#### 46、0716 常见的复杂度分析： 算法复杂度分析
+#### 0716 常见的复杂度分析： 算法复杂度分析
 
 ```js
 function swapTwoInts(a, b) {d
@@ -1698,7 +1690,7 @@ n = 1 -> (n-2)
 0
 O($n^2$) 的时间复杂度
 
-#### 0717 47、手写深拷贝
+#### 0717 手写深拷贝
 
 1、遍历对象
 
@@ -1754,7 +1746,7 @@ O($n^2$) 的时间复杂度
   lodash.cloneDeep()
 ```
 
-#### 0718 48、如何判断是否为数组？
+#### 0718 如何判断是否为数组？
 1、Object.prototype.toString()返回的是//"[object Type]"的形式，通过call将Array的this上下文切换到Object，从而调用了Object.prototype.toString()，因此返回[object Function]。（https://www.jianshu.com/p/e4237ebb1cf0）
 
 ```js
@@ -1776,7 +1768,7 @@ O($n^2$) 的时间复杂度
   console.log(a instanceof Array); //true
 ```
 
-#### 0719 49、简述cookie、sessionStorage和localStorage的区别
+#### 0719 简述cookie、sessionStorage和localStorage的区别
 
 共同点：都是保存在浏览器端，且同源的。
 区别：
@@ -1787,14 +1779,14 @@ O($n^2$) 的时间复杂度
 - (4)数据有效期不同 sessionStorage：仅在当前浏览器窗口关闭前有效，自然也就不可能持久保持；localStorage：始终有效，窗口或浏览器关闭也一直保存，因此用作持久数据；cookie只在设置的cookie过期时间之前一直有效，即使窗口或浏览器关闭。
 - (5)作用域不同 sessionStorage不在不同的浏览器窗口中共享，即使是同一个页面；localStorage 在所有同源窗口中都是共享的；cookie也是在所有同源窗口中都是共享的。
 
-#### 0720 50、手写一个冒泡的排序算法 算法实现
+#### 0720 手写一个冒泡的排序算法 算法实现
 
 ```js
 <input v-model="sth" />
 <input v-bind:value="sth" v-on:input="sth = $event.target.value" />
 ```
 
-#### 0721 51、说一下http1.0 http1.1 和http2.0的区别:
+#### 0721 说一下http1.0 http1.1 和http2.0的区别:
 影响HTTP 网络请求的因素主要有两个：带宽和延迟：
   带宽：现在的网络都已经告别拨号上网，所以这块不需要特别关注
   延迟：
@@ -1821,11 +1813,8 @@ O($n^2$) 的时间复杂度
   3、header压缩，如上文中所言，对前面提到过HTTP1.x的header带有大量信息，而且每次都要重复发送，HTTP2.0使用encoder来减少需要传输的header大小，通讯双方各自cache一份header fields表，既避免了重复header的传输，又减小了需要传输的大小。
 
   4、服务端推送（server push），同SPDY一样，HTTP2.0也具有server push功能。
-
-###  0815 Vue中双向绑定 简单原理说明
-
   
-#### 0722 52、选择排序实现 考察点 常见的算法实现
+#### 0722 选择排序实现 考察点 常见的算法实现
   ```js
   function selectSort(arr=[]) {
     if (arr === undefined || arr.length < 2) {
@@ -1846,7 +1835,7 @@ O($n^2$) 的时间复杂度
   }
   ```
 
-#### 0723 52、插入排序实现 考察点 常见的算法实现:
+#### 0723 插入排序实现 考察点 常见的算法实现:
 ```js
   var obj  = {};
   Object.defineProperty(obj, 'name', {
@@ -1862,7 +1851,7 @@ O($n^2$) 的时间复杂度
   var val = obj.name;//在得到obj的name属性，会触发get方法
 ```
 
-#### 0724 53、如何实现数组的浅拷贝：
+#### 0724 如何实现数组的浅拷贝：
 在平时的业务开发中，如果是一维数组，我们可以巧妙的借用两个数组方法来进行操作：concat slice
 
 >* concat方法用于合并两个或多个数组。此方法不会更改现有数组，而是返回一个新数组。
@@ -1902,7 +1891,7 @@ console.log(new_arr) // [{old: 'new'}, ['new']]
 所以我们可以看出使用 concat 和 slice 是一种浅拷贝。
 
 
-#### 0725 54、如何实现数组的扁平化操作 (数组扁平化操作，一般使用递归调用操作)
+#### 0725 如何实现数组的扁平化操作 (数组扁平化操作，一般使用递归调用操作)
 首先解释一下什么是数组的扁平化操作, 简单的说就是将多维的数组拍平变成一维数组：
 
 例如： arr = [1, [2, [3, 4]]];  数组拍平之后变成了 [1,2,3,4];
@@ -1928,7 +1917,7 @@ console.log(flatten(arr))
 其中depth 的意思是展开的深度,默认值是1。如果传入这个参数`Infinity`展开任意的
 数据
 
-#### 0726 55、将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
+#### 0726 将数组扁平化并去除其中重复数据，最终得到一个升序且不重复的数组
 var arr = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
 
 ```js
@@ -1982,7 +1971,7 @@ upSort(unique(flatten(arr)))
 解答：Vue实例创建时， obj.b 并未声明，因此就没有被Vue转换为响应式的属性，自然就不会触发视图的更新，这时就需要使用Vue的全局api—— $set() this.$set(this.obj,'b','obj.b')
 
 
-#### 0806 53、你是如何理解Vue的响应式系统的?
+#### 0806 你是如何理解Vue的响应式系统的?
 
 响应式系统简述:
 任何一个 Vue Component 都有一个与之对应的 Watcher 实例。
@@ -1990,7 +1979,7 @@ Vue 的 data 上的属性会被添加 getter 和 setter 属性。
 当 Vue Component render 函数被执行的时候, data 上会被 触碰(touch), 即被读, getter 方法会被调用, 此时 Vue 会去记录此 Vue component 所依赖的所有 data。(这一过程被称为依赖收集)
 data 被改动时（主要是用户操作）, 即被写, setter 方法会被调用, 此时 Vue 会去通知所有依赖于此 data 的组件去调用他们的 render 函数进行更新。
 
-#### 0806 54、Vue中的key到底有什么用？
+#### 0806 Vue中的key到底有什么用？
 
 key是为Vue中的vnode标记的唯一id,通过这个key,我们的diff操作可以更准确、更快速
 diff算法的过程中,先会进行新旧节点的首尾交叉对比,当无法匹配的时候会用新节点的key与旧节点进行比对,然后超出差异.
@@ -2103,119 +2092,20 @@ var val = obj.name; //在得到obj的name属性，会触发get方法
 3、实现一个Watcher，作为连接Observer和Compile的桥梁，能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数，从而更新视图
 4、mvvm入口函数，整合以上三者
 
-###  0821 http状态码
-简单版
-  [
-    100  Continue	继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息
-    200  OK 		正常返回信息
-    201  Created  	请求成功并且服务器创建了新的资源
-    202  Accepted 	服务器已接受请求，但尚未处理
-    301  Moved Permanently  请求的网页已永久移动到新位置。
-    302 Found  		临时性重定向。
-    303 See Other  	临时性重定向，且总是使用 GET 请求新的 URI。
-    304  Not Modified 自从上次请求后，请求的网页未修改过。
-
-    400 Bad Request  服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
-    401 Unauthorized 请求未授权。
-    403 Forbidden  	禁止访问。
-    404 Not Found  	找不到如何与 URI 相匹配的资源。
-
-    500 Internal Server Error  最常见的服务器端错误。
-    503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）。
-  ]
-
-    完整版
-    1**(信息类)：表示接收到请求并且继续处理
-  	100——客户必须继续发出请求
-  	101——客户要求服务器根据请求转换HTTP协议版本
-
-    2**(响应成功)：表示动作被成功接收、理解和接受
-  	200——表明该请求被成功地完成，所请求的资源发送回客户端
-  	201——提示知道新文件的URL
-  	202——接受和处理、但处理未完成
-  	203——返回信息不确定或不完整
-  	204——请求收到，但返回信息为空
-  	205——服务器完成了请求，用户代理必须复位当前已经浏览过的文件
-  	206——服务器已经完成了部分用户的GET请求
-
-    3**(重定向类)：为了完成指定的动作，必须接受进一步处理
-  	300——请求的资源可在多处得到
-  	301——本网页被永久性转移到另一个URL
-  	302——请求的网页被转移到一个新的地址，但客户访问仍继续通过原始URL地址，重定向，新的URL会在response中的Location中返回，浏览器将会使用新的URL发出新的Request。
-  	303——建议客户访问其他URL或访问方式
-  	304——自从上次请求后，请求的网页未修改过，服务器返回此响应时，不会返回网页内容，代表上次的文档已经被缓存了，还可以继续使用
-  	305——请求的资源必须从服务器指定的地址得到
-  	306——前一版本HTTP中使用的代码，现行版本中不再使用
-  	307——申明请求的资源临时性删除
-
-    4**(客户端错误类)：请求包含错误语法或不能正确执行
-  	400——客户端请求有语法错误，不能被服务器所理解
-  	401——请求未经授权，这个状态代码必须和WWW-Authenticate报头域一起使用
-  	HTTP 401.1 - 未授权：登录失败
-  	&emsp;&emsp;HTTP 401.2 - 未授权：服务器配置问题导致登录失败
-  	&emsp;&emsp;HTTP 401.3 - ACL 禁止访问资源
-  	&emsp;&emsp;HTTP 401.4 - 未授权：授权被筛选器拒绝
-  	HTTP 401.5 - 未授权：ISAPI 或 CGI 授权失败
-  	402——保留有效ChargeTo头响应
-  	403——禁止访问，服务器收到请求，但是拒绝提供服务
-  	HTTP 403.1 禁止访问：禁止可执行访问
-  	&emsp;&emsp;HTTP 403.2 - 禁止访问：禁止读访问
-  	&emsp;&emsp;HTTP 403.3 - 禁止访问：禁止写访问
-  	&emsp;&emsp;HTTP 403.4 - 禁止访问：要求 SSL
-  	&emsp;&emsp;HTTP 403.5 - 禁止访问：要求 SSL 128
-  	&emsp;&emsp;HTTP 403.6 - 禁止访问：IP 地址被拒绝
-  	&emsp;&emsp;HTTP 403.7 - 禁止访问：要求客户证书
-  	&emsp;&emsp;HTTP 403.8 - 禁止访问：禁止站点访问
-  	&emsp;&emsp;HTTP 403.9 - 禁止访问：连接的用户过多
-  	&emsp;&emsp;HTTP 403.10 - 禁止访问：配置无效
-  	&emsp;&emsp;HTTP 403.11 - 禁止访问：密码更改
-  	&emsp;&emsp;HTTP 403.12 - 禁止访问：映射器拒绝访问
-  	&emsp;&emsp;HTTP 403.13 - 禁止访问：客户证书已被吊销
-  	&emsp;&emsp;HTTP 403.15 - 禁止访问：客户访问许可过多
-  	&emsp;&emsp;HTTP 403.16 - 禁止访问：客户证书不可信或者无效
-  	HTTP 403.17 - 禁止访问：客户证书已经到期或者尚未生效
-  	404——一个404错误表明可连接服务器，但服务器无法取得所请求的网页，请求资源不存在。eg：输入了错误的URL
-  	405——用户在Request-Line字段定义的方法不允许
-  	406——根据用户发送的Accept拖，请求资源不可访问
-  	407——类似401，用户必须首先在代理服务器上得到授权
-  	408——客户端没有在用户指定的饿时间内完成请求
-  	409——对当前资源状态，请求不能完成
-  	410——服务器上不再有此资源且无进一步的参考地址
-  	411——服务器拒绝用户定义的Content-Length属性请求
-  	412——一个或多个请求头字段在当前请求中错误
-  	413——请求的资源大于服务器允许的大小
-  	414——请求的资源URL长于服务器允许的长度
-  	415——请求资源不支持请求项目格式
-  	416——请求中包含Range请求头字段，在当前请求资源范围内没有range指示值，请求也不包含If-Range请求头字段
-  	417——服务器不满足请求Expect头字段指定的期望值，如果是代理服务器，可能是下一级服务器不能满足请求长。
-
-    5**(服务端错误类)：服务器不能正确执行一个正确的请求
-  	HTTP 500 - 服务器遇到错误，无法完成请求
-  	&emsp;&emsp;HTTP 500.100 - 内部服务器错误 - ASP 错误
-  	&emsp;&emsp;HTTP 500-11 服务器关闭
-  	&emsp;&emsp;HTTP 500-12 应用程序重新启动
-  	&emsp;&emsp;HTTP 500-13 - 服务器太忙
-  	&emsp;&emsp;HTTP 500-14 - 应用程序无效
-  	&emsp;&emsp;HTTP 500-15 - 不允许请求 global.asa
-  	&emsp;&emsp;Error 501 - 未实现
-    HTTP 502 - 网关错误
-    HTTP 503：由于超载或停机维护，服务器目前无法使用，一段时间后可能恢复正常
-
 ###  0827 js中的前自增和后自增区别:
-
 - 1. 前自增:算数运算符优先于赋值运算符，先执行++操作，再执行赋值操作
 ```js
-var a = 1 ;
-var b = ++a ;// a = a+1, b =a 
-console.log(a);// 2
-console.log(b); //2
+  var a = 1 ;
+  var b = ++a ;// a = a+1, b =a 
+  console.log(a);// 2
+  console.log(b); //2
 ```
 - 2. 后自增：赋值运算符优先于算数运算符，先执行赋值操作，再执行++操作
 ```js
-var a =1;
-var b = a++ ;// b =a , a = a +1
-console.log(a);//2
-console.log(b);//1
+  var a =1;
+  var b = a++ ;// b =a , a = a +1
+  console.log(a);//2
+  console.log(b);//1
 ```
 在vue的源码中的 `initMinin` 函数中 _uid 使用的是 **后自增**, `vm._uid = uid++` => `vue = {_uid : 0}`
 初始化的时候 _uid 就是 0 因此赋值的时候就是0 下次使用使用的时候就变成1了。
@@ -2344,11 +2234,11 @@ react.lazy()的应用。react在16.6的版本中添加了 react.lazy() 的这个
 这个是非常让我们头疼的。react16.6 版本中新增加的react.lazy() 是一个非常重要的应用。
 我在思考我们的项目是否能够直接升级成react16.6的版本。
 
-### 0909 
-react 中选择合适的组件类型：
+### 0909 react中选择合适的组件类型原则
 
 SFC(Stateless Functional Compoent):
 react 可以使用 function 来创建 component 这种组件 没有生命周期 内部不需要维护 state 只要传入 props 有变化则进行重新渲染。
+
 ```js
 function Welcome(props) {
   return <h1>Hello, {props.name}</h1>;
@@ -2360,6 +2250,8 @@ const Welcome = props => <h1>Hello, {props.name}</h1>;
 
 HOC(Higher-Order Components)
 高阶组件对于 Vue 开发者来说应该是个陌生的概念（不知道，我用 Vue 的时候没见过类似的用法）。从代码上看，高阶组件就是一个方法，传入一个组件，返回另一个组件。
+
+最常见的高阶组件是 react-redux 里面的 connect 方法，通过传入 组件和 map*ToProps 方法，让组件和 store 连接。组件内部就可以直接通过 props 获得 connect 之后的值。
 
 ```js
 function logProps(WrappedComponent) {
@@ -2373,8 +2265,6 @@ function logProps(WrappedComponent) {
     }
   }
 }
-
-最常见的高阶组件是 react-redux 里面的 connect 方法，通过传入 组件和 map*ToProps 方法，让组件和 store 连接。组件内部就可以直接通过 props 获得 connect 之后的值。
 
 exprot default connect(
   mapStateToProps,
@@ -2393,6 +2283,7 @@ render() {
   return <Tag>{ children }</Tag>
 }
 ```
+
 ### 0910 算法题目：给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。你可以假设数组中无重复元素。
 
 输入: [1,3,5,6], 5
@@ -2448,22 +2339,24 @@ react官方文档中说道，组件无论是使用函数声明还是通过class�
 默认值是undefined。
 
 ### 1026 说一下什么情况下会出现undefined,你对undefined的理解:
-  1、如果没有声明直接访问一个变量，会提示错误信息 xx is not defined 而不是undefined，因此很多人理解的有错误。
-  2、一个变量声明了，但是没有赋值，值默认为是undefined
-  ```js
-  var b
-  console.log(b) // b 就是一个undefined类型的值
-  ```
-  3、一个变量声明了，并且赋值了undefined的值
-  ```js
-  var c = undefined
-  console.log(c) // c 就是一个undefined类型的值
-  ```
-  4、一个对象中,获取某一个并不存在的属性也是返回 undefined
-  ```js
-  var d = {};
-  console.log(d.age) // 由于d对象中没有age属性 所以返回undefined
-  ```
+
+1、如果没有声明直接访问一个变量，会提示错误信息 xx is not defined 而不是undefined，因此很多人理解的有错误。
+2、一个变量声明了，但是没有赋值，值默认为是undefined
+```js
+var b
+console.log(b) // b 就是一个undefined类型的值
+```
+3、一个变量声明了，并且赋值了undefined的值
+```js
+var c = undefined
+console.log(c) // c 就是一个undefined类型的值
+```
+4、一个对象中,获取某一个并不存在的属性也是返回 undefined
+```js
+var d = {};
+console.log(d.age) // 由于d对象中没有age属性 所以返回undefined
+```
+
 ### 你能简单的说一下js中数据类型吗？说一下js中的数据类型吧，js 中有哪几种数据类型。
 
 分析，这种问题属于送分的题目，概念性很强，但是回答好也是不容易的，面试官可能会以此为维度继续往下深度挖掘，直到，挖到非常的底层
@@ -2519,7 +2412,7 @@ console.log(p2) // -> ?
 但是 当我们在函数内部重新给person 赋值了一个对象的时候, 出现了分歧, 实际上这个时候 被重新赋值的这个person和
 原本传递进去的p1已经没有任何的关系了。
 
-### 6、js中你都是怎么判断类型的，判断类型中遇到了什么问题？
+### js中你都是怎么判断类型的，判断类型中遇到了什么问题？
 我们可以使用：typeof 判断类型 除了null 之外都是可以正确判断的，返回值是一个string 类型
 ```js
 typeof 1 // 'number'
@@ -2540,7 +2433,7 @@ typeof console.log // 'function'
 全部返回的是 object 使用instanceof 就可以 [1,2,3] instanceof Array 返回的就是true。或者 我们平时使用构造器创建对象的时候
 可以使用 对象 instanceof 构造器 是否为true 判断对象是不是这个构造器的实例。
 
-### 7、说一下js你了解的js中的类型转换：
+### 说一下js你了解的js中的类型转换：
 回答：js 中的类型转换只有三种情况；
 1、转换为布尔值
 2、转换为数字
@@ -2551,7 +2444,7 @@ typeof console.log // 'function'
 最后这个是重点，我们在实际项目中有过采坑的经历，在if的判断条件中, 对某一个初始值为 {} 这个对象做了布尔判断，
 直接进入了逻辑，在update钩子函数中,直接爆了空指针的异常问题。吃过生产的亏。
 
-### 8、说一下this吧
+### 说一下this吧
 JavaScript 中的this和其他语言有比较大的不同，一句话概括来说，this总是指向一个对象，具体指向哪个对象是基于函数的执行环境
 动态绑定的，而非函数被声明时的环境。
 
@@ -2630,7 +2523,7 @@ console.log(a()()())
 ```
 回答：首先箭头函数其实是没有 this 的，箭头函数中的 this 只取决包裹箭头函数的第一个普通函数的 this。在这个例子中，因为包裹箭头函数的第一个普通函数是 a，所以此时的 this 是 window。另外对箭头函数使用 bind 这类函数是无效的。
 
-### 10、说一下闭包吧,什么是闭包，实际开发过程中有哪些应用？你觉得闭包的缺点是什么？
+### 说一下闭包吧,什么是闭包，实际开发过程中有哪些应用？你觉得闭包的缺点是什么？
 回到：闭包的定义：函数A内部有一个函数B，函数B可以访问函数A中的变量，那么函数B就是闭包。
 
 ```js
@@ -2819,7 +2712,7 @@ img 标签我看的资中属于 行内替换元素（replaced inline element） 
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-### 1029（算法题）求多个数组之间的交集（阿里）
+### （算法题）求多个数组之间的交集（阿里）
   认真的阅读题目就可以想到，这道题目的结果应该是输出一个集合，es6 中新增两种重要的数据结构 set 和 map 用于
   补充es5中的数组和对象。
   
@@ -2863,7 +2756,7 @@ Array、prototype、repeNum : function(){
   for( let i : 0 ; i < new_arr、length ; i++){
       if(new_arr[i] :: new_arr[i+1] &&    //判断是否重复,是否已经放入容器
       new_arr[i] !:new_arr[i-1]){
-          res、push(new_arr[i]);
+        res、push(new_arr[i]);
       }
   }
   return res
@@ -3018,13 +2911,8 @@ proxy 是es6 中新添加的 api 可以理解成在目标对象之前架设一�
 ### 1109 说说你对react渲染原理的理解？
 // Todo 暂时不知道该如何回答这个问题
 
-## 1112 说说react中的Context吧,有什么应用场景？如何使用？
+### 1112 说说react中的Context吧,有什么应用场景？如何使用？
 `Context` 提供了一个无需为每层组件手动添加 `props`，就能在组件树间进行数据传递的方法。我们在平时开发中如果不使用redux 这种数据状态管理库，可能在数据传递的时候使用的就是从祖先元素层层传递的方式，当层级较多之后，我们需要将数据通过组件的props接口层层传递，层级如果嵌套太深，总会容易出错。Context 就是为了解决这个问题而出现的。
-
-
-
-
-
 
 
 17、知道浏览器缓存吗？

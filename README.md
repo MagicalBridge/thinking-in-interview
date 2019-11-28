@@ -1,11 +1,13 @@
 # 每日面试题集锦
 
-每日的面试题目的分享意在提高大家对于 JavaScript 基础知识的把握。
-每天的面试题目标题格式：
+每日的面试题目的分享意在提高大家对于 前端知识点的梳理和把握。
 
-**#### 序号、 日期 考察的知识点：xxxx**
+### CSS专题
 
-### JavaScript 基础
+[css基础面试题](https://github.com/MagicalBridge/orange_financial_interview/blob/master/css%E5%B8%B8%E8%A7%81%E9%9D%A2%E8%AF%95%E9%A2%98%E7%9B%AE.md)
+
+
+### JavaScript 专题
 
 #### 1、 0516 考察的知识点：作用域、js 异步、事件循环。
 

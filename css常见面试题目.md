@@ -181,5 +181,15 @@ BFC的全称是块级格式化上下文，是W3C规范中的一个概念，**�
   <meta name=’viewport’ content=”width=device-width, initial-scale=1. maximum-scale=1,user-scalable=no”>
   ```
 
+## Doctype的作用? 标准模式和兼容模式有什么区别？
+  声明在文档的第一行，位于html的前面，用于告知浏览器的解析器以什么样的文档标准来解析这个文档，如果没有声明文档，就会以兼容模式呈现。
+  + 标准模式：标准模式的排版和JS都是以浏览器支持的最高标准来运行。
+  + 兼容模式：兼容模式页面以宽松向后兼容的方式显示，模仿老的浏览器，防止站点无法工作。
+
+## 页面导入样式时候，使用link和@import有什么区别？
+  link 是HTML的标签，不但可以引入 CSS 还可以引入 RSS，定义REL 属性等
+  @import 是 css2.1提出的，只能引入 css 
+  
+  link在页面加载时同时加载，@import 要等到页面加载完成之后才加载
 
 

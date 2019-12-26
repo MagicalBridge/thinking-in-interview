@@ -2808,6 +2808,30 @@ proxy 是es6 中新添加的 api 可以理解成在目标对象之前架设一�
 ### 1112 说说react中的Context吧,有什么应用场景？如何使用？
 `Context` 提供了一个无需为每层组件手动添加 `props`，就能在组件树间进行数据传递的方法。我们在平时开发中如果不使用redux 这种数据状态管理库，可能在数据传递的时候使用的就是从祖先元素层层传递的方式，当层级较多之后，我们需要将数据通过组件的props接口层层传递，层级如果嵌套太深，总会容易出错。Context 就是为了解决这个问题而出现的。
 
+### 1226 说下下面两段代码会打印出什么？
+```js
+var scope = "global scope";
+function checkscope(){
+  var scope = "local scope";
+  function f(){
+    return scope;
+  }
+  return f();
+}
+checkscope();
+
+var scope = "global scope";
+function checkscope(){
+    var scope = "local scope";
+    function f(){
+        return scope;
+    }
+    return f;
+}
+checkscope()();
+```
+上面这两段代码都会打印 'local scope' 原因很简单，因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置。javascript函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的，嵌套函数 f()定义在这个作用域里面，其中变量scope一定是局部变量，不管何时何地执行函数f() 这种绑定在执行f()时依然有效。
+
 
 掘金面试头条摘录；
 + 简单的自我介绍与项目经验

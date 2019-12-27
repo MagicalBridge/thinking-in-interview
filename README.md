@@ -2822,15 +2822,17 @@ checkscope();
 
 var scope = "global scope";
 function checkscope(){
-    var scope = "local scope";
-    function f(){
-        return scope;
-    }
-    return f;
+  var scope = "local scope";
+  function f(){
+    return scope;
+  }
+  return f;
 }
 checkscope()();
 ```
 上面这两段代码都会打印 'local scope' 原因很简单，因为JavaScript采用的是词法作用域，函数的作用域基于函数创建的位置。javascript函数的执行用到了作用域链，这个作用域链是在函数定义的时候创建的，嵌套函数 f()定义在这个作用域里面，其中变量scope一定是局部变量，不管何时何地执行函数f() 这种绑定在执行f()时依然有效。
+
+
 
 
 掘金面试头条摘录；

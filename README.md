@@ -1754,9 +1754,11 @@ O($n^2$) 的时间复杂度
 
 ### 0719 简述cookie、sessionStorage和localStorage的区别
 
+1、什么是cookie? cookie的属性有哪些？如何设置cookie？cookie缺点？cookie和session的区别？
+https://segmentfault.com/a/1190000017332168 这篇文章讲的很好。
+
 共同点：都是保存在浏览器端，且同源的。
 区别：
-
 - (1)cookie数据始终在同源的http请求中携带（即使不需要），即cookie在浏览器和服务器间来回传递。而sessionStorage和localStorage不会自动把数据发给服务器，仅在本地保存。
 - (2)cookie数据还有路径（path）的概念，可以限制cookie只属于某个路径下。
 - (3)存储大小限制不同，cookie数据不能超过4k，同时因为每次http请求都会携带cookie，所以cookie只适合保存很小的数据，如会话标识。sessionStorage和localStorage 虽然也有存储大小的限制，但比cookie大得多，可以达到5M或更大。

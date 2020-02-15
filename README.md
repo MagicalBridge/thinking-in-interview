@@ -2570,7 +2570,7 @@ for (var i = 1; i <= 5; i++) {
 + 其实任何函数都可以当做构造函数
 + 只要把一个函数通过new的方法进行调用，我们就把这一次函数的调用方法称之为：构造函数的调用
 
-### 你能说一下 构造函数的执行过程吗？
+### 你能说一下 构造函数的执行过程吗？也可以说是new的过程
 `var p1 = new Person();`
 + 1、创建一个对象，（我们把这个对象称之为Person构造函数的实例）- p1
 + 2、创建一个内部对象 this 将this 指向了该实例
@@ -2594,6 +2594,16 @@ for (var i = 1; i <= 5; i++) {
     }
     f3 = new fn3() // f3不再是 fn3的实例
   ```
+如果我们想要模拟实现整个过程同样遵循整个方法:
+```js
+function objectFactory() {
+  var obj = new Object(),
+  Constructor = [].shift.call(arguments);
+  obj.__proto__ = Constructor.prototype;
+  var ret = Constructor.apply(obj,arguments);
+  return typeof ret === 'object' ? ret : obj;
+}
+```
 ### JS中的继承的概念:
   + 通过[**某种方式**]让一个对象可以访问到另一个对象中的属性和方法，我们把这种方式称之为继承
 

@@ -1,3 +1,36 @@
+
+### 什么是内联元素，什么是块元素？特点是什么？img是什么元素。如何将行内元素转换为块元素
+**块级元素**：一个水平流上只能放置一个元素，多个块级元素换行显示，且元素高度、行高，内边距padding 外边距margin都是可以控制的,默认情况下,其宽度自动填满其父元素宽度。
+**内联元素**：多个内联元素可以在同一行显示，且高度、行高 内边距、外边距不可控制，默认的高度和宽度是由内部的内容撑开的。
+img 标签属于行内替换元素（replaced inline element）属于inline element.
+
+>行内元素转换为块元素的方式是：设置disply属性 block table list-item 都是可以具有块级的特性，但是用的最多的是 block
+
+### link 和 @import 的区别?
+页面中使用css的方式主要有三种:
+* 1、行内添加定义 style 属性值。
+* 2、页面头部内嵌调用 (一般在html上面填写的 style 标签)
+* 3、外面链接调用 只有两种 link 和 @import 
+
+```html
+<link rel="stylesheet" rev="stylesheet" href="CSS文件" type="text/css" media="all" />   
+
+<style type="text/css" media="screen">   
+@import url("CSS文件");   
+</style>  
+```
+
+1、@import url（）机制是不同于link的，link是在加载页面时把css同时加载，而@import url（）则是读取完文件后在加载，所以会出现一开始没有css样式，闪烁一下出现样式后的页面(网速慢的情况下)。
+2、@import 是css2里面的，所以古老的ie5不支持。
+3、当使用javascript控制dom去改变样式的时候，只能使用link标签，因为@import不是dom可以控制的。
+4、link是XHTML标签, 除了能加载css外,还能定义RSS，定义rel连接属性，@import只能加载css。
+
+### 了解过什么是DHTML吗？
+1、DHTML是Dynamic HTML的简称，就是动态的HTML(标准通用标记语言下的一个应用)，是相对传统的静态的html而言的一种制作网页的概念。
+2、DHTML只是HTML、CSS和客户端脚本的一种集成，即一个页面中包括html+css+javascript(或其它客户端脚本)
+3、html+css+javascript（或其他脚本）的优点：html确定页面框架，css和脚本决定页面样式、动态内容和动态定位。
+
+
 ## 1112、介绍一下标准的CSS的盒子模型？与低版本IE的盒子模型有什么不同的？
 解答，分为两种盒模型：W3C盒模型（也称之为标准盒模型）IE盒模型；
 + 标准盒模型: 宽度 = 内容的宽度（content）+ border+ padding + margin
@@ -276,6 +309,46 @@ css加载会阻塞后面的js代码的执行。
 ## 如何判断元素是否滚动到底部？
   如果滚动到底部，下面的等式返回true
   element.scrollHeight - element.scrollTop === element.clientHeight
+
+## 什么是web worker? 了解过吗？ 在实际项目中是如何使用的？
+
+## 假设有下面的DOM 结构,<parent><child>content</child></parent>下列哪些做法可以实现child内容垂直居中？
+
+## 如何分类css的中标签:
+回答: css 中的标签其实有很多，但是按照大类别分 可以分为“块级元素”和“内联元素”
+
+
+
+### 如何将多个元素，设置在同一行？
+第一种方式是使用浮动 float 第二种方式是设置元素 disolay-inline-block 
+
+### 你能想出几种清除浮动的方式，为什么要清除浮动？
+
+### 说一下 display:none 和 visibility: hidden 并且说出其他几种隐藏元素的方式
+  + display：none 隐藏对应的元素，在文档布局中不再给她分配空间，它各边的元素 会合拢，就当它不存在
+  + visibility：hidden 隐藏对应的元素，但是在文档布局中仍然保留原来的空间。
+  ```js
+  1、opacity: 0;
+  2、visibility: hidden;
+  3、display: none;
+  4、position: absolute;
+    top: -9999px;
+    left: -9999px;
+  5、clip-path: polygon(0px 0px,0px 0px,0px 0px,0px 0px);
+  ```
+### 单行文字超出部分省略号显示
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+### DOM（文件对象模型）,提供了树状结构的表示方法，以下描述正确的是：
+DOM树中总共分为如下几种节点格式：Element类型（元素节点）、Text类型（文本节点）、Comment类型（注释节点）、Document类型（document节点）。
+第一题：document可以说是一种节点格式，但节点树的根节点也叫document，所以第一题的说法太绝对，是错的。
+第二题：所有的HTML elements（元素节点，其实就是HTML标签）都是element。
+第三题：comments属于注释节点
+
+
+
   
 
 

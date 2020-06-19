@@ -2647,39 +2647,6 @@ function objectFactory() {
 
   ESmodule 
 
-
-css 常见知识点:
-###  如何分类css的中标签:
-回答: css 中的标签其实有很多，但是按照大类别分 可以分为“块级元素”和“内联元素”
-
-### 什么是内联元素，什么是块元素？特点是什么？img 是什么元素。如何将行内元素转换为块元素
-块级元素：一个水平流上只能放置一个元素，多个块级元素换行显示，且元素高度、行高，内边距padding 外边距margin都是可以控制的
-内联元素：多个内联元素可以在同一行显示，且高度、行高 内边距、外边距不可控制，默认的高度和宽度是由内部的内容撑开的。
-img 标签我看的资中属于 行内替换元素（replaced inline element） 属于inline element 
-
-行内元素转换为块元素的方式是：设置disply属性 block table list-item 都是可以具有快速的特性，但是用的最多的是 block
-
-### 如何将多个元素，设置在同一行？
-第一种方式是使用浮动 float 第二种方式是设置元素 disolay-inline-block 
-
-### 你能想出几种清除浮动的方式，为什么要清除浮动？
-
-### 说一下 display:none 和 visibility: hidden 并且说出其他几种隐藏元素的方式
-  + display：none 隐藏对应的元素，在文档布局中不再给她分配空间，它各边的元素 会合拢，就当它不存在
-  + visibility：hidden 隐藏对应的元素，但是在文档布局中仍然保留原来的空间。
-  ```js
-  1、opacity: 0;
-  2、visibility: hidden;
-  3、display: none;
-  4、position: absolute;
-    top: -9999px;
-    left: -9999px;
-  5、clip-path: polygon(0px 0px,0px 0px,0px 0px,0px 0px);
-  ```
-### 单行文字超出部分省略号显示
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 ### （算法题）求多个数组之间的交集（阿里）
   认真的阅读题目就可以想到，这道题目的结果应该是输出一个集合，es6 中新增两种重要的数据结构 set 和 map 用于
   补充es5中的数组和对象。
@@ -2692,27 +2659,10 @@ img 标签我看的资中属于 行内替换元素（replaced inline element） 
     //set{ 2, 3}
   ```
 
-### React组件的构造函数有什么作用？
-React组件的class是基于es6的语法规范实现的，react的渲染有两种情况，一个是初次渲染，一个是状态更新之后的再次渲染，构造函数在组件的初次渲染中只会运行一次，构造函数里进行的操作一般有三种用途：
-1、指定this -->  super(props)
-2、设置初始化的状态 --> this.setState({});
-3、为组件上的构造函数绑定this;
-
-### 如何理解react中的super() 和 super(props)?
-react 中的class 是基于es6的规范实现的, 继承是使用extends关键字实现继承的，子类必须在constructor()中调用super() 方法否则新建实例
-就会报错，报错的原因是 子类是没有自己的this对象的，它只能继承父类的this对象，然后对其进行加工，而super()就是将父类中的this对象继承给子类的，没有super() 子类就得不到this对象。
-
-如果你使用了constructor就必须写super() 这个是用来初始化this的，可以绑定事件到this上
-如果你想要在constructor中使用this.props,就必须给super添加参数 super(props)
-注意，无论有没有 constructor，在render中的this.props都是可以使用的，这是react自动附带的
-如果没有用到constructor 是可以不写的，react会默认添加一个空的constroctor.
-
 ### lombok @Data 注解到底干了个啥?
 在java bean 定义的时候，需要给每个字段提供set 和 get 属性，lombok这个插件所做的事情就是在编译期间
 替我们干了这个事情。
 
-### 请描述一下状态码304
-  表示浏览器端有缓存，并且服务端未更新，不用向服务器端请求资源。
 ### 实现一个方法，找出一个数组中重复的元素(10分)
 举例
 arr : [1,2,3,4,1,1,2,4,4]

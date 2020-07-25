@@ -348,6 +348,75 @@ DOM树中总共分为如下几种节点格式：Element类型（元素节点）�
 第三题：comments属于注释节点
 
 
+### 水平垂直居中的方法：
+常用的使用方法是三种:
+垂直居中的方法，如果全写出来，有10多种。面试的时候一般都会说比较常用的几种。
+* flex、
+* position + transform、
+* position + 负margin
+是最常见的三种情况。
+```html
+<div class="outer">
+  <div class="inner"></div>
+</div>
+```
+
+方法一:
+flex：容器设置属性就好, 项目不需要设置特别的属性
+```css
+.outer{
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+```
+
+方法二：`position + transform, inner`**宽高未知**
+```css
+.outer{
+  position: relative;
+}
+.inner{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+}
+```
+方法三: `position + 负margin, inner`**宽高已知**
+```css
+.outer{
+  position: relative;
+}
+.inner{
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+```
+
+方法四: `position + margin auto`设置各个方向的距离都是0，再将 `margin`设为`auto`，也可以实现，前提是`inner宽高已知`
+```css
+.outer {
+  position: relative;
+}
+.inner {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+}
+```
+
+
 
   
 

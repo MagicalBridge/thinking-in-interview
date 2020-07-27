@@ -416,6 +416,115 @@ flex：容器设置属性就好, 项目不需要设置特别的属性
 }
 ```
 
+### 三栏布局
+三栏布局是一种很常见的布局方式，两边固定，中间自适应。实现起来有很多种方法
+
+第一种：flex: 两边的项目使用flex basis 宽度固定 中间部分占据全部剩余空间
+
+```html
+<div class="container">
+  <div class="left">left</div>
+  <div class="main">main</div>
+  <div class="right">right</div>
+</div>
+```
+```css
+.container{
+  display: flex;
+}
+.left{
+  flex-basis:200px;
+  background: green;
+}
+.main{
+  flex: 1;
+  background: red;
+}
+.right{
+  flex-basis:200px;
+  background: green;
+}
+```
+
+第二种：position + margin 使用定位的方式，左右两栏使用绝对定位, 中间部分使用margin将两边撑开
+
+```html
+<div class="container">
+  <div class="left">left</div>
+  <div class="right">right</div>
+  <div class="main">main</div>
+</div>
+```
+```css
+body,html{
+  padding: 0;
+  margin: 0;
+}
+.left,.right{
+  position: absolute;
+  top: 0;
+  background: red;
+}
+.left{
+  left: 0;
+  width: 200px;
+}
+.right{
+  right: 0;
+  width: 200px;
+}
+.main{
+  margin: 0 200px ;
+  background: green;
+}
+```
+
+第三种：float + margin 这种方式和 上面那一种类似 只不过使用的是 float 实现
+```html
+<div class="container">
+  <div class="left">left</div>
+  <div class="right">right</div>
+  <div class="main">main</div>
+</div>
+```
+```css
+body,html{
+  padding:0;
+  margin: 0;
+}
+.left{
+  float:left;
+  width:200px;
+  background:red;
+}
+.main{
+  margin:0 200px;
+  background: green;
+}
+.right{
+  float:right;
+  width:200px;
+  background:red;
+}
+```
+
+### CSS权重计算方式:
+
+CSS基本选择器包含ID选择器、类选择器、标签选择器、通配符选择器
+
+CSS基本选择器包含ID选择器、类选择器、标签选择器、通配符选择器。 正常情况下，一般都能答出!important > 行内样式 > ID选择器 > 类选择器 > 标签选择器 > 通配符选择器。
+
+但如果这几种选择器同时作用于一个元素时，该元素最后应用哪个样式呢？这就涉及到权重计算的问题。 关于权重计算，有两种不同的计算方式：一种是以二进制的规则计算，一种是以1,10,100,1000这种的计算方式。我更倾向于二进制的这种方式。
+
+各选择器权值：
+
+* 内联样式，权值为1000
+* ID选择器，权值为0100
+* 类，伪类和属性选择器，权值为0010
+* 标签选择器和伪元素选择器，权值为0001
+* 通配符、子选择器、相邻选择器等，权值为0000
+* 继承的样式没有权值
+
 
 
   

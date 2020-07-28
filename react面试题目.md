@@ -126,3 +126,59 @@ react 中的class 是基于es6的规范实现的, 继承是使用extends关键�
 
 ### React的核心思想
 内存中维护一颗虚拟DOM树，数据变化时（setState），自动更新虚拟 DOM，得到一颗新树，然后 Diff 新老虚拟 DOM 树，找到有变化的部分，得到一个 Change(Patch)，将这个 Patch 加入队列，最终批量更新这些 Patch 到 DOM 中。
+
+
+### react提供 ref 来访问在render 方法中创建的DOM元素或者是React组件实例。
+
+目前有三种形式的ref:
+
+* 1、string ref
+* 2、callback ref
+* 3、React.createRef API
+
+```js
+// string ref
+class MyComponent extends React.Component {
+  componentDidMount() {
+    this.refs.myRef.focus();
+  }
+  render() {
+    return <input ref="myRef" />;
+  }
+}
+
+// callback ref
+class MyComponent extends React.Component {
+  componentDidMount() {
+    this.myRef.focus();
+  }
+  render() {
+    return <input ref={(ele) => {
+      this.myRef = ele;
+    }} />;
+  }
+}
+
+// React.createRef
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.myRef = React.createRef();
+  }
+  componentDidMount() {
+    this.myRef.current.focus();
+  }
+  render() {
+    return <input ref={this.myRef} />;
+  }
+}
+```
+
+### string ref 有什么弊端？
+* 1、当 ref 定义为 string 时，需要 React 追踪当前正在渲染的组件，在 reconciliation 阶段，React Element 创建和更新的过程中，ref 会被封装为一个闭包函数，等待 commit 阶段被执行，这会对 React 的性能产生一些影响。
+* 2、在根组件上使用无法生效。
+```js
+ReactDOM.render(<App ref="app" />, document.getElementById('main')); 
+```
+* 3、对于静态类型不友好，当使用string ref时，必须显示声明ref的类型，无法完成自动推导。
+https://juejin.im/post/5b59287af265da0f601317e3

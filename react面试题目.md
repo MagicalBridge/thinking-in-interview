@@ -182,3 +182,9 @@ ReactDOM.render(<App ref="app" />, document.getElementById('main'));
 ```
 * 3、对于静态类型不友好，当使用string ref时，必须显示声明ref的类型，无法完成自动推导。
 https://juejin.im/post/5b59287af265da0f601317e3
+
+
+### react中有哪些常见的副作用？
+* 绑定事件
+* 网络请求
+* 访问dom元素
